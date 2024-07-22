@@ -2,6 +2,8 @@
 
 在 htdocs       git clone https://github.com/jiayua5661/happypet.git
 
+VS code 裡安裝 延伸模組Git Graph 有圖形化git可以看
+
 開新分支 git branch 分支名稱
 
 切換分支 git checkout 分支名稱
