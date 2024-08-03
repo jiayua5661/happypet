@@ -1,0 +1,125 @@
+:root{
+    --color-primary:#90b9ab;
+    --color-secondary:#e4b0b4 ;
+}
+body{
+    background: url(../img/geometry.png);
+}
+thead th:nth-child(2),
+thead th:nth-child(3),
+thead th:nth-child(4),
+thead th:nth-child(5),
+thead th:nth-child(6),
+thead th:nth-child(8){
+    width: 80px;
+}
+th:nth-child(7){
+    width: 150px;
+}
+th:nth-child(1),.querySeriesID th{
+    width: 180px;
+}
+
+.pd_id_area input:first-child{
+    width: 30%;
+}
+.pd_id_area input:last-child{
+    width: 65%;
+}
+th,td{
+    text-align: center;
+    vertical-align: middle;
+}
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: #cbe9dd;
+}
+.querySeriesID td:nth-child(2n){
+    background-color: #cbe9dd;
+}
+.querySeriesID td:first-of-type{
+    /* background-color: red; */
+    width: 25%;
+}
+input{
+    width: 95%;
+    border: 1px solid #ccc;
+    outline: none;
+    /* border-radius: 5px; */
+}
+.seriesNum{
+    width: 60%;
+}
+.pdID{
+    width: 25%;
+}
+input[name="pdSeries"]{
+    width: 200px;
+
+}
+#pdName{
+    width: 380px; 
+    /* width: 80%;  */
+}
+input[readonly] ,input:disabled{
+    background-color: #f2f2f2;
+}
+@media (max-width: 1200px) {
+    #pdName{
+        width: 300px; 
+    }
+    input[name="pdSeries"]{
+        width: 170px;
+    }
+}
+.pdDetailContainer{
+    position: relative;
+    margin: 0 100px;
+}
+#addBtn{
+    position: absolute;
+    left: -80px;
+    top: 135px;
+}
+
+button,.btn{
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    background-color:var(--color-primary);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 3px #569682;
+    letter-spacing: 1.5px;
+    transition: .2s;
+}
+button:hover,.btn:hover{
+    background-color:#a2c5ba;
+    color: #fff;
+}
+button:active{
+    transform: scale(0.96);
+}
+i[class$="Btn"]{
+    padding: 6px;
+    cursor: pointer;
+    transition: .3s;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+i[class$="Btn"]:hover{
+    color: #aaa;
+
+}
+/* 彈出視窗 */
+.modal-footer{
+    border: none;
+}
+
+.deleteBtn{
+    top: 22%;
+    left: -15%;
+    box-shadow: none;
+    padding: 1px 5px;
+    /* transform: translateY(-50%); */
+}
