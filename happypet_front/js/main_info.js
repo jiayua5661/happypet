@@ -42,7 +42,7 @@ let inserBtn = document.getElementById('inserBtn')
             // formData.append('action', 'fetch');
             // fetch('infoupload.php',{
             console.log('event.target.value',event.target.value)
-            fetch(`http://localhost/testpet/public/product_back/info/select/${event.target.value}`,{
+            fetch(`http://localhost/testpet/public/api/product_back/info/select/${event.target.value}`,{
                 method:'get',
                 // body:formData
             })
