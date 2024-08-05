@@ -1,0 +1,61 @@
+/* progress */
+.progress-step {
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+.progress-step::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 8px;
+  background-color: #ccc;
+  z-index: 1;
+}
+.progress-step.active::before {
+  background-color: #90b9ab;
+}
+.progress-circle {
+  background-color: #ccc;
+  color: white;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+}
+.progress-step.active .progress-circle {
+  background-color: #90b9ab;
+}
+/* order */
+.table {
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
+}
+.mythead {
+  color: white;
+  background-color: #e4b0b4;
+}
+/* notice */
+.myh2,
+.myh3,
+.myh4 {
+  background-color: #90b9ab;
+  color: white;
+  border-radius: 50px;
+  letter-spacing: 4px;
+}
+#myp1,
+#myp2,
+#myp3 {
+  display: none;
+}
+.warning-text {
+  color: rgb(245, 89, 89);
+  font-weight: bold;
+}
+/* check */
+.custom-container {
+  margin-top: 60px;
+  margin-bottom: 30px;
+}

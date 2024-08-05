@@ -1,0 +1,96 @@
+#searchBtn {
+  color: white;
+  background-color: #7d868ed4;
+  border: none;
+  border-radius: 5px;
+  width: 120px;
+  height: 40px;
+}
+/* calender */
+.input-icon {
+  position: relative;
+}
+.input-icon input {
+  padding-left: 2.5rem;
+}
+.input-icon .bi-calendar {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #aaa;
+}
+.myCalendar {
+  height: 100px;
+  background-color: #90b9ab;
+}
+.date-box-shadow {
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
+}
+
+@media (max-width: 768px) {
+  .input-icon input {
+    width: 100%;
+  }
+}
+
+/* hotel */
+
+.image-container {
+  position: relative;
+  width: 100%;
+  color: #90b9ab;
+}
+
+.hotelimg {
+  width: 100%;
+  height: 400px;
+}
+
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 5px;
+}
+
+.myProduct {
+  width: 430px;
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
+}
+#myProductimg {
+  width: 425px;
+}
+.room {
+  background-color: #90b9ab;
+}
+.choose {
+  color: white;
+  background-color: #e4b0b4;
+  border: none;
+  border-radius: 5px;
+}
+/* products price */
+#priceTable {
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
+}
+#mythead {
+  background-color: #e4b0b4;
+}
+.custom-table .text-light {
+  background-color: #bbbbbb;
+}
+/* shoppingcar */
+.myshopping {
+  border-top: 10px solid #90b9ab;
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
+}
+/* productQuantity  */
+.hotelQuantity {
+  width: 80px;
+  height: 40px;
+}
