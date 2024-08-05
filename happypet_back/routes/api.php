@@ -79,6 +79,83 @@ Route::get('/product/{c}',function($c){
 
     // print_r($products);
     return response()->json($products);
-    // return response()->json($part);
     // return view('product1')->with('jsonString', json_encode($products, JSON_UNESCAPED_UNICODE));
+});
+
+// 查詢此產品資訊(product_item.html)
+Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
+    // $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id like '{$c}%' and series_AINUM = '{$seriesProduct}'");
+    $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id like ? and series_ai_id = ?", ["{$c}%", $seriesProduct]);
+    $productImgs = DB::select("SELECT psi.*,spv.series_ai_id
+                                FROM seriespdimg_view spv
+                                JOIN product_series ps
+                                ON spv.series_ai_id = ps.series_ai_id
+                                JOIN product_seriesimg psi 
+                                ON ps.series_id = psi.series_id 
+                                WHERE spv.series_ai_id = ?
+                                GROUP BY psi.id ,psi.series_id,psi.img,psi.pic_category_id ,psi.create_date 
+                            ",[$seriesProduct]);
+    // $category = DB::scalar("SELECT description FROM product_category WHERE id = '{$c}'");
+    $category = DB::scalar("SELECT description FROM product_category WHERE category_id = ?",["{$c}"]);
+
+    // print_r($products);
+    foreach($products as &$pd){
+        // print_r($pd);
+        if(isset($pd->cover_img)){
+            $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pd->cover_img);
+            $pd->cover_img = base64_encode($pd->cover_img);
+            $src = "data:{$mime_type};base64,{$pd->cover_img}";
+           $pd->cover_img = $src;
+        }
+    }
+    foreach($productImgs as &$pdImg){
+        // print_r($pd);
+        if(isset($pdImg->img)){
+            $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pdImg->img);
+            $pdImg->img = base64_encode($pdImg->img);
+            $src = "data:{$mime_type};base64,{$pdImg->img}";
+            $pdImg->img = $src;
+        }
+    }
+    // return response()->json($products);
+    return response()->json([
+        'products' => $products,
+        'productImgs' => $productImgs,
+        'categoryName' => $category
+    
+    ]);
+});
+
+// 插入購物車
+Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity){
+    // 會傳回異動筆數
+    if(!isset($poductID) || !isset($quantity)){
+        echo '尚未選擇產品';
+    }else{
+        $pdCount = DB::scalar("SELECT count(*) FROM pd_cart WHERE product_id = ?",[$poductID]);
+        // echo 'pdCount'.json_encode($pdCount);
+        // echo 'pdCount'.$pdCount;
+        // echo $pdCount;
+        if($pdCount >= 1){
+            $n = DB::update("UPDATE pd_cart 
+                            SET quantity = quantity + ?
+                            WHERE product_id = ?",[$quantity,$poductID]);
+
+            echo $n;
+        }else{
+            // $n = DB::insert("insert into userinfo (uid,cname) values(?,?)",[$uid,$cname]);
+            $n = DB::insert("INSERT INTO pd_cart(order_number,uid,product_id,quantity,create_time)
+                        VALUES('202407230001','qwe123',?,?,NOW())",[$poductID,$quantity]);
+            // echo "異動筆數".$n;
+            echo $n;
+        }
+    }
+});
+// 查詢購物車
+Route::get('/productcart/{uid}',function($uid){
+    session(['uid' => 'qwe123']);
+    $uid = session('uid');
+    // $_SESSION["uid"] = 'qwe123';
+    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM pd_cart WHERE uid = '{$uid}'");
+    echo $totalAmount;
 });

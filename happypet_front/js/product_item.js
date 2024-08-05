@@ -48,7 +48,8 @@ window.onload = ()=>{
     // console.log('flavorOrColorArea',flavorOrColorArea.className)
     // fetch(`http://localhost/testpet/public/product/ds/96`,{
     // 查詢此產品資訊
-    fetch(`http://localhost/testpet/public/product/${categoryID}/${seriesID}`,{
+    // fetch(`http://localhost/testpet/public/product/${categoryID}/${seriesID}`,{
+    fetch(`http://localhost/happypet/happypet_back/public/api/product/${categoryID}/${seriesID}`,{
         method:'get',
     })
     .then(response=>{
@@ -62,7 +63,8 @@ window.onload = ()=>{
         console.log('第一個',products)
 
         // 過濾下架產品
-        products = products.filter(product => product.status === 't');
+        // products = products.filter(product => product.status === 't');
+        products = products.filter(product => product.status == 1);
         if (products.length === 0) {
             // 如果沒有上架產品，顯示提示或進行其他處理
             alert('產品準備中');
@@ -84,7 +86,7 @@ window.onload = ()=>{
         goodsTitle.setAttribute('data-categoryID',products[0].category_id)
         mainImg.src = products[0].cover_img
         let categoryID = goodsTitle.getAttribute('data-categoryid')
-        $('.breadcrumb').find('a').eq(1).prop('href',`http://localhost/petx/product.html?category=${categoryID}`)
+        $('.breadcrumb').find('a').eq(1).prop('href',`http://localhost/happypet_front/40_product/front/product.html?category=${categoryID}`)
        
         productImgs.forEach((productImg,i)=>{
             let {pic_category_id} = productImg
@@ -281,7 +283,7 @@ window.onload = ()=>{
             }else{
                 addCartText.style.opacity = "0"
                 addCartIcon.style.opacity = "1"
-                fetch(`http://localhost/testpet/public/product/insert/${poductID}/${quantity}`,{
+                fetch(`http://localhost/happypet/happypet_back/public/api/product/insert/${poductID}/${quantity}`,{
                     method:'get'
                 })
                 .then(response=>response.text())
@@ -308,7 +310,7 @@ window.onload = ()=>{
         // let cartQuantity = document.querySelector('header .cart_quantity')
         queryQuantity()
         function queryQuantity(){
-            fetch('http://localhost/testpet/public/productcart/qwe123')
+            fetch('http://localhost/happypet/happypet_back/public/api/productcart/qwe123')
             .then(response=>response.text())
             .then(quantity=>{
                 if(!quantity ){

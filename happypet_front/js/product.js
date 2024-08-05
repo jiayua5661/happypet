@@ -145,11 +145,6 @@ window.onload = function(){
             changeBanner(category)
 
         })
-    //     console.log('category',category)
-        // event.target.onclick = ()=>{
-            // console.log(event.target)
-        // }
-
     })
 
     // 切換類別(傳入類別,是否要更改?category="")
@@ -203,7 +198,7 @@ window.onload = function(){
                         // productItem.classList.add('product_item','col-md-3','position-relative')
                         productItem.classList.add('product_item','position-relative')
                             productItem.innerHTML = `
-                                <a href="http://localhost/petx/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${seriesProduct.series_AINUM}">
+                                <a href="http://localhost/happypet/happypet_front/40_product/front/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${seriesProduct.series_AINUM}">
                                     <div class="img_wrapper">
                                         <img src="${cover_img}" alt="" class="" />
                                     </div>
