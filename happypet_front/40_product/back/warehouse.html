@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入庫</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <!-- 使用CDN引入bootstrap-icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- 後台header -->
+    <link rel="stylesheet" href="../../css/back_header_footer.css">
+    <link rel="stylesheet" href="../../css/warehouse.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="../../js/jquery-3.7.1.js"></script>
+    <script src="../../js/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <header class="w-100 position-sticky">
+        <div class="row m-0 px-md-5 text-center justify-content-lg-between justify-content-center align-items-center">
+            <a href="" class="col-lg-3 col-8"><img class="img-fluid logo" src="../../img/LOGO.png" alt=""></a>
+            <ul class="nav col-lg-9 p-0 d-flex justify-content-lg-between justify-content-center">
+                <li class="col-lg-2 col-3 dropdown">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
+                        data-bs-toggle="dropdown" aria-expanded="false">美容預約</a>
+                    <ul class="dropdown-menu" aria-labelledby="beauty">
+                        <li><a href="" class="dropdown-item">美容預約表</a></li>
+                    </ul>
+                </li>
+                <li class="col-lg-2 col-3 dropdown">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
+                        data-bs-toggle="dropdown" aria-expanded="false">寵物住宿</a>
+                    <ul class="dropdown-menu" aria-labelledby="beauty">
+                        <li><a href="" class="dropdown-item">旅館訂單</a></li>
+                        <li><a href="" class="dropdown-item">當日住宿</a></li>
+                    </ul>
+                </li>
+                <li class="col-lg-2 col-3 dropdown">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
+                        data-bs-toggle="dropdown" aria-expanded="false">產品專區</a>
+                    <ul class="dropdown-menu" aria-labelledby="beauty">
+                        <li><a href="" class="dropdown-item">產品主要內容</a></li>
+                        <li><a href="" class="dropdown-item">產品詳細資訊</a></li>
+                        <li><a href="" class="dropdown-item">產品入庫</a></li>
+                        <li><a href="" class="dropdown-item">上架中產品</a></li>
+                        <li><a href="" class="dropdown-item">未上架產品</a></li>
+                    </ul>
+                </li>
+                <li class="col-lg-2 col-3 dropdown">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
+                        data-bs-toggle="dropdown" aria-expanded="false">產品訂單</a>
+                    <ul class="dropdown-menu" aria-labelledby="beauty">
+                        <li><a href="" class="dropdown-item">美容預約表</a></li>
+                    </ul>
+                </li>
+                <div class="nav_icon col-lg-2 ">
+                    <a href="">登出</a>
+                </div>
+            </ul>
+        </div>
+    </header>
+    
+    <div class="m-auto  myContainer py-3">
+        <h2 class="m-0 py-3">產品入庫</h2>
+        <form id="pdWarehouse" method="post" enctype="multipart/form-data" class="position-relative">
+
+            <table class="table  table-striped align-middle">
+                <tbody>
+                    <tr>
+                        <th scope="row">產品料號</th>
+                        <td colspan="4"><input type="text" name="productID" id="productID"> <i class="bi bi-search"></i></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">產品名稱</th>
+                        <td colspan="4" id="pdName" class="position-relative">
+                            <!-- <span class="position-relative">查詢中<i class="bi bi-battery position-absolute"></i><i class="bi bi-battery-half position-absolute"></i><i class="bi bi-battery-full position-absolute"></i></span>
+                            <i class="bi bi-airplane-fill"></i> -->
+
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">製造日期</th>
+                        <td id=""><input type="date" name="mfd" id="pdMfd" ></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">有效日期</th>
+                        <td ><input type="date" name="exp" id="pdExp" ></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">進貨數量(販賣最小單位：包、罐、個)</th>
+                        <td ><input type="text" name="inventory" id="inventory"></td>
+                    </tr>
+                    <tr>
+                       <th scope="row">進貨日期</th>
+                        <td ><input type="text" name="restockDate" id="restockDate" readonly></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <button id="insertBtn" class="position-absolute " >確認</button>
+         
+        </form>
+    </div>
+    
+    <!-- 彈出視窗 -->
+    <!-- Modal -->
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="alertMsg" class="m-0"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/warehouse.js"></script>
+    <!-- <script>
+        let insertBtn = document.getElementById('insertBtn');
+        window.onload = ()=>{
+            let myModal = document.getElementById('myModal')
+            let myInput = document.getElementById('myInput')
+
+            let datObj = new Date()
+            let dateFormat = `${ datObj.getFullYear() }-${ (datObj.getMonth()+1).toString().padStart(2,0) }-${ (datObj.getDate()).toString().padStart(2,0) }`
+            console.log(dateFormat)
+            restockDate.value = dateFormat
+        
+            function showMsg(msg){
+                $('#myModal').modal('show')
+                $('#alertMsg').text(msg)
+            }
+            $('.bi-search').click(()=>{
+                pdName.innerHTML = '<span class="position-relative">查詢中<i class="bi bi-battery position-absolute"></i><i class="bi bi-battery-half position-absolute"></i><i class="bi bi-battery-full position-absolute"></i></span>';
+                let pdWarehouseFormData = new FormData(document.getElementById('pdWarehouse'));
+                pdWarehouseFormData.append('action', 'fetch');
+                console.log('pdWarehouseFormData',pdWarehouseFormData)
+                console.log('productID.value',productID.value)
+               // productID.onchange = ()=>{
+                fetch(`http://localhost/testpet/public/api/product_back/warehouse `,{
+                    method:'post',
+                    body:pdWarehouseFormData
+                })
+                .then(response=>{
+                    // console.log(response)
+                    // return response.text()
+                    return response.json()
+                })
+                .then(data=>{
+                    console.log('我是data',data)
+                    data.full_name ? pdName.innerText = data.full_name :  pdName.innerText = data.error;
+                    
+                })
+
+            })
+            // }
+           
+            insertBtn.onclick = (event)=>{
+                event.preventDefault();
+                let pdWarehouseFormData = new FormData(document.getElementById('pdWarehouse'));
+                pdWarehouseFormData.append('action', 'insert');
+                fetch('http://localhost/testpet/public/api/product_back/warehouse',{
+                    method:'post',
+                    body:pdWarehouseFormData
+                })
+                .then(response=>{
+                    if (!response.ok) {
+                        throw new Error(`伺服器錯誤: ${response.statusText}`);
+                    }
+                    // console.log(response)
+                    // return response.text()
+                    return response.json()
+                })
+                .then(data=>{
+                    // alert(data)
+                    console.log('我是data1',data)
+                    showMsg(data.message)
+
+                   
+                })
+            }
+        }
+    </script> -->
+</body>
+</html>

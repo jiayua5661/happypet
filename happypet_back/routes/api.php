@@ -159,3 +159,43 @@ Route::get('/productcart/{uid}',function($uid){
     $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM pd_cart WHERE uid = '{$uid}'");
     echo $totalAmount;
 });
+
+// 產品入庫
+Route::post('/product_back/warehouse',function(Request $request){
+    $productID = $request->input('productID');
+    $action = $request->input('action');
+    
+    if($action === 'fetch'){
+        $products = DB::select("SELECT p.product_id,CONCAT_WS(' / ', nullif(ps.series_name,''),nullif(flavor,''),
+                                    nullif(weight,''),nullif(size,''),nullif(style,'')) AS full_name
+                                FROM product p
+                                JOIN product_series ps 
+                                ON p.series_ai_id = ps.series_ai_id
+                                WHERE p.product_id = ? ",[$productID]);
+        if(count($products) > 0){
+            // foreach($products as $product){
+            return response()->json($products[0]);
+            // }
+        }else{
+            return response()->json(["error" => "查無此產品"]);
+        }
+    }else if($action === 'insert'){
+        // $productID = $request->input('productID');
+        $mfd = $request->input('mfd');
+        $exp = $request->input('exp');
+        $inventory = $request->input('inventory');
+        $restockDate = $request->input('restockDate');
+        // $data = $request->all();
+        // DB::table('product_warehouse')->insert($data);
+        try{
+            DB::insert("INSERT INTO product_warehouse (product_id,inventory,mfd,exp,restock_date) 
+                    VALUES(?,?,?,?,?)",[$productID,$inventory,$mfd,$exp,$restockDate]);
+            return response()->json(["message" => "產品已入庫"]);
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(["error" => "產品入庫失敗"]);
+    
+        }
+    }
+    
+});

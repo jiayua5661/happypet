@@ -160,7 +160,7 @@ let inserBtn = document.getElementById('inserBtn')
                     showMsg(data.message)
                     setTimeout(()=>{
                         location.reload()// 刷新頁面
-                    },1000)
+                    },1500)
                 } else if (data.error) {
                     showMsg(data.error)
                     
