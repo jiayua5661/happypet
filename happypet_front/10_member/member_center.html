@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 好寵你 | 寵物全方位服務網站 </title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/header_footer.css">
+    <link rel="stylesheet" href="../css/member_center.css">
+    <script src="../js/bootstrap.bundle.js"></script>
+
+    <!-- 使用CDN引入bootstrap-icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- 字型字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- Header -->
+    <!-- Header -->
+    <!-- Header -->
+    <!-- Header -->
+    <!-- Header -->
+
+    <header id="navbar" class="sticky-top ">
+        <div class="member nav_icon">
+            <a data-bs-toggle="modal" data-bs-target="#memberLoginModal" href="#"><i class="bi-person"></i></a>
+            <a href="#"><i class="bi-cart"></i></a>
+        </div>
+        <div class="row align-items-center container-xl">
+            <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
+                <a class="" href="#">
+                    <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
+                </a>
+            </div>
+            <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
+                <ul class="nav justify-content-center text-center">
+                    <li class="col-3 mt-3 mb-3">
+                        <a class="p-2" href="#">美容預約</a>
+                    </li>
+                    <li class="col-3 mt-3 mb-3">
+                        <a class="p-2" href="#">寵物住宿</a>
+                    </li>
+                    <li class="col-3 mt-3 mb-3">
+                        <a class="p-2" href="#">產品專區</a>
+                    </li>
+                    <li class="col-3 mt-3 mb-3">
+                        <a class="p-2" href="#">獸醫門診</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- Login Modal -->
+    <div class="modal fade" id="memberLoginModal" tabindex="-1" aria-labelledby="memberLoginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberLoginModalLabel">會員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">電子信箱 / e-mail :</label>
+                            <input type="email" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">密碼 / password :</label>
+                            <input type="password" class="form-control" id="recipient-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p><a href="#">忘記密碼?</a>&ensp;或&ensp;<a
+                            href="./member_register.html">註冊會員</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    </p>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                    <button type="button" class="btn btn-success">登入</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Modal End-->
+
+    <!-- Header end -->
+    <!-- Header end -->
+    <!-- Header end -->
+    <!-- Header end -->
+    <!-- Header end -->
+
+    <!-- 側邊欄 -->
+    <div class="row mt-4 mb-4 px-3 container-fluid">
+        <div class="col-4 col-md-3">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action" id="member-edit-list" data-bs-toggle="list"
+                    href="#member-edit" role="tab" aria-controls="member-edit">會員設定</a>
+                <a class="list-group-item list-group-item-action active" id="member-pets-list" data-bs-toggle="list"
+                    href="#member-pets" role="tab" aria-controls="member-pets">我的寵物</a>
+                <a class="list-group-item list-group-item-action" id="member-record-list" data-bs-toggle="list"
+                    href="#member-record" role="tab" aria-controls="member-record">歷史訂單</a>
+                <a class="list-group-item list-group-item-action" id="member-password-reset-list" data-bs-toggle="list"
+                    href="#member-password-reset" role="tab" aria-controls="member-password-reset">重設密碼</a>
+                <a class="list-group-item list-group-item-action" id="member-logout-list" data-bs-toggle="list"
+                    href="#member-logout" role="tab" aria-controls="member-logout">登出</a>
+            </div>
+        </div>
+        <div class="col-8 col-md-9">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="container-fluid tab-pane fade" id="member-edit" role="tabpanel"
+                    aria-labelledby="member-edit-list">
+                    <h4 class="member-center-title mt-2 mb-4">會員設定</h4>
+                    <form>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">姓名：</label>
+                            <input type="text" class="form-control" value="王大明">
+                        </div>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">性別</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    男
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    女
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    其他
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">電子信箱</label>
+                            <input type="email" class="form-control" value="gn20030523@gmail.com">
+                        </div>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">行動電話</label>
+                            <input type="tel" class="form-control" id="phone1" value="0900-123456">
+                        </div>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">其他連絡電話</label>
+                            <input type="tel" class="form-control" id="phone2">
+                        </div>
+                        <div class="mb-1">
+                            <label for="recipient-name" class="col-form-label">地址</label>
+                            <input type="text" class="form-control" id="adress">
+                        </div>
+                    </form>
+                    <div class="container mt-5 d-flex justify-content-center">
+                        <button type="button" class="btn btn-success">確定修改</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade show active" id="member-pets" role="tabpanel"
+                    aria-labelledby="member-pets-list">
+                    <h4 class="member-center-title mt-2 mb-4">我的寵物</h4>
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="../img/10_member/pet-money.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Money</h5>
+                                    <p class="card-text">品種：柴犬</p>
+                                    <p class="card-text">生日：2020/08/01</p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center gap-2">
+                                    <button class="btn btn-secondary btn-sm">查看詳情</button>
+                                    <button class="btn btn-secondary btn-sm">編輯</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="../img/10_member/pet-kani.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Kani</h5>
+                                    <p class="card-text">品種：米克斯貓</p>
+                                    <p class="card-text">生日：2020/08/01</p>
+
+                                </div>
+
+                                <div class="card-footer d-flex justify-content-center gap-2">
+                                    <button class="btn btn-secondary btn-sm">查看詳情</button>
+                                    <button class="btn btn-secondary btn-sm">編輯</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="../img/10_member/pet-lava.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Lava</h5>
+                                    <p class="card-text">品種：米克斯貓</p>
+                                    <p class="card-text">生日：2021/08/01</p>
+
+                                </div>
+                                <div class="card-footer d-flex justify-content-center gap-2">
+                                    <button class="btn btn-secondary btn-sm">查看詳情</button>
+                                    <button class="btn btn-secondary btn-sm">編輯</button>
+                                </div>
+                            </div>
+                        </div>
+                        <a data-bs-toggle="modal" data-bs-target="#addPetModal" href="#" class="card-add">
+                            <div class="col card h-100">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                                <div class="card-body mt-5">
+                                    <h5 class="card-title mt-2">Add</h5>
+                                    <p class="card-text">點此新增</p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center gap-2">
+                                    <button class="btn btn-secondary btn-sm">新增寵物</button>
+                                </div>
+                            </div>
+                    </div>
+                    </a>
+                    <!-- Add Pet Modal -->
+                    <div class="modal fade" tabindex="-1" aria-hidden="true" id="addPetModal"
+                        aria-labelledby="addPetModalLabel">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addPetModalLabel">新增寵物</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex justify-content-center">
+                                        <img class="pet-headphoto" src="../img/10_member/paw.png" alt="">
+                                    </div>
+                                    <form>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">寵物名字</label>
+                                            <input type="text" class="form-control" id="pet-name">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">寵物種類</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>點此選擇</option>
+                                                <option value="1">狗</option>
+                                                <option value="2">貓</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">品種</label>
+                                            <input type="text" class="form-control" id="pet-variety">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">體重</label>
+                                            <input type="number" class="form-control" id="pet-weight">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">毛髮類型</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>點此選擇</option>
+                                                <option value="1">長毛</option>
+                                                <option value="2">多層毛</option>
+                                                <option value="2">短毛</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">生日</label>
+                                            <input type="date" class="form-control" id="pet-birthday">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">性別</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    公
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    母
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">節育狀態</label>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>點此選擇</option>
+                                                <option value="1">已結紮</option>
+                                                <option value="2">未結紮</option>
+                                                <option value="2">不清楚</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="recipient-name" class="col-form-label">備註</label>
+                                            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary">重填</button>
+                                    <button type="button" class="btn btn-success">新增</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add Pet Modal End-->
+                </div>
+                <div class="tab-pane fade" id="member-record" role="tabpanel" aria-labelledby="member-record-list">
+                    <h4 class="member-center-title mt-2 mb-4">歷史訂單</h4>
+                    <div class="mb-1">
+                        <label for="recipient-name" class="col-form-label">顯示該日期以前180天的訂單</label>
+                        <input type="date" class="form-control" id="">
+                    </div>
+                    <div class="m-2 d-flex justify-content-center gap-2">
+                        <button class="btn btn-info">美容</button>
+                        <button class="btn btn-info">旅館</button>
+                        <button class="btn btn-info">商品</button>
+                    </div>
+                    <div class="m-2 container justify-content-center" style="border: 1px solid black;">
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                    </div>
+                    <div class="m-2 container justify-content-center" style="border: 1px solid black;">
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                    </div>
+                    <div class="m-2 container justify-content-center" style="border: 1px solid black;">
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                        <p>訂單訂單訂單訂單訂單訂單訂單</p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="member-password-reset" role="tabpanel"
+                    aria-labelledby="member-password-reset-list">
+                    <h4 class="member-center-title mt-2 mb-4">重設密碼</h4>
+                    <div class="container mt-3">
+                        <form class="row g-3 needs-validation" novalidate>
+                            <div class="col-md-12">
+                                <label for="validationCustom03" class="form-label">舊的密碼：</label>
+                                <input type="password" class="form-control" id="validationCustom03" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label">新的密碼：</label>
+                                <input type="password" class="form-control" id="" value="" required>
+                                <div class="invalid-feedback">
+                                    請輸入8~16個字元且包含數字、英文字母大小寫及特殊符號的密碼
+                                </div>
+                                <div class="valid-feedback">
+                                    密碼格式正確，請再次確認!
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label">再次輸入新的密碼：</label>
+                                <input type="password" class="form-control" id="" value="" required>
+                                <div class="invalid-feedback">
+                                    請輸入8~16個字元且包含數字、英文字母大小寫及特殊符號的密碼
+                                </div>
+                                <div class="valid-feedback">
+                                    密碼格式正確，請再次確認!
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-success" type="submit">確定變更</button>
+                            </div>
+                        </form>
+                        <script>
+                            (function () {
+                                'use strict'
+                                var forms = document.querySelectorAll('.needs-validation')
+                                Array.prototype.slice.call(forms)
+                                    .forEach(function (form) {
+                                        form.addEventListener('submit', function (event) {
+                                            if (!form.checkValidity()) {
+                                                event.preventDefault()
+                                                event.stopPropagation()
+                                            }
+
+                                            form.classList.add('was-validated')
+                                        }, false)
+                                    })
+                            })()
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 側邊欄 結束 -->
+
+    <!--------------- footer ---------------->
+    <!--------------- footer ---------------->
+    <!--------------- footer ---------------->
+    <!--------------- footer ---------------->
+    <!--------------- footer ---------------->
+    <footer>
+        <div class="row text-center justify-content-center mt-4 align-items-center">
+            <!-- <div class="container-md 
+        container-fluid 
+        justify-content-md-evenly 
+        justify-content-center 
+        align-items-center 
+        "> -->
+            <a href="#" class="col-xl-4 col-lg-5 col-md-10 col-10 p-2">
+                <img class="logo" src="../img/LOGO.png" alt="">
+            </a>
+
+            <ul class="footer_contact col-xl-4 col-lg-5 col-md-10 col-10 text-lg-start text-center p-4">
+                <li>0800-123-456</li>
+                <li>service@gmail.com</li>
+                <li>特定寵物業許可證號：特寵業字第s1110005號</li>
+
+                <div class="footer_icon">
+                    <span class=""><a href=""><i class="bi bi-instagram"></i></a></span>
+                    <span class=""><a href=""><i class="bi bi-line"></i></a></span>
+                    <span class=""><a href=""><i class="bi bi-facebook"></i></a></span>
+                </div>
+            </ul>
+            <p class="copyright text-center mt-2"><a href="#">服務條款及隱私保護政策 | </a>&copy;此網站為練習使用，不做商業用途</p>
+        </div>
+
+        <div class="d-flex">
+            <img class="footer_img col-12 col-sm-12 col-md-8 col-xl-8 col-xxl-8" src="../img/00_index/資產-40.png" alt="">
+            <img class="footer_stamp" src="../img/00_index/transparent01.png" alt="">
+        </div>
+
+    </footer>
+    <!--------------- footer end---------------->
+    <!--------------- footer end---------------->
+    <!--------------- footer end---------------->
+    <!--------------- footer end---------------->
+    <!--------------- footer end---------------->
+
+</body>
+
+</html>
