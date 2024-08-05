@@ -58,3 +58,27 @@ Route::post('/product_back/detail/show',function(Request $request) {
 });
 // php artisan make:controller DetailProductInsertController
 Route::post('/product_back/detail/create',[DetailProductInsertController::class,'store']);
+
+// 查詢種類(狗狗、貓貓專區 product.html)
+Route::get('/product/{c}',function($c){
+    // $products = DB::select('select * from seriespdimg_view');
+    // $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id LIKE '{$c}%'");
+    $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id LIKE ? ",["{$c}%"]);
+    // json_decode($products);
+    // print_r($products);
+    
+    foreach($products as &$pd){
+        // print_r($pd);
+        if(isset($pd->cover_img)){
+            $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pd->cover_img);
+            $pd->cover_img = base64_encode($pd->cover_img);
+            $src = "data:{$mime_type};base64,{$pd->cover_img}";
+           $pd->cover_img = $src;
+        }
+    }
+
+    // print_r($products);
+    return response()->json($products);
+    // return response()->json($part);
+    // return view('product1')->with('jsonString', json_encode($products, JSON_UNESCAPED_UNICODE));
+});

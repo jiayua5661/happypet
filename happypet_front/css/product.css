@@ -210,7 +210,10 @@ header {
 /* .product_item::after{ */
 .animalTag{
     /* background: url(./img/productIcon/dog.png) no-repeat; */
-    background-image: url('./img/productIcon/dog.png') ;
+    /* background-image: url('./img/productIcon/dog.png') ; */
+    /* background-image: url('../../img/40_product/productIcon/dog.png') ; */
+    background-image: url('happypet_front/img/40_product/productIcon/dog.png') ;
+    /* background-image: url('../img/40_product/productIcon/cat.png') ; */
     background-repeat: no-repeat;
     background-size: contain;
     /* display:block ; */

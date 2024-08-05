@@ -68,7 +68,7 @@ window.onload = function(){
     function changeTagImg(dogOrCat){
         let animalTags = document.querySelectorAll('.animalTag')
         animalTags.forEach((tag)=>{
-            tag.style.backgroundImage = `url('../../40_product/img/productIcon/${dogOrCat}.png')`
+            tag.style.backgroundImage = `url('../../img/40_product/productIcon/${dogOrCat}.png')`
             // tag.style.backgroundImage = `url('./img/productIcon/${dogOrCat}.png')`
         })
     }
@@ -164,7 +164,8 @@ window.onload = function(){
         // 設定正在fetch，如果沒有flag，點某類別後產品還沒回傳，再點別的類別，畫面會把兩個類別都show出
         isFetching = true
         loadingArea.style.display = 'block';
-        fetch(`http://localhost/testpet/public/product/${category}`,{
+        // fetch(`http://localhost/testpet/public/product/${category}`,{
+        fetch(`http://localhost/happypet/happypet_back/public/api/product/${category}`,{
                 method:'get',
             })
             .then(response=>{
@@ -173,24 +174,27 @@ window.onload = function(){
                 return response.json()  //陣列
             })
             .then(products=>{
-                // console.log(products)
+                console.log('products',products)
                 
                 let oneSeries = new Set()
                 products.forEach(pd => {
-                    if(pd.status != 'f'){
+                    console.log('pd',pd)
+                    // if(pd.status != 'f'){
+                    if(pd.status != 0){
 
                         // 系料號加到集合中
-                        oneSeries.add(pd.series_AINUM)
+                        oneSeries.add(pd.series_ai_id)
                     }
+                   
                 })
-                // console.log('我是SET集合',oneSeries)
+                console.log('我是SET集合',oneSeries)
                 
                 // let productContainer = document.querySelector('.product_container');
                 oneSeries.forEach(arrSeriesID=>{
                     // console.log('我是SET中的系列號',arrSeriesID)
                     // let seriesProduct = products.find(pd=> pd.series_id === arrSeriesID)
-                    let seriesProduct = products.find(pd=> pd.series_AINUM === arrSeriesID)
-                    let {category_id,series_AINUM,cover_img,series_name,price} = seriesProduct
+                    let seriesProduct = products.find(pd=> pd.series_ai_id === arrSeriesID)
+                    let {category_id,series_ai_id,cover_img,series_name,price} = seriesProduct
                     // console.log('我是636行category_id',category_id)
                     console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
                     console.log('我是seriesProduct',seriesProduct)
@@ -199,7 +203,7 @@ window.onload = function(){
                         // productItem.classList.add('product_item','col-md-3','position-relative')
                         productItem.classList.add('product_item','position-relative')
                             productItem.innerHTML = `
-                                <a href="http://localhost/petx/product_item.html?category=${category_id}&sID=${series_AINUM}" data-seriesID="${seriesProduct.series_AINUM}">
+                                <a href="http://localhost/petx/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${seriesProduct.series_AINUM}">
                                     <div class="img_wrapper">
                                         <img src="${cover_img}" alt="" class="" />
                                     </div>
