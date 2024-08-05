@@ -132,20 +132,29 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
     if(!isset($poductID) || !isset($quantity)){
         echo '尚未選擇產品';
     }else{
-        $pdCount = DB::scalar("SELECT count(*) FROM pd_cart WHERE product_id = ?",[$poductID]);
+        $pdCount = DB::scalar("SELECT count(*) FROM shopping_cart_item WHERE product_id = ?",[$poductID]);
         // echo 'pdCount'.json_encode($pdCount);
         // echo 'pdCount'.$pdCount;
         // echo $pdCount;
         if($pdCount >= 1){
-            $n = DB::update("UPDATE pd_cart 
+            $n = DB::update("UPDATE shopping_cart_item 
                             SET quantity = quantity + ?
                             WHERE product_id = ?",[$quantity,$poductID]);
 
             echo $n;
         }else{
             // $n = DB::insert("insert into userinfo (uid,cname) values(?,?)",[$uid,$cname]);
-            $n = DB::insert("INSERT INTO pd_cart(order_number,uid,product_id,quantity,create_time)
-                        VALUES('202407230001','qwe123',?,?,NOW())",[$poductID,$quantity]);
+            DB::select("call giveOrderNumber(@current_order)");
+            $callProcedure = DB::select('select @current_order');
+            
+            Log::info('callProcedure:', $callProcedure); // 日誌查詢的ID
+            // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'}); // 日誌查詢的ID
+            $orderNumber = $callProcedure[0]->{'@current_order'}; //取得orderNumber
+            Log::info('orderNumber_2 :', ['orderNumber' => $orderNumber]); // 日誌查詢的ID
+            Log::info('今天日期:', ['今天日期' => now()]); 
+
+            $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
+                        VALUES(?,'qwe123',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
             // echo "異動筆數".$n;
             echo $n;
         }
@@ -156,7 +165,7 @@ Route::get('/productcart/{uid}',function($uid){
     session(['uid' => 'qwe123']);
     $uid = session('uid');
     // $_SESSION["uid"] = 'qwe123';
-    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM pd_cart WHERE uid = '{$uid}'");
+    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = '{$uid}'");
     echo $totalAmount;
 });
 
