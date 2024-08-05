@@ -122,3 +122,19 @@ input[name^="description"]{
 .modal-footer{
     border: none;
 }
+button,.btn{
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    background-color:var(--color-primary);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 3px #569682;
+    letter-spacing: 1.5px;
+    transition: .2s;
+}
+button:hover,.btn:hover{
+    background-color:#a2c5ba;
+    color: #fff;
+}

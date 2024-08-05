@@ -42,7 +42,8 @@ let inserBtn = document.getElementById('inserBtn')
             // formData.append('action', 'fetch');
             // fetch('infoupload.php',{
             console.log('event.target.value',event.target.value)
-            fetch(`http://localhost/testpet/public/api/product_back/info/select/${event.target.value}`,{
+            // fetch(`http://localhost/testpet/public/api/product_back/info/select/${event.target.value}`,{
+            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/select/${event.target.value}`,{
                 method:'get',
                 // body:formData
             })
@@ -100,10 +101,11 @@ let inserBtn = document.getElementById('inserBtn')
             })
             // console.log('我是封面圖',descimgs.files[0])
         }
-
+        
+        // 查詢option列出的類別
         // fetch('category.php',{
         // fetch('http://localhost/testpet/public/product_back/info/select',{
-        fetch('http://localhost/testpet/public/api/product_back/info/select',{
+        fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/select',{
                 method:'get',
         })
         .then(response=>{
@@ -112,8 +114,10 @@ let inserBtn = document.getElementById('inserBtn')
             return response.json()
         })
         .then(({categories})=>{
+        // .then((aaa)=>{
             // alert(data)
             console.log('我是options',categories)
+            // console.log('我是options',aaa)
             categories.forEach((category) => {   //多張照片遍歷
                 // console.log('category = ', category)
                 // console.log('我是index',index)
@@ -131,7 +135,8 @@ let inserBtn = document.getElementById('inserBtn')
             //     method:'post',
             //     body:formData
             // })
-            fetch('http://localhost/testpet/public/api/product_back/info/create',{
+            // fetch('http://localhost/testpet/public/api/product_back/info/create',{
+            fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/create',{
                 method:'post',
                 body:formData
             })

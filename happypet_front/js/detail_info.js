@@ -54,7 +54,7 @@
         // formData.append('action', 'fetch');
         // fetch('insertDetail.php',{
         let pdSeries = document.querySelector('[name="pdSeries"]').value;
-        fetch('http://localhost/testpet/public/api/product_back/detail/show',{
+        fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/show',{
             method:'post',
             headers:{
                 'Content-Type': 'application/json'
@@ -73,7 +73,7 @@
             // 插入系列名
             // dataObj.name === undefined ? showMsg('查無此商品')  : pdName.value = obj.name
 
-            if(!dataObj.name){
+            if(!dataObj.series_name){
                 showMsg(dataObj.error)
                 pdName.value = ''
                 $('input.fullPdID').each(function(index,fullInput){
@@ -81,7 +81,7 @@
                     fullInput.value = ''
                 });
             }else{
-                pdName.value = dataObj.name
+                pdName.value = dataObj.series_name
             }
 
             // console.log('obj.name型態',typeof obj.name)
@@ -181,7 +181,7 @@
 
         // 產品insert至資料庫
         // fetch('insertDetail.php',{
-        fetch('http://localhost/testpet/public/api/product_back/detail/create',{
+        fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/create',{
             method:'post',
             body:formData
             // body:new FormData(myPd)
@@ -191,7 +191,7 @@
             console.log('我是點選insert後的response',response)
             console.log('response的content-type',response.headers.get('content-type'))
             if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+                throw new Error('回應錯誤： ' + response.statusText);
             }
             return response.json()  
             // return response.text()  
@@ -213,7 +213,6 @@
         })
         .catch(error => {
             // console.error('Error:', error);
-            // alert('Error:', error);
             showMsg(error)
             
         });

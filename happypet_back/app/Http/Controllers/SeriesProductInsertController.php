@@ -28,6 +28,18 @@ class SeriesProductInsertController extends Controller
             $description4 = $request->input('description4');
             $description5 = $request->input('description5');
 
+            if(empty($pdSeries)){ 
+                return response()->json(["error"=>"產品系列編號不可為空"]); 
+                DB::rollBack();
+            }
+            else if(empty($category)){ 
+                return response()->json(["error"=>"產品類別不可為空"]);
+                DB::rollBack();
+             }
+            else if(empty($pdName)){ 
+                return response()->json(["error"=>"產品系列名稱不可為空"]);
+                DB::rollBack();
+            }
 
             $coverimg = $request->file('coverimg');
             $imgs = $request->file('imgs');
@@ -45,7 +57,7 @@ class SeriesProductInsertController extends Controller
                 DB::rollBack();
                 return response()->json(["error" => "產品系列編號為11碼"]);
             }
-            $n = DB::insert("INSERT INTO product_series(id,category_id,name,description1,description2,description3,description4,description5)
+            $n = DB::insert("INSERT INTO product_series(series_id,category_id,series_name,description1,description2,description3,description4,description5)
             VALUES(?,?,?,?,?,?,?,?)",[$pdSeries,$category,$pdName,$description1,$description2,$description3,$description4,$description5]);
             
 
@@ -61,7 +73,7 @@ class SeriesProductInsertController extends Controller
                 $fileContent = $coverimg->get();
                 Log::info("封面圖片if有效");
                 Log::info("封面圖片有效，檔案大小: " . strlen($fileContent));
-                DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,created_at)
+                DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
                     VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 1]);
                 // $stmt->execute([$pdSeries, $fileContent, 1]);
             }else{
@@ -81,7 +93,7 @@ class SeriesProductInsertController extends Controller
                     if ($img->isValid()) {
                         $fileContent = $img->get();
                         Log::info("其他圖片有效，檔案大小: " . strlen($fileContent));
-                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,created_at)
+                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
                                     VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 2]);
                     }else{
                         DB::rollBack();
@@ -97,7 +109,7 @@ class SeriesProductInsertController extends Controller
                         $fileContent = $descimg->get();
                         Log::info("敘述圖片有效，檔案大小: " . strlen($fileContent));
 
-                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,created_at)
+                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
                                     VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 3]);
                     }else{
                         DB::rollBack();
@@ -111,7 +123,7 @@ class SeriesProductInsertController extends Controller
         }catch(\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
-            return response()->json(["error" => "發生錯誤222"]);
+            return response()->json(["error" => "發生錯誤"]);
         }
     }
 }
