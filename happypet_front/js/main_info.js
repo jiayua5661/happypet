@@ -1,4 +1,4 @@
-let inserBtn = document.getElementById('inserBtn')
+let insertBtn = document.getElementById('insertBtn')
     window.onload = ()=>{
         let myModal = document.getElementById('myModal')
         let myInput = document.getElementById('myInput')
@@ -16,47 +16,117 @@ let inserBtn = document.getElementById('inserBtn')
         $('.bi-x-circle-fill').click(()=>{
             $(".descriptionInfo").addClass('d-none');
         })
-        // $('.bi-info-circle-fill').hover(function(){
-        //     // $(".descriptionInfo").removeClass('info_opacity');
-        //     $(".descriptionInfo").removeClass('d-none');
-        // },function(){
-        //     // $("p").css("background-color","pink");
-        //     // $(".descriptionInfo").addClass('info_opacity');
-        //     $(".descriptionInfo").addClass('d-none');
+        let pdinfoType = pdInfo.getAttribute('data-type');
+        console.log('pdinfoType',pdinfoType)
 
-        // });
-        // coverimg.onchange = ()=>{
-        //     // let coverIMG = coverimg
-        //     console.log('我是封面圖',coverimg.files)
-        //     console.log('我是封面圖',coverimg.files[0])
-        //     let imgreader = new FileReader();
-        //     imgreader.readAsDataURL(coverimg.files[0])
-        //     imgreader.onload = (event)=>{
-        //         console.log('eee',event) 
-        //         // src在event裡面的target的result
-        //         showImg.innerHTML += `<img src="${event.target.result}">`
-        //     }
-        // }
+        insertPage.onclick = ()=>{
+            $('#maininfoTitle').text('產品主要資訊(新增)')
+            $('#updateBtn').addClass('d-none')
+            $('#insertBtn').removeClass('d-none')
+            pdInfo.setAttribute('data-type','insert')
+            pdinfoType = pdInfo.getAttribute('data-type')
+
+            console.log('pdinfoType',pdinfoType)
+
+        }
+        updatePage.onclick = ()=>{
+            $('#maininfoTitle').text('產品主要資訊(修改)')
+            $('#insertBtn').addClass('d-none')
+            $('#updateBtn').removeClass('d-none')
+            pdInfo.setAttribute('data-type','update')
+            pdinfoType = pdInfo.getAttribute('data-type')
+
+            console.log('pdinfoType',pdinfoType)
+
+        }
+        // 查詢產品系列編號是否使用
+
         pdSeries.onchange = (event)=>{
-            // let formData = new FormData(document.getElementById('pdInfo'));
-            // formData.append('action', 'fetch');
-            // fetch('infoupload.php',{
-            console.log('event.target.value',event.target.value)
-            // fetch(`http://localhost/testpet/public/api/product_back/info/select/${event.target.value}`,{
-            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/select/${event.target.value}`,{
-                method:'get',
-                // body:formData
+       
+            console.log('pdSeries裡pdinfoType',pdinfoType)
+            if(pdinfoType === 'insert'){
+                console.log('event.target.value',event.target.value)
+                // fetch(`http://localhost/testpet/public/api/product_back/info/select/${event.target.value}`,{
+                fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/select/${event.target.value}?pdinfoType=${pdinfoType}`,{
+                    method:'get',
+                    // body:formData
+                })
+                .then(response=>{
+                    // console.log(response)
+                    // return response.json()
+                    return response.json()
+                })
+                .then(({message,categories})=>{
+                    console.log('message = ',message.message)
+                    // let {message,data} = data
+                    showMsg(message.message)
+                })
+                console.log('我是if')
+            }else{
+                console.log('我是else')
+                fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/update/${event.target.value}`,{
+                    method:'post',
+                    // body:formData
+                })
+                .then(response=>{
+                    // console.log(response)
+                    // return response.json()
+                    return response.json()
+                })
+                .then(({seriesProduct})=>{ 
+                    // console.log('data = ',seriesProducts[0])
+                    console.log('seriesProduct = ',seriesProduct)
+                    seriesProduct.forEach((seriesPD)=>{
+                        let {category_id,series_name,pic_category_id,...products} = seriesPD
+
+                        // console.log('data',data)
+                        // console.log('category_id',category_id)
+                        // console.log('series_name',series_name)
+                        pdName.value = series_name
+                        categoryOptions.value = category_id
+                        // console.log('inpuuuuut',$('input[name^="description"]'))
+                        $('input[name^="description"]').each((i,elem)=>{
+                            descKey = `description${i+1}` 
+                            // console.log("seriesProduct[key]",products[descKey])
+                            $(elem).val(products[descKey])
+                        })
+                        console.log('pic_category_id',pic_category_id)
+                        // seriesProduct.forEach((elem,i)=>{
+                            // console.log('seriesProduct.elem',elem)
+                            switch (pic_category_id) {
+                                case 1:
+                                    showCoverImg.innerHTML = `<img src="${seriesPD.img}">`
+                                    break;
+                                case 2:
+                                    showOthersImgs.innerHTML += `<img src="${seriesPD.img}">`
+                                    break;
+                                case 3:
+                                    showDescImgs.innerHTML += `<img src="${seriesPD.img}">`
+                                    break;
+                            
+                                default:
+                                    break;
+                            }
+                    })
+                })
+            }
+
+        }
+        
+        updateBtn.onclick = ()=>{
+            let formData = new FormData(document.getElementById('pdInfo'));
+            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/update/${event.target.value}`,{
+                method:'post',
+                body:formData
             })
             .then(response=>{
                 // console.log(response)
                 // return response.json()
                 return response.json()
             })
-            .then(({message,categories})=>{
-                console.log('message = ',message.message)
-                // let {message,data} = data
-                showMsg(message.message)
-            })
+            .then(({seriesProduct})=>{
+
+             })
         }
         coverimg.onchange = ()=>{
             let imgreader = new FileReader();
@@ -127,14 +197,10 @@ let inserBtn = document.getElementById('inserBtn')
         })
 
 
-        inserBtn.onclick = (event)=>{
+        insertBtn.onclick = (event)=>{
             event.preventDefault();
             let formData = new FormData(document.getElementById('pdInfo'));
             formData.append('action', 'insert');
-            // fetch('infoupload.php',{
-            //     method:'post',
-            //     body:formData
-            // })
             // fetch('http://localhost/testpet/public/api/product_back/info/create',{
             fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/create',{
                 method:'post',

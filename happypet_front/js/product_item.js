@@ -86,7 +86,7 @@ window.onload = ()=>{
         goodsTitle.setAttribute('data-categoryID',products[0].category_id)
         mainImg.src = products[0].cover_img
         let categoryID = goodsTitle.getAttribute('data-categoryid')
-        $('.breadcrumb').find('a').eq(1).prop('href',`http://localhost/happypet_front/40_product/front/product.html?category=${categoryID}`)
+        $('.breadcrumb').find('a').eq(1).prop('href',`http://localhost/happypet/happypet_front/40_product/front/product.html?category=${categoryID}`)
        
         productImgs.forEach((productImg,i)=>{
             let {pic_category_id} = productImg

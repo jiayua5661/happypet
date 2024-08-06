@@ -158,7 +158,8 @@ window.onload = function(){
         
         // 設定正在fetch，如果沒有flag，點某類別後產品還沒回傳，再點別的類別，畫面會把兩個類別都show出
         isFetching = true
-        loadingArea.style.display = 'block';
+        // loadingArea.style.display = 'block';
+        $('#loadingArea').removeClass("d-none")
         // fetch(`http://localhost/testpet/public/product/${category}`,{
         fetch(`http://localhost/happypet/happypet_back/public/api/product/${category}`,{
                 method:'get',
@@ -173,7 +174,7 @@ window.onload = function(){
                 
                 let oneSeries = new Set()
                 products.forEach(pd => {
-                    console.log('pd',pd)
+                    // console.log('pd',pd)
                     // if(pd.status != 'f'){
                     if(pd.status != 0){
 
@@ -182,7 +183,7 @@ window.onload = function(){
                     }
                    
                 })
-                console.log('我是SET集合',oneSeries)
+                // console.log('我是SET集合',oneSeries)
                 
                 // let productContainer = document.querySelector('.product_container');
                 oneSeries.forEach(arrSeriesID=>{
@@ -191,8 +192,8 @@ window.onload = function(){
                     let seriesProduct = products.find(pd=> pd.series_ai_id === arrSeriesID)
                     let {category_id,series_ai_id,cover_img,series_name,price} = seriesProduct
                     // console.log('我是636行category_id',category_id)
-                    console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
-                    console.log('我是seriesProduct',seriesProduct)
+                    // console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
+                    // console.log('我是seriesProduct',seriesProduct)
                     if(seriesProduct){
                         let productItem = document.createElement('div')
                         // productItem.classList.add('product_item','col-md-3','position-relative')
@@ -212,7 +213,8 @@ window.onload = function(){
                         }
                     
                 })
-                loadingArea.style.display = 'none';
+                // loadingArea.style.display = 'none';
+                $('#loadingArea').addClass("d-none")
                 isFetching = false
                 
                
@@ -229,7 +231,9 @@ window.onload = function(){
             })
             .catch(error => {
                 console.error('Error:', error);
-                loadingArea.style.display = 'none';
+                // loadingArea.style.display = 'none';
+                $('#loadingArea').addClass("d-none")
+
                 isFetching = false
 
             });

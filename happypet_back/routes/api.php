@@ -15,10 +15,10 @@ Route::get('/user', function (Request $request) {
 Route::get('/product_back/info/select/{seriesID?}',function($seriesID = null){
     $seriesIDCount = DB::scalar("SELECT count(*) FROM product_series WHERE series_id = ?",[$seriesID]);
     $categories = DB::select('SELECT category_id,description FROM product_category');
-    // $categories->toArray();
+    
+    // Log::info('我是seriesIDCount',['seriesIDCount',$seriesIDCount]);
     // Cannot use object of type stdClass as array ，解決↓ (編碼在解碼為Array)
     $categories = json_decode(json_encode($categories), true);
-
     // 預設message為null
     $message = null;
     if ($seriesID !== null && $seriesIDCount > 0) {
@@ -36,15 +36,34 @@ Route::get('/product_back/info/select/{seriesID?}',function($seriesID = null){
         'message'=>$message,
         'categories'=>$categoryArr,
     ]);
- 
 });
+Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
+    $seriesProduct = DB::select("SELECT * FROM  product_series ps 
+                                JOIN product_seriesimg psi 
+                                ON ps.series_id  = psi.series_id
+                                WHERE ps.series_id = ?",[$seriesID]);
+    foreach($seriesProduct as &$spdImg){
+        // print_r($pd);
+        if(isset($spdImg->img)){
+            $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($spdImg->img);
+            $spdImg->img = base64_encode($spdImg->img);
+            $src = "data:{$mime_type};base64,{$spdImg->img}";
+            $spdImg->img = $src;
+        }
+    };
+    return response()->json([
+        'seriesProduct'=>$seriesProduct,
+    ]);
+});
+
+
+
 // 產品主要資訊插入(系列產品)
 Route::post('/product_back/info/create',[SeriesProductInsertController::class,'store']);
 // 產品詳細資訊：查詢系列編號
-
 Route::post('/product_back/detail/show',function(Request $request) {
     $pdSeries = $request->input('pdSeries');
-    Log::info('查詢產品系列ID:', ['pdSeries' => $pdSeries]); // 日誌查詢的ID
+    // Log::info('查詢產品系列ID:', ['pdSeries' => $pdSeries]); // 日誌查詢的ID
     $existPdSeries = DB::table('product_series')
     ->select('series_id','series_name')
     ->where('series_id',$pdSeries)
