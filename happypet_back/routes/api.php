@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-use App\Http\Controllers\SeriesProductInsertController; 
+use App\Http\Controllers\SeriesProductController; 
 use App\Http\Controllers\DetailProductInsertController; 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -56,10 +56,16 @@ Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
     ]);
 });
 
+// 產品主要資訊插入(系列產品)
+// Route::post('/product_back/info/update',[SeriesProductController::class,'update']);
 
+Route::prefix('/product_back/info')->group(function () {
+    Route::post('/create',[SeriesProductController::class,'store'] );
+    Route::post('/update',[SeriesProductController::class,'update']);
+});
 
 // 產品主要資訊插入(系列產品)
-Route::post('/product_back/info/create',[SeriesProductInsertController::class,'store']);
+Route::post('/product_back/info/create',[SeriesProductController::class,'store']);
 // 產品詳細資訊：查詢系列編號
 Route::post('/product_back/detail/show',function(Request $request) {
     $pdSeries = $request->input('pdSeries');
