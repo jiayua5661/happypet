@@ -84,7 +84,6 @@ class SeriesProductController extends Controller
                 return response()->json(["error"=>"封面圖片上傳失敗"]);
             }
 
-            
 
             // 處理其他圖片(8張)
             Log::info("imgs的if有效",["imgs"=>$imgs]);
@@ -133,7 +132,7 @@ class SeriesProductController extends Controller
         }
     }
 
-    function update(Request $request){
+    function modify(Request $request){
         try {
             $pdSeries = $request->input('pdSeries');
             $category = $request->input('category');
@@ -157,6 +156,73 @@ class SeriesProductController extends Controller
                     SET series_id = ? ,category_id = ?,series_name = ?,description1 = ?,description2 = ?,description3 = ?,description4 = ?,description5 = ?,update_date = Now()
                     WHERE series_id = ?",[$pdSeries,$category,$pdName,$description1,$description2,$description3,$description4,$description5,$pdSeries]);
             
+
+
+            if(!empty($coverimg)){
+                if ($coverimg->isValid() ){
+                    $fileContent = $coverimg->get();
+                    
+                    Log::info("封面圖片有效，檔案大小: " . strlen($fileContent));
+                    DB::update("UPDATE product_seriesimg 
+                    SET series_id = ? ,img = ? ,update_date = Now()
+                    WHERE series_id = ? AND pic_category_id = 1",[$pdSeries,$fileContent,$pdSeries]);
+                   
+                }else{
+                    DB::rollBack();
+                    return response()->json(["error"=>"封面圖片上傳失敗"]);
+                }
+            }
+            
+            if (!empty($imgs) && count($imgs) <= 8){
+                DB::table('product_seriesimg')
+                ->where('series_id',$pdSeries)
+                ->where('pic_category_id',2)
+                ->delete();
+                foreach ($imgs as $img) {
+                    if ($img->isValid()) {
+                        $fileContent = $img->get();
+                        Log::info("其他圖片有效，檔案大小: " . strlen($fileContent));
+                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
+                                    VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 2]);
+                    }else{
+                        DB::rollBack();
+                        return response()->json(["error"=>"其他圖片上傳失敗"]);
+                    }
+                }
+            }else{
+                return response()->json(["error"=>"其他圖片至少一張且不可以超過八張"]);
+            }
+            
+            if (!empty($descimgs)){
+                DB::table('product_seriesimg')
+                ->where('series_id',$pdSeries)
+                ->where('pic_category_id',3)
+                ->delete();
+                foreach ($descimgs as $descimg) {
+                    if ($descimg->isValid()) {
+                        $fileContent = $descimg->get();
+                        Log::info("敘述圖片有效，檔案大小: " . strlen($fileContent));
+                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
+                                    VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 3]);
+                    }else{
+                        DB::rollBack();
+                        return response()->json(["error"=>"敘述圖片上傳失敗"]);
+                    }
+                }
+            }else{
+                return response()->json(["error"=>"敘述圖片至少上傳一張"]);
+            }
+
+            Log::info("我是修改:$n " , ['$n'=>$n]);
+            if($n > 0){
+                Log::info("我有進n>0: ");
+
+                DB::commit();
+                return response()->json(["message" => "產品修改成功！"]);
+            }else{
+                DB::rollBack();
+            }
+
         }catch(\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
@@ -165,6 +231,9 @@ class SeriesProductController extends Controller
 
         
     }
+
+
+
     private function inputValidation($pdSeries,$category,$pdName,$description1,$imgs){
         if(empty($pdSeries)){ 
             return "產品系列編號不可為空"; 

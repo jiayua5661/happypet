@@ -61,7 +61,7 @@ window.onload = ()=>{
                 console.log(data.message);
                 showMsg(data.message)
                 setTimeout(()=>{
-                    location.reload()// 刷新頁面
+                    // location.reload()// 刷新頁面
                 },1500)
             } else if (data.error) {
                 showMsg(data.error)

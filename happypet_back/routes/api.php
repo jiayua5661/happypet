@@ -23,7 +23,7 @@ Route::get('/product_back/info/select/{seriesID?}',function($seriesID = null){
     $message = null;
     if ($seriesID !== null && $seriesIDCount > 0) {
         // return response()->json(["message" => "此產品系列編號已使用"]);
-        $message = (["message" => "此產品系列編號已使用"]);
+        $message = (["message" => "此產品系列編號已使用222"]);
         // echo json_encode($row['id']);
     } 
     $categoryArr = [];
@@ -51,9 +51,16 @@ Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
             $spdImg->img = $src;
         }
     };
-    return response()->json([
-        'seriesProduct'=>$seriesProduct,
-    ]);
+    if(empty($seriesProduct)){
+        return response()->json([
+            'message'=>"查無此系列編號",
+        ]);
+    }else{
+        Log::info('系列產品查詢結果',['seriesProduct'=>empty($seriesProduct)]);
+        return response()->json([
+            'seriesProduct'=>$seriesProduct,
+        ]);
+    }
 });
 
 // 產品主要資訊插入(系列產品)
@@ -61,11 +68,12 @@ Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
 
 Route::prefix('/product_back/info')->group(function () {
     Route::post('/create',[SeriesProductController::class,'store'] );
-    Route::post('/update',[SeriesProductController::class,'update']);
+    Route::post('/modify',[SeriesProductController::class,'modify']);
 });
 
 // 產品主要資訊插入(系列產品)
-Route::post('/product_back/info/create',[SeriesProductController::class,'store']);
+// Route::post('/product_back/info/create',[SeriesProductController::class,'store']);
+
 // 產品詳細資訊：查詢系列編號
 Route::post('/product_back/detail/show',function(Request $request) {
     $pdSeries = $request->input('pdSeries');

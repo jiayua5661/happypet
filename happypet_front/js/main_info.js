@@ -4,7 +4,9 @@ let insertBtn = document.getElementById('insertBtn')
         let myInput = document.getElementById('myInput')
         // let infoBtn = document.querySelector('.bi-info-circle-fill')
         myModal.addEventListener('shown.bs.modal', function () {
-            myInput.focus()
+            if (myInput != undefined) {
+                myInput.focus()
+            }
         })
         function showMsg(msg){
             $('#myModal').modal('show')
@@ -57,9 +59,15 @@ let insertBtn = document.getElementById('insertBtn')
                     return response.json()
                 })
                 .then(({message,categories})=>{
-                    console.log('message = ',message.message)
+                // .then((dataa)=>{
+
+                    // console.log('dataa',dataa)
+                    // console.log('message = ',message.message)
                     // let {message,data} = data
-                    showMsg(message.message)
+                    if (message != undefined) {
+                        console.log('我是message.message')
+                        showMsg(message.message)
+                    }
                 })
                 console.log('我是if')
             }else{
@@ -73,8 +81,24 @@ let insertBtn = document.getElementById('insertBtn')
                     // return response.json()
                     return response.json()
                 })
-                .then(({seriesProduct})=>{ 
-                    // console.log('data = ',seriesProducts[0])
+                .then(({seriesProduct,message})=>{ 
+                    console.log('測試 = ',seriesProduct +"與message"+message)
+                    // 如果系列編號不存在即顯示是訊息
+                    if(message){
+                        // message ? showMsg(message): null ;
+                        showMsg(message)
+                        $('select').val('')
+                        $('#pdName').val('')
+                        $('#showCoverImg').html('');
+                        $('#showOthersImgs').html('');
+                        $('#showDescImgs').html('');
+                        $('input[name^="description"]').each((_,elem)=>{
+                            $(elem).val('')
+                        })
+
+                        return
+                    }
+
                     console.log('seriesProduct = ',seriesProduct)
                     seriesProduct.forEach((seriesPD)=>{
                         let {category_id,series_name,pic_category_id,...products} = seriesPD
@@ -113,21 +137,39 @@ let insertBtn = document.getElementById('insertBtn')
 
         }
         
-        updateBtn.onclick = ()=>{
+        updateBtn.addEventListener('click', (event)=>{
+            event.preventDefault();
+            console.log('Update button clicked, preventing default form submission');
             let formData = new FormData(document.getElementById('pdInfo'));
-            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/update/${event.target.value}`,{
+            for (let pair of formData.entries()) {
+                console.log('我是formdata',pair[0] + ': ' + pair[1]); 
+            }
+            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/modify`,{
                 method:'post',
-                body:formData
+                body:formData,
+                // headers: {
+                //     'X-Requested-With': 'XMLHttpRequest', // 確保伺服器知道這是一個 AJAX 請求
+                // }
             })
             .then(response=>{
                 // console.log(response)
                 // return response.json()
                 return response.json()
             })
-            .then(({seriesProduct})=>{
-
+            .then((data)=>{
+                console.log('data',data)
+                if (data.message) {
+                    console.log(data.message);
+                    showMsg(data.message)
+                    setTimeout(()=>{
+                        console.log('settimeout')
+                        location.reload()// 刷新頁面
+                    },2000)
+                } else if (data.error) {
+                    showMsg(data.error)
+                }
              })
-        }
+        })
         coverimg.onchange = ()=>{
             let imgreader = new FileReader();
             // console.log('imgreader',imgreader)
@@ -173,7 +215,6 @@ let insertBtn = document.getElementById('insertBtn')
         }
         
         // 查詢option列出的類別
-        // fetch('category.php',{
         // fetch('http://localhost/testpet/public/product_back/info/select',{
         fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/select',{
                 method:'get',
@@ -217,20 +258,17 @@ let insertBtn = document.getElementById('insertBtn')
             .then(data=>{
                 // alert(data)
                 console.log('我是data1',data)
-
-                // let parsedData = JSON.parse(data)
-                // console.log('我是data2',data)
-                console.log('parsedData',data)
+                console.log('我是data1',data.message)
                 if (data.message) {
                     console.log(data.message);
                     showMsg(data.message)
                     setTimeout(()=>{
+                        console.log('成功與否')
                         location.reload()// 刷新頁面
-                    },1500)
+                    },2000)
                 } else if (data.error) {
+                    console.log('data.error',data.error)
                     showMsg(data.error)
-                    
-
                 }
                 // if (parsedData.message) {
                 //     console.log(parsedData.message);
