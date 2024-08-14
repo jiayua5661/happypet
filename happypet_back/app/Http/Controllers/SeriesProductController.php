@@ -54,6 +54,7 @@ class SeriesProductController extends Controller
             //     return response()->json(["error" => "至少輸入一條敘述"]);
             // }
             
+            
            
             // if($imgs && count($imgs) > 8 ){
             //     return response()->json(["error"=>"其他圖片至少一張且不可以超過八張"]);
@@ -74,6 +75,7 @@ class SeriesProductController extends Controller
             // 處理封面圖
             if ($coverimg && $coverimg->isValid() ){
                 $fileContent = $coverimg->get();
+                // Log::info("coverimg",["fileContent"=>$fileContent]);
                 
                 Log::info("封面圖片有效，檔案大小: " . strlen($fileContent));
                 DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
@@ -173,24 +175,30 @@ class SeriesProductController extends Controller
                 }
             }
             
-            if (!empty($imgs) && count($imgs) <= 8){
-                DB::table('product_seriesimg')
-                ->where('series_id',$pdSeries)
-                ->where('pic_category_id',2)
-                ->delete();
-                foreach ($imgs as $img) {
-                    if ($img->isValid()) {
-                        $fileContent = $img->get();
-                        Log::info("其他圖片有效，檔案大小: " . strlen($fileContent));
-                        DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
-                                    VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 2]);
-                    }else{
-                        DB::rollBack();
-                        return response()->json(["error"=>"其他圖片上傳失敗"]);
+            if (!empty($imgs)){
+                if(count($imgs) <= 8){
+
+                
+                    DB::table('product_seriesimg')
+                    ->where('series_id',$pdSeries)
+                    ->where('pic_category_id',2)
+                    ->delete();
+                    foreach ($imgs as $img) {
+                        if ($img->isValid()) {
+                            $fileContent = $img->get();
+                            Log::info("其他圖片有效，檔案大小: " . strlen($fileContent));
+                            DB::insert("INSERT INTO product_seriesimg(series_id,img,pic_category_id,create_date)
+                                        VALUES(?,?,?,NOW())",[$pdSeries, $fileContent, 2]);
+                        }else{
+                            DB::rollBack();
+                            return response()->json(["error"=>"其他圖片上傳失敗"]);
+                        }
                     }
+                }else{
+
+                    return response()->json(["error"=>"不可以超過八張"]);
                 }
-            }else{
-                return response()->json(["error"=>"其他圖片至少一張且不可以超過八張"]);
+                
             }
             
             if (!empty($descimgs)){
@@ -209,8 +217,6 @@ class SeriesProductController extends Controller
                         return response()->json(["error"=>"敘述圖片上傳失敗"]);
                     }
                 }
-            }else{
-                return response()->json(["error"=>"敘述圖片至少上傳一張"]);
             }
 
             Log::info("我是修改:$n " , ['$n'=>$n]);

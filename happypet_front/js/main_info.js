@@ -20,6 +20,7 @@ let insertBtn = document.getElementById('insertBtn')
         })
         let pdinfoType = pdInfo.getAttribute('data-type');
         console.log('pdinfoType',pdinfoType)
+        $('#insertPage').addClass('active')
 
         insertPage.onclick = ()=>{
             $('#maininfoTitle').text('產品主要資訊(新增)')
@@ -29,6 +30,9 @@ let insertBtn = document.getElementById('insertBtn')
             pdinfoType = pdInfo.getAttribute('data-type')
 
             console.log('pdinfoType',pdinfoType)
+            $('#insertPage').addClass('active')
+            $('#updatePage').removeClass('active')
+
 
         }
         updatePage.onclick = ()=>{
@@ -37,7 +41,8 @@ let insertBtn = document.getElementById('insertBtn')
             $('#updateBtn').removeClass('d-none')
             pdInfo.setAttribute('data-type','update')
             pdinfoType = pdInfo.getAttribute('data-type')
-
+            $('#insertPage').removeClass('active')
+            $('#updatePage').addClass('active')
             console.log('pdinfoType',pdinfoType)
 
         }
@@ -77,7 +82,7 @@ let insertBtn = document.getElementById('insertBtn')
                     // body:formData
                 })
                 .then(response=>{
-                    // console.log(response)
+                    console.log(response)
                     // return response.json()
                     return response.json()
                 })
@@ -242,6 +247,10 @@ let insertBtn = document.getElementById('insertBtn')
             event.preventDefault();
             let formData = new FormData(document.getElementById('pdInfo'));
             formData.append('action', 'insert');
+            console.log('formdata',formData)
+            formData.forEach((value, key) => {
+                console.log('formdata',key, value);
+            });
             // fetch('http://localhost/testpet/public/api/product_back/info/create',{
             fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/create',{
                 method:'post',

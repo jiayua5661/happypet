@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\SeriesProductController; 
-use App\Http\Controllers\DetailProductInsertController; 
+use App\Http\Controllers\DetailProductController; 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -23,7 +23,7 @@ Route::get('/product_back/info/select/{seriesID?}',function($seriesID = null){
     $message = null;
     if ($seriesID !== null && $seriesIDCount > 0) {
         // return response()->json(["message" => "此產品系列編號已使用"]);
-        $message = (["message" => "此產品系列編號已使用222"]);
+        $message = (["message" => "此產品系列編號已被使用"]);
         // echo json_encode($row['id']);
     } 
     $categoryArr = [];
@@ -77,7 +77,7 @@ Route::prefix('/product_back/info')->group(function () {
 // 產品詳細資訊：查詢系列編號
 Route::post('/product_back/detail/show',function(Request $request) {
     $pdSeries = $request->input('pdSeries');
-    // Log::info('查詢產品系列ID:', ['pdSeries' => $pdSeries]); // 日誌查詢的ID
+    Log::info('查詢產品系列ID:', ['pdSeries' => $pdSeries]); // 日誌查詢的ID
     $existPdSeries = DB::table('product_series')
     ->select('series_id','series_name')
     ->where('series_id',$pdSeries)
@@ -90,7 +90,14 @@ Route::post('/product_back/detail/show',function(Request $request) {
     }
 });
 // php artisan make:controller DetailProductInsertController
-Route::post('/product_back/detail/create',[DetailProductInsertController::class,'store']);
+// Route::post('/product_back/detail/create',[DetailProductInsertController::class,'store']);
+// Route::post('/product_back/detail/modify',[DetailProductInsertController::class,'modify']);
+
+Route::prefix('/product_back/detail')->group(function () {
+    Route::get('/select',[DetailProductController::class,'select'] );
+    Route::post('/create',[DetailProductController::class,'store'] );
+    Route::post('/modify',[DetailProductController::class,'modify']);
+});
 
 // 查詢種類(狗狗、貓貓專區 product.html)
 Route::get('/product/{c}',function($c){
@@ -126,7 +133,7 @@ Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
                                 JOIN product_seriesimg psi 
                                 ON ps.series_id = psi.series_id 
                                 WHERE spv.series_ai_id = ?
-                                GROUP BY psi.id ,psi.series_id,psi.img,psi.pic_category_id ,psi.create_date 
+                                GROUP BY psi.id ,psi.series_id,psi.img,psi.pic_category_id ,psi.create_date, psi.update_date
                             ",[$seriesProduct]);
     // $category = DB::scalar("SELECT description FROM product_category WHERE id = '{$c}'");
     $category = DB::scalar("SELECT description FROM product_category WHERE category_id = ?",["{$c}"]);
@@ -177,18 +184,34 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
             echo $n;
         }else{
             // $n = DB::insert("insert into userinfo (uid,cname) values(?,?)",[$uid,$cname]);
-            DB::select("call giveOrderNumber(@current_order)");
-            $callProcedure = DB::select('select @current_order');
-            
-            Log::info('callProcedure:', $callProcedure); // 日誌查詢的ID
-            // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'}); // 日誌查詢的ID
-            $orderNumber = $callProcedure[0]->{'@current_order'}; //取得orderNumber
-            Log::info('orderNumber_2 :', ['orderNumber' => $orderNumber]); // 日誌查詢的ID
-            Log::info('今天日期:', ['今天日期' => now()]); 
+            // uid寫死
+            // $aaa = DB::select('SELECT count(uid) FROM shopping_cart_item WHERE uid = ?',["qwe123"]);
+            // if($aaa >0){
+                // }
+            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',["qwe123"]);
+            Log::info('ordernumber_old :', ['ordernumber_old' => $ordernumber_old]); 
+            //  {"ordernumber_old":[{"stdClass":{"order_number":"20240814001"}}]} 
+            // Log::info('ordernumber_old :', ['ordernumber_old[0]->order_number' => $ordernumber_old[0]->order_number]); 
 
-            $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                        VALUES(?,'qwe123',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
-            // echo "異動筆數".$n;
+            if($ordernumber_old){
+                $ordernumber_old = $ordernumber_old[0]->order_number;
+                $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
+                        VALUES(?,'qwe123',?,?,NOW())",[$ordernumber_old,$poductID,$quantity]);    
+            }else{
+                DB::select("call giveOrderNumber(@current_order)");
+                $callProcedure = DB::select('select @current_order');
+                
+                Log::info('callProcedure:', $callProcedure); // 日誌查詢的ID
+                // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'}); // 日誌查詢的ID
+                $orderNumber = $callProcedure[0]->{'@current_order'}; //取得orderNumber
+                Log::info('orderNumber_2 :', ['orderNumber' => $orderNumber]); // 日誌查詢的ID
+                Log::info('今天日期:', ['今天日期' => now()]); 
+
+                $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
+                            VALUES(?,'qwe123',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
+                // echo "異動筆數".$n;
+            }
+
             echo $n;
         }
     }

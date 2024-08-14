@@ -30,15 +30,15 @@ window.onload = ()=>{
         } else {
             pdNavbar.style.top = "96px"
         }
-        console.log('window.innerWidth',window.innerWidth)
+        // console.log('window.innerWidth',window.innerWidth)
     })
     // ------------------------------------------
     // url測試
     let urlParams  = new URLSearchParams(window.location.search)
-    console.log('window',window.location.search)
+    // console.log('window',window.location.search)
     let categoryID = urlParams.get('category') 
     let seriesID = urlParams.get('sID') 
-    console.log(categoryID,seriesID)
+    // console.log(categoryID,seriesID)
 
 
 
@@ -58,9 +58,9 @@ window.onload = ()=>{
         return response.json()  //陣列
     })
     .then(data=>{
-        console.log(data)
+        // console.log(data)
         let {products,productImgs,categoryName} = data
-        console.log('第一個',products)
+        // console.log('第一個',products)
 
         // 過濾下架產品
         // products = products.filter(product => product.status === 't');
@@ -71,7 +71,7 @@ window.onload = ()=>{
             return;
         }
 
-        console.log('第二個',products)
+        // console.log('第二個',products)
 
         // console.log(productImgs)
         $('.breadcrumb').removeClass("d-none")
@@ -116,7 +116,7 @@ window.onload = ()=>{
             currentQuantity = parseInt(pdQuantity.value) -1
             pdQuantity.value = currentQuantity
             pdQuantity.value >= 1 || (pdQuantity.value = 1)  
-            console.log(pdQuantity.value)
+            // console.log(pdQuantity.value)
         }
         
         let descriptionSet = new Set()
@@ -271,10 +271,10 @@ window.onload = ()=>{
             let addCartIcon = document.querySelector('#add_cart i.bi-cart-fill')
             let addCartCheckIcon = document.querySelector('#add_cart i.bi-cart-check-fill')
 
-            console.log('fn裡的poductID',poductID)
-            console.log('fn裡的quantity',quantity)
+            // console.log('fn裡的poductID',poductID)
+            // console.log('fn裡的quantity',quantity)
             if(!poductID || !quantity){
-                console.log('尚未選擇產品')
+                // console.log('尚未選擇產品')
                 showMsg('尚未選擇產品')
                 setTimeout(() => {
                     $('#myModal').modal('hide')
@@ -288,7 +288,7 @@ window.onload = ()=>{
                 })
                 .then(response=>response.text())
                 .then(rows =>{
-                    console.log('插入資料',rows )
+                    // console.log('插入資料',rows )
                     if(rows > 0 ){
                         setTimeout(() => {
                             addCartIcon.style.opacity = "0"
@@ -313,6 +313,8 @@ window.onload = ()=>{
             fetch('http://localhost/happypet/happypet_back/public/api/productcart/qwe123')
             .then(response=>response.text())
             .then(quantity=>{
+                console.log('購物車quantity',quantity)
+
                 if(!quantity ){
                     // cartQuantity.style.display = 'none'
                     $('.nav_icon .cart_quantity').addClass('d-none');
@@ -320,10 +322,13 @@ window.onload = ()=>{
                     // cartQuantity.style.display = 'block'
                     $('.nav_icon .cart_quantity').removeClass('d-none');
                     $('.nav_icon .cart_quantity').text(quantity);
+                    localStorage.setItem("cartQuantity", quantity);
+                    console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
                     // cartQuantity.innerText = quantity
                 }
             })
         }
+        console.log(localStorage.getItem("cartQuantity"))
 
 // ----------------------------------------------------------------
 // function checkInput() {
@@ -396,7 +401,7 @@ window.onload = ()=>{
                     // return product[flavorOrColor] === input.value && product[weightOrSize] === selectWeightOrSizeValue 
                     // 資料庫寵物睡窩[水上樂園] === input選擇水上樂園 && (資料庫寵物睡窩[2XL找不到]!undefined === )
                     // true && 
-                    console.log(product[flavorOrColor],"===",input.value,'&& (',!selectWeightOrSizeValue,"||",product[weightOrSize],'=== ' ,selectWeightOrSizeValue,")")
+                    // console.log(product[flavorOrColor],"===",input.value,'&& (',!selectWeightOrSizeValue,"||",product[weightOrSize],'=== ' ,selectWeightOrSizeValue,")")
                     // 資料庫寵物睡窩[水上樂園] === input選擇水上樂園 
                     if(product[flavorOrColor] === input.value){
                         // 且沒有被選擇的size || 資料庫寵物睡窩[XL] ==== 選擇的XL

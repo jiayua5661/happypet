@@ -34,7 +34,17 @@ header {
     /* nav 置中 */
     width: auto;
 }
-
+/* 購物車數量(紅圈) */
+header .nav_icon .cart_quantity{
+    bottom: 2px;
+    right: -2px;
+    font-size: .8rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    color: #fff;
+}
 
 /* 漢堡 */
 .navbar-toggler{

@@ -17,11 +17,13 @@
 
     <script src="../../js/bootstrap.bundle.js"></script>
     <script src="../../js/jquery-3.7.1.js"></script>
-    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
     <title>產品詳細資訊</title>
-    <style>
-        
-    </style>
+    
 </head>
 <body>
     <header class="w-100 position-sticky">
@@ -67,9 +69,9 @@
             </ul>
         </div>
     </header>
-    <div class=" pdDetailContainer position-relative py-3">
+    <div id="root"></div>
+    <!-- <div class=" pdDetailContainer position-relative py-3">
         <h2 class="m-0 py-3">產品詳細資訊</h2>
-
         <button id="addBtn"> + 新增</button>
         <form id="myPd" method="post" enctype="multipart/form-data" class="position-relative">
             <table class="table border " >
@@ -90,15 +92,12 @@
                         <th >款式</th>
                         <th >價格</th>
                         <th >GTIN</th>
-                        <!-- <th >產品敘述</th> -->
-                        <!-- <th >操作</th> -->
                     </tr>
                 </thead>
                 <tbody id="newItem">
                     <tr class="pd_row ">
                         <td class="pd_id_area position-relative">
                             <button class="position-absolute deleteBtn"><i class="bi bi-x"></i></button>
-                            <!-- <input class="seriesNum" type="text" disabled> -->
                             <input class="pdID" type="text" form="myPd">
                             <input type="text" name="fullID[]" class="fullPdID" form="myPd" readonly>
                         </td>
@@ -108,11 +107,6 @@
                         <td><input type="text" name="style[]" form="myPd"></td>
                         <td><input type="text" name="price[]" form="myPd"></td>
                         <td><input type="text" name="GTIN[]" form="myPd"></td>
-                        <!-- <td><input type="text" name="description[]" form="myPd"></td> -->
-                        <!-- <td >
-                            <i class="bi bi-check2-circle checkBtn"></i>
-                            <i class="bi bi-pencil-square updateBtn"></i>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -121,7 +115,7 @@
             <button id="insertBtn" form="myPd" >新增至資料庫</button>
         </div>
 
-    </div>
+    </div> -->
     <!-- 彈出視窗 -->
         <!-- Modal -->
         <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,7 +132,425 @@
         </div>
     
 
-        <script src="../../js/detail_info.js"></script>
+       
+    <script type="text/babel">
+        window.onload = () =>{
+            // document.getElementById('myPd').setAttribute('data-type','insert')
+            // let x = document.getElementById('myPd').getAttribute('data-type')
+            // console.log('x',x)
+            
+        }
+        function showMsg(msg){
+            $('#myModal').modal('show')
+            $('#alertMsg').text(msg)
+        }
+        let myReactRoot = ReactDOM.createRoot(document.getElementById('root'));
+
+        let myContext =  React.createContext()
+        function AddTable({pdSeries,productObj}){
+            // console.log('我是AddTable的pdSeries',pdSeries)
+            let {productArr,setProductArr} = productObj
+            // console.log('我是AddTable的productArr',productArr)
+            let {myPdType,setMyPdType,rows,setRows} = React.useContext(myContext)
+            // console.log('我是AddTable的myPdType',myPdType)
+            // const [rows,setRows] = React.useState([{ id: 0, fullPdID: '' }])
+            // const [rows,setRows] = React.useState([{ id: 0 }])
+            // const [fullPdID,setFullPdID] = React.useState(pdSeries)
+            // console.log('rows',rows)
+            // console.log('我是系列編號',pdSeries)
+            // console.log('我是系列名稱',productObj)
+            React.useEffect(() => {
+                console.log('pdSeries 狀態變化:', pdSeries);
+                return ()=>{
+                    setProductArr([])
+                    setRows([{ id: '', fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:'' }])
+                }
+            }, [myPdType]);
+            function addRow(){
+                setRows([...rows,{ id: rows.length, fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:''  }])
+                // console.log('setRows',setRows)
+                // setRows([...rows,{ id: rows.length }])
+            }
+            function removeRow(index){
+                setRows(rows.filter((_,i)=> i != index))
+                // console.log('removeRows',rows)
+            }
+            function userInput(index,value = ''){
+                let updateRows = rows.map((row,i)=>{
+                    // console.log('map row',row)
+                    // console.log('map val',value)
+                    // console.log('map index',index)
+                    // console.log('map i',i)
+                    // 如果該行index = map的index(檢查是否是更新的那行) ，就更新fullPdID，不是就維持
+                    return index === i ? {...row,fullPdID : pdSeries + value } : row
+                })
+                setRows(updateRows)
+            }
+            function updateUserInput(index,product,value = ''){
+                let updatedProductArr  = productArr.map((prod,i)=>{
+                    // console.log('map prod',prod)
+                    // console.log('map prod',value)
+                    // console.log('map index',index)
+                    // console.log('map i',i)
+                    // 如果該行index = map的index(檢查是否是更新的那行) ，就更新fullPdID，不是就維持
+                    return index === i ? {...prod,product_id : pdSeries + value} : prod
+                })
+                setProductArr(updatedProductArr)
+            }
+            function removeProductRow(index){
+                setRows(rows.filter((_,i)=> i != index))
+                console.log('removeRows',rows)
+            }
+            
+            return(
+                <React.Fragment>
+                    <table id="addTable" className="table table-striped align-middle table-bordered ">
+                        <thead>
+                            <tr>
+                                <th>料號</th>
+                                <th>口味</th>
+                                <th>淨重</th>
+                                <th>尺寸</th>
+                                <th>款式</th>
+                                <th>價格</th>
+                                <th>GTIN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="newItem">
+                            {   myPdType == 'insert' ?
+                                rows.map((row,index)=> (
+                                    <tr className="pd_row" key={row.id}>
+                                        <td className="pd_id_area position-relative"> 
+                                            <button type="button" className="position-absolute deleteBtn" onClick={()=>{removeRow(index)}}><i className="bi bi-x"></i></button>
+                                            <input className="pdID" type="text" onChange={(e)=>{userInput(index,e.target.value)}}/>
+                                            <input type="text" name="fullID[]" className="fullPdID" readOnly value={row.fullPdID}/>
+                                        </td>
+                                        <td><input type="text" name="flavor[]" defaultValue={row.flavor}/></td>
+                                        <td><input type="text" name="weight[]" defaultValue={row.weight}/></td>
+                                        <td><input type="text" name="size[]" defaultValue={row.size}/></td>
+                                        <td><input type="text" name="color[]" defaultValue={row.color}/></td>
+                                        <td><input type="text" name="price[]" defaultValue={row.price}/></td>
+                                        <td><input type="text" name="GTIN[]" defaultValue={row.GTIN}/></td>
+                                    </tr>
+                                )):productArr.map((product,index)=>(
+                                    // onChange={()=>{}}
+                                    <tr className="pd_row" key={index}>
+                                        <td className="pd_id_area position-relative"> 
+                                            <button type="button" className="position-absolute deleteBtn" onClick={()=>{removeProductRow(index)}} style={myPdType == 'insert' ? {display:'block'}:{display:'none'}}><i className="bi bi-x" ></i></button>
+                                            <input className="pdID" type="text" readOnly value={product.product_id.slice(-2)} onChange={(e)=>{updateUserInput(index,product,e.target.value)}}/>
+                                            <input type="text" name="fullID[]" className="fullPdID" readOnly value={product.product_id} />
+                                        </td>
+                                        <td><input type="text" name="flavor[]" defaultValue={product.flavor}/></td>
+                                        <td><input type="text" name="weight[]" defaultValue={product.weight}/></td>
+                                        <td><input type="text" name="size[]" defaultValue={product.size}/></td>
+                                        <td><input type="text" name="color[]" defaultValue={product.style}/></td>
+                                        <td><input type="text" name="price[]" defaultValue={product.price}/></td>
+                                        <td><input type="text" name="GTIN[]" defaultValue={product.GTIN}/></td>
+                                    </tr>
+                                ))
+
+                            }
+                        </tbody>
+                    </table>
+                    <button id="addBtn" type="button" onClick={addRow} style={myPdType == 'insert' ? {display:'block'}:{display:'none'}} >+ 新增列</button>
+                </React.Fragment>    
+            )
+        }//style={{ left:"-80px",top:"250px"}}
+        // function TitieAndAddbtn({clearInput}){
+        function TitieAndAddbtn(){
+            let detailinfoTitle = React.useRef()
+            // let [myPdType,setMyPdType] = React.useState('insert');
+            let {myPdType,setMyPdType,clearInput,pdSeries,setPdSeries,seriesName,setSeriesName,rows,setRows} = React.useContext(myContext)
+            // React.useEffect(() => {
+                // if(myPdType == 'update'){
+                    // setPdSeries('')
+                    // setSeriesName('')
+                    // clearInput()
+                // console.log('Before clearInput:', { pdSeries, seriesName });
+                // clearInput();
+                // console.log('After clearInput:', { pdSeries, seriesName });
+
+                // }
+                // console.log('useEffect clearInput myPdType',myPdType);
+                // console.log('useEffect clearInput pdSeries',pdSeries);
+                
+            // }, []);
+            function handleInsertPageClick(){
+                detailinfoTitle.current.innerText = '產品詳細資訊(新增)'
+                $('#updateBtn').addClass('d-none')
+                $('#insertBtn').removeClass('d-none')
+                setMyPdType('insert')
+                // console.log('Insert_myPdType',myPdType)
+                // setRows([{ id: 0, fullPdID: '' }])
+
+                clearInput();
+
+            }
+            function handleUpdatePageClick(){
+                detailinfoTitle.current.innerText = '產品詳細資訊(修改)'
+
+                $('#insertBtn').addClass('d-none')
+                $('#updateBtn').removeClass('d-none')
+                setMyPdType('update')
+                // console.log('update_myPdType',myPdType)
+                clearInput();
+                // setRows([{ id: rows.length, fullPdID: '' }])
+
+     
+               
+            }
+
+            return(
+                <React.Fragment>
+                    <h2 className="m-0 py-3 " ref={detailinfoTitle} id="">產品詳細資訊(新增)</h2>
+                    <span className="ms-5 " style={{position:"absolute",right:'0',top:'40px' }}>
+                        切換頁面：&nbsp;&nbsp;
+                        <button className="pagebtn" onClick={handleInsertPageClick} style={myPdType =='insert' ? {backgroundColor:'#e4b0b4'}:{backgroundColor:'#90b9ab'}}>新增</button>
+                        <button className="pagebtn ms-2" onClick={handleUpdatePageClick} style={myPdType =='update' ? {backgroundColor:'#e4b0b4'}:{backgroundColor:'#90b9ab'}}>修改</button>
+                    </span>
+                </React.Fragment>
+            )
+        }
+        
+        function QuerySeriesIDTable({pdSeriesObj,productObj,clearInput}){
+            // let [seriesID,setSeriesID] = React.useState('')
+            // let [seriesName,setSeriesName] = React.useState('')
+            let {myPdType,setMyPdType,seriesName,setSeriesName} = React.useContext(myContext)
+            let myProduct = React.useRef([])
+            // let [productArr,setProductArr] = React.useState([])
+            let {pdSeries,setPdSeries} = pdSeriesObj
+            let {productArr,setProductArr} = productObj
+            // let {clearInput} = clearInput
+
+            // console.log('QuerySeriesIDTable的productArr',productArr)
+            // React.useEffect(() => {
+                // return ()=>{
+                    // setSeriesName('')
+                // }
+           
+            function querySeriesID(event){
+                // console.log('有值嗎?',$('[name="pdSeries"]').val().trim(),'seriesName',seriesName)
+                if($('[name="pdSeries"]').val() != ''){
+                    // console.log(event.target.value)
+                    // console.log('seriesID = ',seriesID)
+                    // let seriesID = event.target.value
+
+                    // console.log('querySeriesID myPdType',myPdType)
+                    if(myPdType == 'insert'){
+                        // console.log('我是if')
+                        // console.log('querySeriesID____seriesName',seriesName)
+                        setPdSeries(event.target.value)
+
+                        fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/show',{
+                            method:'post',
+                            headers:{
+                                'Content-Type': 'application/json'
+                            },
+                            body:JSON.stringify({pdSeries})
+                        })
+                        .then(response=>{
+                            return response.json()  //陣列
+                        })
+                        .then(dataObj=>{
+                            // console.log('dataObj',dataObj)
+                            // 插入系列名稱
+                            if(!dataObj.series_name){
+                                console.log(dataObj.error)
+                                showMsg(dataObj.error)
+                                // pdName.value = ''
+                                setSeriesName('')
+                                // $('input.fullPdID').each(function(index,fullInput){
+                                //     fullInput.value = ''
+                                //     console.log('fullInput.value',fullInput.value)
+                                // });
+                            }else{
+                                // pdName.value = dataObj.series_name
+                                setSeriesName(dataObj.series_name)
+                                // console.log('dataObj.series_name',dataObj.series_name)
+                            }
+                        })
+                        .catch(error => {
+                            showMsg(error.error)
+                            console.log(error.error)
+                        });
+                    }else{
+
+                        // console.log('我是else')
+                        setPdSeries(event.target.value)
+
+                        $.get({
+                            url:`http://localhost/happypet/happypet_back/public/api/product_back/detail/select?pdSeries=${pdSeries}`,
+                            success: function({product}){
+                                console.log('productproductproduct',product)
+
+                                myProduct.current = product
+                                if(product.length>0){
+                                    setProductArr(myProduct.current)
+                                    setSeriesName(myProduct.current[0].series_name)
+                                }else{
+                                    showMsg('查無系列編號')
+                                }
+                                console.log('myProduct',myProduct)
+                                console.log('myProduct.current',myProduct.current)
+                                // console.log('myProduct.current[0].series_name.current',myProduct.current[0].series_name)
+
+                                
+
+                                // console.log('product',product)
+                                // console.log('productArr',productArr)
+                            }
+                        })
+                    }
+
+                }
+     
+            }
+            
+            // onChange={()=>{setPdSeries('')}}
+            return(
+                <table className="table border" >
+                    <tbody>
+                        <tr className="querySeriesID">
+                            <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput}></i></th>
+                            <td className="border"><input onBlur={querySeriesID} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} /></td>
+                            <th>產品系列名稱</th>
+                            <td className="border"><input value={seriesName} id="pdName" type="text" name="pdName" disabled={myPdType =='insert' || false} onChange={(e)=>{setSeriesName(e.target.value)}}/></td> {/*insert時disabled，update解除disabled*/}
+                        </tr>
+                    </tbody>
+                </table>
+            )
+        }
+        
+        function DetailForm(){
+            // 在父組件定義，兄弟間才可以傳給
+            // let [pdSeries,setPdSeries] = React.useState('')
+            // let [productArr,setProductArr] = React.useState([])
+            let {myPdType,setMyPdType,clearInput,pdSeries,setPdSeries,productArr,setProductArr} = React.useContext(myContext)
+            // 插入資料表
+            function insertTable(){
+                // console.log('insertTable____ pdSeries',pdSeries)
+                let formData = new FormData(document.getElementById('myPd'));
+                // formData.append('action', 'insert');
+                // 產品insert至資料庫
+                fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/create',{
+                    method:'post',
+                    body: new FormData(document.getElementById('myPd'))
+                })
+                .then(response=>{
+                    console.log('我是點選insert後的response',response)
+                    if (!response.ok) {
+                        throw new Error('回應錯誤： ' + response.statusText);
+                    }
+                    return response.json()    
+                })
+                .then(data => {
+                    // console.log('data',data)
+                    if (data.message) {
+                        // console.log(data.message);
+                        showMsg(data.message)
+                        setTimeout(()=>{
+                            location.reload()// 刷新頁面
+                        },1000)
+                    } else if (data.error) {
+                        console.log('Error:', data.error);
+                        showMsg(data.error)
+                    }
+                })
+                .catch(error => {
+                    showMsg(error)
+                });
+            }
+            function updateTable(){
+                if(myPdType == 'update'){
+                    console.log('我是update修正產品系列 ')
+                    fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/modify',{
+                        method:'post',
+                        body: new FormData(document.getElementById('myPd'))
+                    })
+                    .then(response=>{
+                        // console.log('我是點選update後的response',response)
+                        if (!response.ok) {
+                            throw new Error('回應錯誤： ' + response.statusText);
+                        }
+                        return response.json()    
+                    })
+                    .then(data => {
+                        console.log('data',data)
+                        if (data.message) {
+                            console.log(data.message);
+                            showMsg(data.message)
+
+                            setTimeout(()=>{
+                                location.reload()// 刷新頁面
+                            },1000)
+                        } else if (data.error) {
+                            // console.log('Error:', data.error);
+                            // alert(data.error)
+                            showMsg(data.error)
+                        }
+                    })
+                    .catch(error => {
+                        showMsg(error)
+                    });
+                }
+            }
+            //  pdSeries={pdSeries} setPdSeries={setPdSeries}
+            return(
+                <React.Fragment>
+                    <form id="myPd" method="post" encType="multipart/form-data" className="position-relative">
+                        <QuerySeriesIDTable pdSeriesObj={{pdSeries,setPdSeries}} productObj={{productArr,setProductArr}}  clearInput={clearInput}/>
+                        <AddTable pdSeries={pdSeries} productObj={{productArr,setProductArr}}/>
+                    </form>
+                    <div className="d-flex justify-content-end">
+                        <button onClick={insertTable} id="insertBtn" type="button" form="myPd" >新增產品系列</button>
+                        <button onClick={updateTable} id="updateBtn" type="button" className="position-absolute d-none">修正產品系列</button>
+                    </div>
+                </React.Fragment>
+            )
+        }
+        function DetailInfo() {
+            let myModal = document.getElementById('myModal')
+            let myInput = document.getElementById('myInput')
+            let [myPdType, setMyPdType] = React.useState('insert')
+            const [rows,setRows] = React.useState([{ id: 0, fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:''  }])
+            let [pdSeries,setPdSeries] = React.useState('')
+            let [seriesName,setSeriesName] = React.useState('')
+            let [productArr,setProductArr] = React.useState([])
+
+            // console.log('我是DetailInfo的pdSeries',pdSeries)
+            
+            function clearInput(){
+                
+                setPdSeries('')
+                setSeriesName('')
+                console.log('清除輸入欄位：', { pdSeries: '', seriesName: '' });
+                // console.log('我是clearinput的pdSeries',pdSeries)
+                // console.log('我是clearinput')
+                // setProductArr([]); 
+            }
+            React.useEffect(() => {
+                console.log('pdSeries 狀態變化:', pdSeries);
+            }, [pdSeries]);
+
+            React.useEffect(() => {
+                console.log('seriesName 狀態變化:', seriesName);
+            }, [seriesName]);
+            return(
+                <React.Fragment>
+                    <myContext.Provider value={{myPdType,setMyPdType,clearInput,rows,setRows,pdSeries,setPdSeries,seriesName,setSeriesName,productArr,setProductArr}}>
+                        <div className=" pdDetailContainer position-relative py-3 mb-2">
+                            {/*<button onClick={()=>{console.log('pdSeries',pdSeries, '-----')}}>我是測試DetailInfo______________________</button>*/}
+                            <TitieAndAddbtn />
+                            <DetailForm />
+                        </div>
+                    </myContext.Provider>
+                </React.Fragment>
+
+            )
+        }
+        myReactRoot.render(<DetailInfo />);
+    </script>
+ <!-- <script src="../../js/detail_info.js"></script> -->
     <!-- <script>
         // window.addEventListener('DOMContentLoaded',function(){
 

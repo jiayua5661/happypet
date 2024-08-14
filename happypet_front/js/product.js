@@ -1,6 +1,7 @@
 window.onscroll = function() {
     headerChange()
     // console.log(window.scrollY)
+   
 }
 function headerChange(){
     let pdNavbar = document.querySelector('.pd_navbar');
@@ -21,6 +22,20 @@ function headerChange(){
 
 window.onload = function(){
     let isFetching = false  //預設沒有執行fetch
+
+    let cartQuantity = localStorage.getItem("cartQuantity")
+    if(!cartQuantity ){
+        // cartQuantity.style.display = 'none'
+        $('.nav_icon .cart_quantity').addClass('d-none');
+    }else{
+        // cartQuantity.style.display = 'block'
+        $('.nav_icon .cart_quantity').removeClass('d-none');
+        $('.nav_icon .cart_quantity').text(cartQuantity);
+        // console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
+    }
+    console.log('cartQuantity  = ',cartQuantity)
+
+
     // changePathname('df',false)
 
     // changePathname('df')

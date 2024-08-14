@@ -32,14 +32,12 @@ header {
 header .nav_icon .cart_quantity{
     bottom: 2px;
     right: -2px;
-    /* text-align: center; */
     font-size: .8rem;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: red;
     color: #fff;
-    /* display: none; */
 }
 /* productItem start*/
 

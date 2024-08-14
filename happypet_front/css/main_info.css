@@ -138,3 +138,15 @@ button:hover,.btn:hover{
     background-color:#a2c5ba;
     color: #fff;
 }
+
+.page{
+    position:absolute;
+    right: 200px;
+    top: 115px;
+}
+.page button{
+    box-shadow: none;
+}
+.page button.active{
+    background-color: var(--color-secondary);
+}

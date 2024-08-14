@@ -143,6 +143,7 @@
       
     })
     addBtn.addEventListener("click",(event)=>{
+        console.log('我是新增欄')
         event.preventDefault();
 
         document.getElementById("newItem").insertAdjacentHTML("beforeend",
