@@ -129,13 +129,6 @@
     }
 
 
-  // pdIDInputs.forEach((pdIDInput, index) => {
-    //     pdIDInput.addEventListener('input', () => {
-    //         let seriesValue = seriesInputs[index].value.trim();
-    //         let pdIDValue = pdIDInput.value.trim();
-    //         fullPdIDInputs[index].value = seriesValue + pdIDValue;
-    //     });
-    // });
 
     // 綁定父元素
     newItem.addEventListener('click',function(event){
@@ -150,6 +143,7 @@
       
     })
     addBtn.addEventListener("click",(event)=>{
+        console.log('我是新增欄')
         event.preventDefault();
 
         document.getElementById("newItem").insertAdjacentHTML("beforeend",

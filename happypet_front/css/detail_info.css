@@ -3,28 +3,38 @@
     --color-secondary:#e4b0b4 ;
 }
 body{
-    background: url(../img/geometry.png);
+    background: url(../img/00_index/geometry.png);
 }
-thead th:nth-child(2),
-thead th:nth-child(3),
-thead th:nth-child(4),
-thead th:nth-child(5),
-thead th:nth-child(6),
-thead th:nth-child(8){
-    width: 80px;
+form{
+    width: 100%;
 }
-th:nth-child(7){
-    width: 150px;
-}
-th:nth-child(1),.querySeriesID th{
-    width: 180px;
+#newItem td:nth-child(2) input,
+#newItem td:nth-child(3) input,
+#newItem td:nth-child(4) input,
+#newItem td:nth-child(5) input,
+#newItem td:nth-child(6) input,
+#newItem td:nth-child(7) input,
+#newItem td:nth-child(8) input{
+    width: 100%;
+    /* background-color: aqua; */
 }
 
-.pd_id_area input:first-child{
-    width: 30%;
+th:nth-child(1),.querySeriesID th{
+    width: 20%;
 }
-.pd_id_area input:last-child{
-    width: 65%;
+
+.pd_id_area input:first-of-type{
+    /* width: 30%; */
+    /* width: 200px; */
+    /* background-color: #e4b0b4; */
+    /* width: 40px; */
+    width: 20%;
+}
+.pd_id_area input:last-of-type{
+    /* width: 65%; */
+    /* width: 155px; */
+    width: 75%;
+    /* background-color: yellowgreen; */
 }
 th,td{
     text-align: center;
@@ -40,45 +50,47 @@ th,td{
     /* background-color: red; */
     width: 25%;
 }
+#addTable{
+    width: 100%;
+}
 input{
-    width: 95%;
-    border: 1px solid #ccc;
+    /* width: 100%; */
+    border: 1px solid #cbe9dd;
     outline: none;
     /* border-radius: 5px; */
 }
 .seriesNum{
     width: 60%;
 }
-.pdID{
-    width: 25%;
-}
-input[name="pdSeries"]{
-    width: 200px;
+
+input[name="pdSeries"],#pdName{
+    /* width: 200px; */
+    width: 95%;
 
 }
 #pdName{
-    width: 380px; 
-    /* width: 80%;  */
+    /* width: 380px;  */
+    /* width: 95%;  */
 }
 input[readonly] ,input:disabled{
     background-color: #f2f2f2;
 }
 @media (max-width: 1200px) {
     #pdName{
-        width: 300px; 
+        /* width: 300px;  */
     }
     input[name="pdSeries"]{
-        width: 170px;
+        /* width: 170px; */
     }
 }
 .pdDetailContainer{
     position: relative;
-    margin: 0 100px;
+    margin: 0 120px;
 }
 #addBtn{
     position: absolute;
-    left: -80px;
-    top: 135px;
+    left: -100px;
+    top: 5px;
 }
 
 button,.btn{
@@ -99,6 +111,12 @@ button:hover,.btn:hover{
 }
 button:active{
     transform: scale(0.96);
+}
+.pagebtn{
+    box-shadow: none;
+}
+.pagebtn.active{
+    background-color: #e4b0b4;
 }
 i[class$="Btn"]{
     padding: 6px;
