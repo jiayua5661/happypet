@@ -1,0 +1,25 @@
+.order_time_check:hover {
+    color: white;
+    background-color: var(--color-primary);
+}
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+h5 {
+    background-color: #cbe9dd;
+    padding: 10px;
+}
+
+.primarycolor {
+    background-color:var(--color-primary);
+    color: #fff;
+}
+
+
+.secondcolor {
+    background-color: #e4b0b4;
+    color: #fff;
+
+}
