@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>productItem</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/jquery-3.7.1.js"></script>
+    <!-- 使用CDN引入bootstrap-icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- google-fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/header_footer.css">
+    
+    <link rel="stylesheet" href="../../css/product_item.css">
+</head>
+<body>
+    <!-- <header class="w-100">
+        <div class="row m-0 px-md-5 text-center justify-content-lg-between justify-content-center align-items-center">
+            <a href="" class="col-lg-3 col-8"><img class="img-fluid logo" src="./img/LOGO.png" alt=""></a>
+            <ul class="nav col-lg-9 p-0 d-flex justify-content-lg-between justify-content-center">
+                <li class="col-lg-2 col-3"><a href="">美容預約</a></li>
+                <li class="col-lg-2 col-3"><a href="">診所預約</a></li>
+                <li class="col-lg-2 col-3"><a href="">寵物寄宿</a></li>
+                <li class="col-lg-2 col-3"><a href="">產品專區</a></li>
+                <div class="nav_icon col-lg-2 ">
+                    <a href=""><i class="bi bi-person "></i></a>
+                    <a href=""><i class="icon_ bi bi-cart"></i></a>
+                </div>
+            </ul>
+        </div>
+    </header> -->
+    <header id="navbar" class="sticky-top ">
+        <div class="member nav_icon">
+            <a href="#"><i class="bi-person"></i></a>
+            <a href="#" class="position-relative">
+                <i class="bi-cart"></i>
+                <span class="cart_quantity position-absolute text-center d-none"></span>
+            </a>
+        </div>
+        <div class="row align-items-center container-xl">
+            <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
+                <a class="" href="#">
+                    <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
+                </a>
+            </div>
+            <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
+                <ul class="nav justify-content-center text-center">
+                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="#">美容預約</a></li>
+                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="#">寵物住宿</a></li>
+                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="#">產品專區</a></li>
+                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="#">獸醫門診</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar navbar-expand-md pd_navbar position-sticky">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav m-auto  ">
+                    <li class="nav-item dropdown mx-5">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">狗狗專區</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" data-pdcategory="df" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=df">狗狗飼料</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="dc" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=dc">狗狗罐頭</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="dt" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=dt">狗狗零食</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="dh" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=dh">狗狗保健</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="ds" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=ds">狗狗用品</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown mx-5">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">貓貓專區</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" data-pdcategory="cf" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=cf">貓貓飼料</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="cc" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=cc">貓貓罐頭</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="ct" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=ct">貓貓零食</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="ch" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=ch">貓貓保健</a></li>
+                            <li><a class="dropdown-item" data-pdcategory="cs" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=cs">貓貓用品</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 麵包屑 -->
+    <nav aria-label="breadcrumb" class="" >
+        <ol class="breadcrumb d-none ms-md-5 mt-3 ms-3 ">
+          <li class="breadcrumb-item"><a href="#">首頁</a></li>
+          <li class="breadcrumb-item"><a href="#"></a></li>
+          <li class="breadcrumb-item active" aria-current="page"></li>
+        </ol>
+    </nav>   
+    
+    <div class="container-lg good_outer row m-auto">
+        <div class="goods_img d-flex col-lg-5 col-12">
+            <div class="">
+                <img id="main_img" class="w-100" src="../../img/40_product/productIcon/loading_img.png" alt="">
+            </div>
+            <div class="thumbnail w-100">
+                <!-- 迭代放入縮圖 -->
+                <!-- <img src="./img/hospital (2).png" alt="">-->
+            </div>
+        
+        </div>
+        <div class="goods_box col-lg-7 col-12 position-relative">
+            <h1 id="goods_title" ></h1>
+            <ul id="goods_description">
+                <!-- <li >全天然草本複方、友善毛孩</li>-->
+            </ul>
+         
+            <!-- weight flavor style size -->
+
+            <p id="price" class="d-none">
+                <span>363</span>
+                <!-- <span>~</span>
+                <span>500</span>  -->
+            </p>
+            <p class="choose d-none">選擇口味 / 款式：</p>
+            <div class="flavorOrColorArea">
+                <!-- <input type="radio" class="d-none" id="flavorOrColorA" class="flavorOrColor" name="color" value="roseGold">
+                <label for="flavorOrColorA">XL號-70cm</label>
+                <input type="radio" class="d-none" id="flavorOrColorB" class="flavorOrColor" name="color" value="roseGold">
+                <label for="flavorOrColorB">2XL號-90cm</label> -->
+            </div>
+            <p class="choose d-none">選擇淨重 / 尺寸：</p>
+            <div class="weightOrSizeArea">
+                <!-- <input type="radio" class="d-none" id="weightOrSizeA" class="weightOrSize" name="color" value="silver">
+                <label for="weightOrSizeA">A款</label>
+                <input type="radio" class="d-none" id="weightOrSizeB" class="weightOrSize" name="color" value="roseGold">
+                <label for="weightOrSizeB">B款</label>
+                <input type="radio" class="d-none" id="weightOrSizeC" class="weightOrSize" name="color" value="roseGold">
+                <label for="weightOrSizeC">C款</label> -->
+            </div>
+            <div class="QuantityArea d-flex">
+                <button id="minusBtn"><i class="bi bi-dash"></i></button>
+                <input type="text" id="pdQuantity" class="text-center" value="1">
+                <button id="plusBtn"><i class="bi bi-plus"></i></button>
+            </div>
+
+            <button id="add_cart" class="">
+                    <p class="m-0 position-absolute d-block m-0">加入購物車</p>
+                    <i class="bi bi-cart-check-fill position-absolute d-block m-0"></i>
+                    <i class="bi bi-cart-fill position-absolute d-block m-0"></i>
+            </button>
+        </div>
+    </div>
+    <hr style="color:red ;margin: 3% 5%;" class="">
+    <div class="container-lg row p-md-5 p-2 pdDescImg m-auto">
+        <!-- <img class="col-12" src="./img/hospital.png" alt="">-->
+
+    </div>
+   
+    <!-- <div class=" addcart_msg">
+        <div class=" ">已加入購物車</div>
+    </div> -->
+    <!-- 彈出視窗 -->
+    <!-- Modal -->
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="alertMsg" class="m-0"></p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn" data-bs-dismiss="modal">確認</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <footer>
+        <div class="row text-center justify-content-center mt-4 align-items-center">
+            <a href="#" class="col-xl-4 col-lg-5 col-md-10 col-10 p-2"><img class="logo" src="../../img/LOGO.png" alt=""></a>
+            <ul class="footer_contact col-xl-4 col-lg-5 col-md-10 col-10 text-lg-start text-center p-4">
+                <li>0800-123-456</li>
+                <li>service@gmail.com</li>
+                <li>特定寵物業許可證號：特寵業字第s1110005號</li>
+                <div class="footer_icon">
+                    <span class=""><a href=""><i class="bi bi-instagram"></i></a></span>
+                    <span class=""><a href=""><i class="bi bi-line"></i></a></span>
+                    <span class=""><a href=""><i class="bi bi-facebook"></i></a></span>
+                </div>
+            </ul>
+            <p class="copyright text-center mt-2"><a href="#">服務條款及隱私保護政策 | </a>&copy;此網站為練習使用，不做商業用途</p>
+        </div>
+        <div class="d-flex">
+            <img class="footer_img col-12 col-sm-12 col-md-8 col-xl-8 col-xxl-8" src="../../img/00_index/資產-40.png" alt="">
+            <img class="footer_stamp" src="../../img/00_index/transparent01.png" alt="">
+            <!-- <img class="footer_stamp" src="../../" alt=""> -->
+        </div>
+    </footer>
+    
+    <script src="../../js/product_item.js"></script>
+    <!-- <script>
+        window.onload = ()=>{
+            let goodsDescription = document.getElementById('goods_description')
+            let mainImg = document.getElementById('main_img')
+            let goodsTitle = document.getElementById('goods_title')
+            let addCartBtn = document.getElementById('add_cart')
+            let currentPage = document.querySelector('li[aria-current="page"]')
+            let flavorOrColorArea = document.querySelector('.flavorOrColorArea')
+            let weightOrSizeArea = document.querySelector('.weightOrSizeArea')
+            let thumbnail = document.querySelector('.thumbnail')
+            let pdDescImg = document.querySelector('.pdDescImg')
+            // let choose = document.querySelectorAll('.choose')
+
+            let myModal = document.getElementById('myModal')
+            let myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', function () {
+                myInput.focus()
+            })
+            function showMsg(msg){
+                $('#myModal').modal('show')
+                $('#alertMsg').text(msg)
+            }
+       
+            let pdNavbar = document.querySelector('.pd_navbar');
+            // let logo = document.querySelector('.logo')
+            window.addEventListener('resize',function(){
+                
+                if (window.innerWidth <= 1198) {
+                    pdNavbar.style.top = "148px"
+                } else {
+                    pdNavbar.style.top = "96px"
+                }
+                console.log('window.innerWidth',window.innerWidth)
+            })
+            // ------------------------------------------
+            // url測試
+            let urlParams  = new URLSearchParams(window.location.search)
+            console.log('window',window.location.search)
+            let categoryID = urlParams.get('category') 
+            let seriesID = urlParams.get('sID') 
+            console.log(categoryID,seriesID)
+
+
+
+
+            // ------------------------------------------
+
+            // console.log('flavorOrColorArea',flavorOrColorArea.className)
+            // fetch(`http://localhost/testpet/public/product/ds/96`,{
+            // 查詢此產品資訊
+            fetch(`http://localhost/testpet/public/product/${categoryID}/${seriesID}`,{
+                method:'get',
+            })
+            .then(response=>{
+                // console.log(response)
+                // return response.text()   //圖片
+                return response.json()  //陣列
+            })
+            .then(data=>{
+                console.log(data)
+                let {products,productImgs,categoryName} = data
+                console.log('第一個',products)
+
+                // 過濾下架產品
+                products = products.filter(product => product.status === 't');
+                if (products.length === 0) {
+                    // 如果沒有上架產品，顯示提示或進行其他處理
+                    alert('產品準備中');
+                    return;
+                }
+
+                console.log('第二個',products)
+
+                // console.log(productImgs)
+                $('.breadcrumb').removeClass("d-none")
+                $('.choose').removeClass("d-none")
+            
+                // 取系列名到標題、麵包屑
+                // console.log($('.breadcrumb').find('a').eq(1).text())
+                // console.log($('.breadcrumb').find('a')[1].innerText)
+                currentPage.innerText = products[0].series_name
+                $('.breadcrumb').find('a').eq(1).text(categoryName)
+                goodsTitle.innerText = products[0].series_name
+                goodsTitle.setAttribute('data-categoryID',products[0].category_id)
+                mainImg.src = products[0].cover_img
+                let categoryID = goodsTitle.getAttribute('data-categoryid')
+                $('.breadcrumb').find('a').eq(1).prop('href',`http://localhost/petx/product.html?category=${categoryID}`)
+               
+                productImgs.forEach((productImg,i)=>{
+                    let {pic_category_id} = productImg
+                    if(pic_category_id == 1 || pic_category_id == 2){
+                        // goodImgArr.push(productImg.img)
+                        let pdImg = document.createElement('img')
+                        pdImg.setAttribute('src',productImg.img) 
+                        thumbnail.appendChild(pdImg)
+                        pdImg.onclick = ()=>{
+                            // console.log('pdImg = ',pdImg)
+                            mainImg.src = pdImg.src
+                        }
+                        // thumbnail.innerHTML += `<img src="${productImg.img}" alt="">`
+
+                    }else{
+                        pdDescImg.innerHTML += `<img class="col-12" src="${productImg.img}" alt="">`
+                    }
+                })
+                //  數量增減
+                let currentQuantity = ''
+                plusBtn.onclick = ()=>{
+                    currentQuantity = parseInt(pdQuantity.value) + 1
+                    pdQuantity.value = currentQuantity
+                    // console.log(pdQuantity.value)
+                }
+                minusBtn.onclick = ()=>{
+                    currentQuantity = parseInt(pdQuantity.value) -1
+                    pdQuantity.value = currentQuantity
+                    pdQuantity.value >= 1 || (pdQuantity.value = 1)  
+                    console.log(pdQuantity.value)
+                }
+                
+                let descriptionSet = new Set()
+                products.forEach((product) => {
+                    // console.log(product)
+                    for(let i = 1; i <= 5 ; i++){
+                        let key = `description${i}`
+                        if(key.startsWith('description')){ 
+                            descriptionSet.add(product[key])
+                        }
+                        
+                    }
+                    // let {flavor,color,weight,size} = product
+                    // console.log('color',color)
+                });
+
+                let descriptionArr = Array.from(descriptionSet)
+                // console.log(descriptionArr)
+                descriptionArr.forEach((description)=>{
+                    // console.log(description)
+                    let descriptionli = document.createElement('li')
+                    descriptionli.innerText = description
+                    goodsDescription.appendChild(descriptionli)
+                    
+                })
+
+                // console.log('SellingProduct',SellingProducts)
+                // 根據取的資料變成選項按鈕
+                // let flavorArr = products.reduce(function(arr,{flavor,...items}){
+                let flavorArr = products.reduce(function(arr,{flavor}){
+                // let flavorArr = SellingProducts.reduce(function(arr,{flavor}){
+                    // console.log('arr',arr)
+                    // return arr.indexOf(flavor) == -1 ? [...arr,flavor] : arr
+                    if (flavor && arr.indexOf(flavor) == -1){
+                        arr.push(flavor);
+                    } 
+                    return arr
+                },[])
+                // let colorArr = products.reduce(function(arr,{color,...items}){
+                let colorArr = products.reduce(function(arr,{color}){
+                // let colorArr = SellingProducts.reduce(function(arr,{color}){
+                    // return arr.indexOf(color) == -1 ? [...arr,color] : arr
+                    if (color && arr.indexOf(color) == -1){
+                        arr.push(color);
+                    }
+                    return arr
+                },[])
+                // let weightArr = products.reduce(function(arr,{weight,...items}){
+                let weightArr = products.reduce(function(arr,{weight}){
+                // let weightArr = SellingProducts.reduce(function(arr,{weight}){
+                    // return arr.indexOf(weight) == -1 ? [...arr,weight] : arr
+                    if (weight && arr.indexOf(weight) == -1){
+                        arr.push(weight);
+                    }
+                    return arr
+                },[])
+                // let sizeArr = products.reduce(function(arr,{size,...items}){
+                let sizeArr = products.reduce(function(arr,{size}){
+                // let sizeArr = SellingProducts.reduce(function(arr,{size}){
+                    // return arr.indexOf(size) == -1 ? [...arr,size] : arr
+                    if (size && arr.indexOf(size) == -1){
+                        arr.push(size);
+                    }
+                    return arr
+                },[])
+                // console.log('flavorArr',flavorArr)
+                // console.log('colorArr',colorArr)  //要改款式!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // console.log('weightArr',weightArr)
+                // console.log("sizeArr",sizeArr)
+                // let str = "flavorArr"
+                
+                // console.log('flavorArr',flavorArr)
+
+                if(flavorArr.length > 0){
+                    traverseArray(flavorArr,flavorOrColorArea,"flavor")
+                }else if(colorArr.length > 0){
+                    traverseArray(colorArr,flavorOrColorArea,"color")
+                }
+
+                if(weightArr.length > 0){
+                    traverseArray(weightArr,weightOrSizeArea,"weight")
+                }else if(sizeArr.length > 0){
+                    traverseArray(sizeArr,weightOrSizeArea,"size")
+                }
+
+                
+                
+                let productPrice = document.querySelector('#price span')
+                // let categoryID = goodsTitle.getAttribute('data-categoryid')
+
+                let flavorOrColor;
+                let weightOrSize;
+                // console.log('categoryID',categoryID)
+                // flavorOrColorInputs[0].setAttribute('checked',true)
+                // weightOrSizeInputs[0].setAttribute('checked',true)
+
+
+                // ----------------------------------------------------------------------------------------------
+                    
+                    // console.log('我是input',flavorOrColorInputs[0])
+                    // console.log('我是products',products)
+                    // console.log('被選中的',document.querySelector('.flavorOrColorArea input[type="radio"]:checked'))
+                    // flavorOrColorInputs.forEach((input)=>{
+                    //     input.addEventListener('change',function(){
+                    //         console.log('監聽input',input.value)
+                    //     })
+                    // })
+                    
+                if(categoryID == 'ds' || categoryID == 'cs'){
+                    flavorOrColor = 'color'
+                    weightOrSize = 'size'
+                }else{
+                    flavorOrColor = 'flavor'
+                    weightOrSize = 'weight'
+                }
+                console.log('種類',flavorOrColor,weightOrSize)
+                document.querySelectorAll('.flavorOrColorArea input,.weightOrSizeArea input').forEach(input => {
+                    input.addEventListener('change',checkInput)
+                    
+                });
+                
+                
+                // 上下架狀態
+                function productStatus(){
+                    // 販賣中產品
+                    SellingProducts = products.filter(p=>{
+                        return p.status === 't'
+                    })
+                    
+                }
+                // let SellingProducts;
+                // productStatus()
+                // console.log('SellingProduct',SellingProducts)
+
+                // let productID = '';
+                
+               
+                // ----------------------------------------------------------------------------------------------
+                // 新增選擇按鈕( 口味、款式 | 淨重、尺寸 )
+                function traverseArray(arr,area,type){
+                    arr.forEach((item,i)=>{
+                        area.innerHTML += ` 
+                            <input type="radio" class="d-none" id="${area.className}${i}" class="flavorOrColor" name="${type}" value="${item}" >
+                            <label for="${area.className}${i}">${item}</label>
+                        `
+                    })
+                }
+               
+                // 取得產品資訊後新增購物車
+                function getProductInfo(poductID,quantity){
+                    let addCartText = document.querySelector('#add_cart p')
+                    let addCartIcon = document.querySelector('#add_cart i.bi-cart-fill')
+                    let addCartCheckIcon = document.querySelector('#add_cart i.bi-cart-check-fill')
+
+                    console.log('fn裡的poductID',poductID)
+                    console.log('fn裡的quantity',quantity)
+                    if(!poductID || !quantity){
+                        console.log('尚未選擇產品')
+                        showMsg('尚未選擇產品')
+                        setTimeout(() => {
+                            $('#myModal').modal('hide')
+                        }, 1500);
+
+                    }else{
+                        addCartText.style.opacity = "0"
+                        addCartIcon.style.opacity = "1"
+                        fetch(`http://localhost/testpet/public/product/insert/${poductID}/${quantity}`,{
+                            method:'get'
+                        })
+                        .then(response=>response.text())
+                        .then(rows =>{
+                            console.log('插入資料',rows )
+                            if(rows > 0 ){
+                                setTimeout(() => {
+                                    addCartIcon.style.opacity = "0"
+                                    addCartCheckIcon.style.opacity = "1"
+                                }, 1000);
+                                setTimeout(() => {
+                                    addCartCheckIcon.style.opacity = "0"
+                                    addCartText.style.opacity = "1"
+                                }, 2500);
+                                queryQuantity()
+                            }else{
+                                $('#add_cart').html()
+                            }
+                        })
+                    }
+                }
+
+                // 更新購物車數量(紅點圖標數量)
+                // let cartQuantity = document.querySelector('header .cart_quantity')
+                queryQuantity()
+                function queryQuantity(){
+                    fetch('http://localhost/testpet/public/productcart/qwe123')
+                    .then(response=>response.text())
+                    .then(quantity=>{
+                        if(!quantity ){
+                            // cartQuantity.style.display = 'none'
+                            $('.nav_icon .cart_quantity').addClass('d-none');
+                        }else{
+                            // cartQuantity.style.display = 'block'
+                            $('.nav_icon .cart_quantity').removeClass('d-none');
+                            $('.nav_icon .cart_quantity').text(quantity);
+                            // cartQuantity.innerText = quantity
+                        }
+                    })
+                }
+
+// ----------------------------------------------------------------
+// function checkInput() {
+//     let selectFlavorOrColor = document.querySelector('.flavorOrColorArea input[type="radio"]:checked')?.value;
+//     let selectWeightOrSize = document.querySelector('.weightOrSizeArea input[type="radio"]:checked')?.value;
+
+//     let selectedProduct = products.find(product => {
+//         return product[flavorOrColor] === selectFlavorOrColor && product[weightOrSize] === selectWeightOrSize;
+//     });
+
+//     if (selectedProduct) {
+//         productPrice.innerText = selectedProduct.price;
+//         price.style.display = 'block';
+//     } else {
+//         productPrice.innerText = '';
+//         price.style.display = 'none';
+//     }
+//     findDisableInput(); // 在此處呼叫更新禁用選項狀態的函數
+// }
+                // 選擇按鈕後更新價格
+                function checkInput(){
+                    let selectFlavorOrColor = document.querySelector('.flavorOrColorArea input[type="radio"]:checked')?.value
+                    let selectWeightOrSize = document.querySelector('.weightOrSizeArea input[type="radio"]:checked')?.value
+                    // let selectedProduct = products.find(product=>{
+                    let selectedProduct = products.find(product=>{
+                        // console.log('product[flavorOrColor]',product[flavorOrColor])
+                        // console.log('selectFlavorOrColor',selectFlavorOrColor)
+                        // console.log('product[weightOrSize]',product[weightOrSize])
+                        // console.log('selectWeightOrSize',selectWeightOrSize)
+                        // if(selectFlavorOrColor){
+                            // console.log('product[flavorOrColor] === selectFlavorOrColor',product[flavorOrColor] === selectFlavorOrColor)
+                        // }
+                        // console.log('product[weightOrSize] === selectWeightOrSize', product[weightOrSize] === selectWeightOrSize)
+                        return product[flavorOrColor] === selectFlavorOrColor && product[weightOrSize] === selectWeightOrSize
+                    })
+                    console.log('selectFlavorOrColor',selectFlavorOrColor)
+                    console.log('selectWeightOrSize',selectWeightOrSize)
+                    
+                    productPrice.innerText = selectedProduct.price.toLocaleString()
+                    // console.log('xxxxxxxx',selectedProduct)
+                    productID = selectedProduct.product_id
+                    console.log('productID',productID)
+                    $('#price').removeClass("d-none")
+// if (selectedProduct) {
+//     productPrice.innerText = selectedProduct.price;
+//     price.style.display = 'block';
+// } else {
+//     productPrice.innerText = '';
+//     price.style.display = 'none';
+// }
+                    // console.log('按鈕配對出的料號',productID)
+                    // findDisableInput()
+                }
+                /**************************************************************************************************************/
+                let allFlavorOrColorInputs = document.querySelectorAll('.flavorOrColorArea input[type="radio"]')
+                allFlavorOrColorInputs.forEach(input => {
+                    input.addEventListener('input',findDisableInput)
+                });
+                let allWeightOrSizeInputs = document.querySelectorAll('.weightOrSizeArea input[type="radio"]') 
+                allWeightOrSizeInputs.forEach(input => {
+                    input.addEventListener('input',findDisableInput)
+                });
+                /**************************************************************************************************************/
+
+
+                // 使下架的產品的input框disabled，搭配一開始產品filter(剃除狀態為f-下架產品)
+                function findDisableInput(){
+                    let selectFlavorOrColorValue = document.querySelector('.flavorOrColorArea input[type="radio"]:checked')?.value
+                    let selectWeightOrSizeValue = document.querySelector('.weightOrSizeArea input[type="radio"]:checked')?.value
+                    // if(!selectFlavorOrColorValue || !selectWeightOrSizeValue) return //如果沒被選擇就return
+
+                    let allFlavorOrColorInputs = document.querySelectorAll('.flavorOrColorArea input[type="radio"]')
+                    let allWeightOrSizeInputs = document.querySelectorAll('.weightOrSizeArea input[type="radio"]') 
+                    allFlavorOrColorInputs.forEach((input)=>{
+                        // 檢查是否有任意產品的 flavorOrColor 屬性值與該按鈕的值匹配，且其 weightOrSize 屬性值與當前選擇的重量或尺寸值 (selectedWeightOrSizeValue) 匹配。
+                        // input.disabled = !products.some((product)=>{ 
+                        let flag = true //預設所有選項禁用
+                        products.forEach((product)=>{ 
+                            // return product[flavorOrColor] === input.value && product[weightOrSize] === selectWeightOrSizeValue 
+                            // 資料庫寵物睡窩[水上樂園] === input選擇水上樂園 && (資料庫寵物睡窩[2XL找不到]!undefined === )
+                            // true && 
+                            console.log(product[flavorOrColor],"===",input.value,'&& (',!selectWeightOrSizeValue,"||",product[weightOrSize],'=== ' ,selectWeightOrSizeValue,")")
+                            // 資料庫寵物睡窩[水上樂園] === input選擇水上樂園 
+                            if(product[flavorOrColor] === input.value){
+                                // 且沒有被選擇的size || 資料庫寵物睡窩[XL] ==== 選擇的XL
+                                if(!selectWeightOrSizeValue || product[weightOrSize] === selectWeightOrSizeValue){
+                                    flag = false
+                                }
+                            }
+                            // console.log('!selectWeightOrSizeValue ',!selectWeightOrSizeValue,"||","product[weightOrSize] ",product[weightOrSize] ,'=== selectWeightOrSizeValue = ',selectWeightOrSizeValue)
+                            // return product[flavorOrColor] === input.value && (!selectWeightOrSizeValue || product[weightOrSize] === selectWeightOrSizeValue) 
+
+
+                        })
+                        input.disabled = flag;
+                        // input.disabled = isDisabledStatus;
+                        // console.log('input.disabled',input.disabled)
+                    })
+                    allWeightOrSizeInputs.forEach((input)=>{
+                        let flag = true //預設所有選項禁用
+                        // 檢查是否有任意產品的 weightOrSize 屬性值與該按鈕的值匹配，且其 flavorOrColor 屬性值與當前選擇的口味或顏色值 (selectedFlavorOrColorValue) 匹配。
+                        // input.disabled = !products.some((product)=>{ 
+                        products.forEach((product)=>{ 
+                            if(product[weightOrSize] === input.value){
+                                if(!selectFlavorOrColorValue || product[flavorOrColor] === selectFlavorOrColorValue){
+                                    flag = false
+                                }
+                            }
+                            // return product[weightOrSize] === input.value && product[flavorOrColor] === selectFlavorOrColorValue 
+                            // return product[weightOrSize] === input.value && (!selectFlavorOrColorValue || product[flavorOrColor] === selectFlavorOrColorValue);
+                        })
+                        input.disabled = flag;
+                        // input.disabled = isDisabledStatus;
+                        // console.log('input.disabled',input.disabled)
+                    })
+                }
+                
+                
+
+// ----------------------------------------------------------------
+
+
+
+
+                addCartBtn.onclick = ()=>{
+                    
+                    // if(!currentQuantity){
+                        //     // pdQuantity.value
+                        // }
+                    getProductInfo(productID,currentQuantity ? currentQuantity : pdQuantity.value)
+                    queryQuantity()
+                   
+                        // getProductInfo(productID,currentQuantity)
+                    // fetch(`http://localhost/testpet/public/product/insert/${poductID}/${quantity}`,{
+                    //     method:'get'
+                    // }).then(response=>response.text())
+                    // .then(data=>{
+                    //     console.log('插入資料',data)
+                    // })
+                }    
+
+
+                        
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                
+            });
+            
+        }
+   </script> -->
+        
+</body>
+</html>
