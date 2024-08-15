@@ -35,9 +35,7 @@ window.onload = function(){
     }
     console.log('cartQuantity  = ',cartQuantity)
 
-
     // changePathname('df',false)
-
     // changePathname('df')
     let urlParams  = new URLSearchParams(window.location.search)
     console.log('window',window.location.search)
@@ -80,6 +78,7 @@ window.onload = function(){
         })
     })
     
+    // 更新card左上角小圖示
     function changeTagImg(dogOrCat){
         let animalTags = document.querySelectorAll('.animalTag')
         animalTags.forEach((tag)=>{
@@ -113,45 +112,6 @@ window.onload = function(){
         dropdownMenu.addEventListener('click',function(event){
             event.preventDefault();
             let category = event.target.getAttribute('data-pdcategory')
-            
-            // console.log('我是類別 = ',category)
-            // console.log('event.target',event.target) 
-            // window.location.replace();
-
-            // categoryTitle.innerText = category
-            // console.log('categoryTitle = ',categoryTitle)
-            // console.log('是d嗎',category.startsWith('d'))
-            // console.log(link.setAttribute('data-change-category'))
-
-
-           
-            // let urlParams = new URLSearchParams(window.location.search)
-            // let urlParams  = new URLSearchParams(window.location.search)
-            // console.log('link裡',window.location.search)
-            // let categoryID = urlParams.get('category') 
-            // console.log('link裡',categoryID)
-
-
-            // if(category.startsWith('d')  ) {
-            //     seriesTile.innerText = "狗狗專區" 
-            //     seriesTile.setAttribute('data-title','d')
-            //     updateIconLink('d')
-            //     // console.log('animalTag',animalTag)
-            //     // animalTag.style.backgroundImage = "url('./img/productIcon/dog.png')"
-            //     changeTagImg('dog')
-            //     // console.log('asbgimg',animalTag.style)
-            //     console.log('category.startsWith(d) ' )
-                
-            // } else{
-            //     seriesTile.innerText = "貓貓專區"
-            //     seriesTile.setAttribute('data-title','c')
-            //     updateIconLink('c')
-            //     console.log('貓的category',category)
-            //     // changePathname(category)
-
-            //     changeTagImg('cat')
-            //     console.log('category.startsWith(c) ' )
-            // }
 
             updateSeriesTitle(category.startsWith('d') ? 'd' : 'c');
             productContainer.innerHTML = ''
@@ -186,18 +146,28 @@ window.onload = function(){
             })
             .then(products=>{
                 console.log('products',products)
-                
                 let oneSeries = new Set()
+                let seriesPriceObj = {};
+
                 products.forEach(pd => {
                     // console.log('pd',pd)
-                    // if(pd.status != 'f'){
+                    //系列產品中價格最大和最小    
                     if(pd.status != 0){
+                        // if 初始化一開始數字，當此系列存在會進入else 來更新成最新的min與max
+                        if(!seriesPriceObj[pd.series_ai_id]){
+                            seriesPriceObj[pd.series_ai_id] = {min:pd.price,max:pd.price}
+                        }else{
+                            // seriesPriceObj[pd.series_ai_id] = {min:Math.min(pd.price),max:Math.max(pd.price)}
+                            seriesPriceObj[pd.series_ai_id].min = Math.min(seriesPriceObj[pd.series_ai_id].min,pd.price)
+                            seriesPriceObj[pd.series_ai_id].max = Math.max(seriesPriceObj[pd.series_ai_id].max,pd.price)
+                        }
 
                         // 系料號加到集合中
                         oneSeries.add(pd.series_ai_id)
                     }
                    
                 })
+                console.log('我是objjjjj',seriesPriceObj)
                 // console.log('我是SET集合',oneSeries)
                 
                 // let productContainer = document.querySelector('.product_container');
@@ -205,35 +175,35 @@ window.onload = function(){
                     // console.log('我是SET中的系列號',arrSeriesID)
                     // let seriesProduct = products.find(pd=> pd.series_id === arrSeriesID)
                     let seriesProduct = products.find(pd=> pd.series_ai_id === arrSeriesID)
+                    // console.log('seriesProduct---------------->',seriesProduct)
                     let {category_id,series_ai_id,cover_img,series_name,price} = seriesProduct
                     // console.log('我是636行category_id',category_id)
                     // console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
-                    // console.log('我是seriesProduct',seriesProduct)
+                    console.log('我是seriesProduct',seriesProduct)
                     if(seriesProduct){
                         let productItem = document.createElement('div')
                         // productItem.classList.add('product_item','col-md-3','position-relative')
+                        let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? `${seriesPriceObj[series_ai_id].min}` : `${seriesPriceObj[series_ai_id].min} ~ ${seriesPriceObj[series_ai_id].max}`
                         productItem.classList.add('product_item','position-relative')
+                        // <p class="pd_price">${price.toLocaleString()}</p>
                             productItem.innerHTML = `
-                                <a href="http://localhost/happypet/happypet_front/40_product/front/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${seriesProduct.series_AINUM}">
+                                <a href="http://localhost/happypet/happypet_front/40_product/front/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${series_ai_id}">
                                     <div class="img_wrapper">
                                         <img src="${cover_img}" alt="" class="" />
                                     </div>
                                     <p>${series_name}</p>
                                 </a>
-                                <p class="pd_price">${price.toLocaleString()}</p>
+                                <p class="pd_price">${priceRange}</p>
                                 <div class="animalTag d-block position-absolute"></div>
                                 `
                             productContainer.appendChild(productItem);
                             // productContainer.appendChild(dogProductItem)
-                        }
-                    
+                    }
                 })
                 // loadingArea.style.display = 'none';
                 $('#loadingArea').addClass("d-none")
                 isFetching = false
                 
-               
-      
                 if(updateState){
                     // history.pushState(state：物件, title：通常是空字串, url：要改成的url);
                     // pushState可以點上一頁，replaceState 只修改最後一筆網址內容
@@ -253,7 +223,12 @@ window.onload = function(){
 
             });
     }        
-       
+    // 搜尋功能
+    $('.bi-search').click(()=>{
+        console.log('我是搜尋')
+        
+        console.log($('.bi-search').prev().val())
+    })
     // 新的一筆紀錄網址會被更改到網址列內，而這時會觸發瀏覽器的內建事件 — popstate 事件
     // 類別點選上一頁時會再fetch該類別
     window.onpopstate  = ( event ) => { 

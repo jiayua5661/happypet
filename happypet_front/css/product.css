@@ -243,7 +243,7 @@ header .nav_icon .cart_quantity{
 
 
 .pd_price::before{
-    content: 'NT$';
+    content: 'NT$ ';
     font-size: 0.8rem;
 }
 /* product end*/

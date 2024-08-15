@@ -14,6 +14,7 @@
     <script src="../../js/bootstrap.bundle.js"></script>
     <!-- <script src="./js/bootstrap.bundle.js"></script> -->
     <script src="../../js/jquery-3.7.1.js"></script>
+    <!-- 使用CDN引入bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- 字型 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,7 +83,7 @@
     </nav>
 
 
-    <div  class="position-relative pd_banner">
+    <div class="position-relative pd_banner">
         <img id="pdBannerImg" class="w-100" src="../../img/40_product/banner/banner-df.jpg" alt="">
     </div>
   
@@ -92,36 +93,33 @@
         <h3 id="seriesTile" class="my-5 fs-1" ></h3>
         <ul class="pet_pdicon">
             <li><a href="#" data-change-category="df">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-food.png" alt="飼料"> -->
                 <img class="pet-category" src="../../img/40_product/productIcon/pet-food.png" alt="飼料">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-food.png" data-alt-src="./img/productIcon/pet-food-a.png" alt=""> -->
                 <p>飼料</p>
             </a></li>
             <li><a href="" data-change-category="dc">
                 <img class="pet-category" src="../../img/40_product/productIcon/pet-canfood.png" alt="罐頭">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-canfood.png" data-alt-src="./img/productIcon/pet-canfood-a.png" alt=""> -->
                 <p>罐頭</p>
             </a></li>
             <li><a href="" data-change-category="dt">
                 <img class="pet-category" src="../../img/40_product/productIcon/pet-treats.png" alt="零食">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-treats.png" data-alt-src="./img/productIcon/pet-treats-a.png" alt=""> -->
                 <p>零食</p>
             </a></li>
             <li><a href="" data-change-category="dh">
                 <img class="pet-category" src="../../img/40_product/productIcon/pet-healthy.png" alt="保健">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-healthy.png" data-alt-src="./img/productIcon/pet-healthy-a.png" alt=""> -->
                 <p>保健</p>
             </a></li>
             <li><a href="" data-change-category="ds">
                 <img class="pet-category" src="../../img/40_product/productIcon/pet-supplies.png" alt="用品">
-                <!-- <img class="pet-category" src="./img/productIcon/pet-supplies.png" data-alt-src="./img/productIcon/pet-supplies-a.png" alt=""> -->
                 <p>用品</p>
             </a></li>
         </ul>
     </div>
     <!-- 12格 -->
-  <!-- React 測試 -->
-  <div id="root"></div>
+    <div class="container-lg text-end">
+        <div>
+            <input type="text" class=""><i class="bi bi-search ps-2 " style="cursor:pointer"></i>
+        </div>
+    </div>
     <div class="container-lg product_wrapper mb-5 py-5">
         <div id="loadingArea" class="d-none">
             <div id="loading" class="position-relative">
@@ -129,7 +127,6 @@
                 <div class="square squareB position-absolute"></div>
             </div>
         </div>
-     
         <div class="product_container w-100 position-relative">
             <!-- <div class="product_item  position-relative">
                 <a href="#" data-seriesID="">

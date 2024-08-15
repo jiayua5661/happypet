@@ -1,8 +1,5 @@
 let insertBtn = document.getElementById('insertBtn');
 window.onload = ()=>{
-    let myModal = document.getElementById('myModal')
-    let myInput = document.getElementById('myInput')
-
     let datObj = new Date()
     let dateFormat = `${ datObj.getFullYear() }-${ (datObj.getMonth()+1).toString().padStart(2,0) }-${ (datObj.getDate()).toString().padStart(2,0) }`
     console.log(dateFormat)

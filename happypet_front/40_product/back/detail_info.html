@@ -118,7 +118,7 @@
     </div> -->
     <!-- 彈出視窗 -->
         <!-- Modal -->
-        <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -129,7 +129,7 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
     
 
        
@@ -140,13 +140,35 @@
             // console.log('x',x)
             
         }
-        function showMsg(msg){
-            $('#myModal').modal('show')
-            $('#alertMsg').text(msg)
-        }
+        // function showMsg(msg){
+        //     $('#myModal').modal('show')
+        //     // $('#alertMsg').text(msg)
+        //     setMessage(msg)
+        // }
         let myReactRoot = ReactDOM.createRoot(document.getElementById('root'));
+        // createContext在所有組件外
+        let myContext =  React.createContext();
 
-        let myContext =  React.createContext()
+        function AlertModal(){
+            let {showMsg,message,setMessage} = React.useContext(myContext)
+            // showMsg()
+            return(
+                <React.Fragment>
+                    <div className="modal fade " id="myModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <p id="alertMsg" className="m-0">{message}</p>
+                            </div>
+                            <div className="modal-footer">
+                            <button type="button" className="btn" data-bs-dismiss="modal">確認</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </React.Fragment>
+            )
+        }
         function AddTable({pdSeries,productObj}){
             // console.log('我是AddTable的pdSeries',pdSeries)
             let {productArr,setProductArr} = productObj
@@ -217,23 +239,21 @@
                             </tr>
                         </thead>
                         <tbody id="newItem">
-                            {   myPdType == 'insert' ?
-                                rows.map((row,index)=> (
-                                    <tr className="pd_row" key={row.id}>
-                                        <td className="pd_id_area position-relative"> 
-                                            <button type="button" className="position-absolute deleteBtn" onClick={()=>{removeRow(index)}}><i className="bi bi-x"></i></button>
-                                            <input className="pdID" type="text" onChange={(e)=>{userInput(index,e.target.value)}}/>
-                                            <input type="text" name="fullID[]" className="fullPdID" readOnly value={row.fullPdID}/>
-                                        </td>
-                                        <td><input type="text" name="flavor[]" defaultValue={row.flavor}/></td>
-                                        <td><input type="text" name="weight[]" defaultValue={row.weight}/></td>
-                                        <td><input type="text" name="size[]" defaultValue={row.size}/></td>
-                                        <td><input type="text" name="color[]" defaultValue={row.color}/></td>
-                                        <td><input type="text" name="price[]" defaultValue={row.price}/></td>
-                                        <td><input type="text" name="GTIN[]" defaultValue={row.GTIN}/></td>
-                                    </tr>
-                                )):productArr.map((product,index)=>(
-                                    // onChange={()=>{}}
+                            {   myPdType == 'insert' ? (rows.map((row,index)=> (
+                                <tr className="pd_row" key={row.id}>
+                                    <td className="pd_id_area position-relative"> 
+                                        <button type="button" className="position-absolute deleteBtn" onClick={()=>{removeRow(index)}}><i className="bi bi-x"></i></button>
+                                        <input className="pdID" type="text" onChange={(e)=>{userInput(index,e.target.value)}}/>
+                                        <input type="text" name="fullID[]" className="fullPdID" readOnly value={row.fullPdID}/>
+                                    </td>
+                                    <td><input type="text" name="flavor[]" defaultValue={row.flavor}/></td>
+                                    <td><input type="text" name="weight[]" defaultValue={row.weight}/></td>
+                                    <td><input type="text" name="size[]" defaultValue={row.size}/></td>
+                                    <td><input type="text" name="color[]" defaultValue={row.color}/></td>
+                                    <td><input type="text" name="price[]" defaultValue={row.price}/></td>
+                                    <td><input type="text" name="GTIN[]" defaultValue={row.GTIN}/></td>
+                                </tr>
+                                ))):(productArr.map((product,index)=>(
                                     <tr className="pd_row" key={index}>
                                         <td className="pd_id_area position-relative"> 
                                             <button type="button" className="position-absolute deleteBtn" onClick={()=>{removeProductRow(index)}} style={myPdType == 'insert' ? {display:'block'}:{display:'none'}}><i className="bi bi-x" ></i></button>
@@ -247,7 +267,7 @@
                                         <td><input type="text" name="price[]" defaultValue={product.price}/></td>
                                         <td><input type="text" name="GTIN[]" defaultValue={product.GTIN}/></td>
                                     </tr>
-                                ))
+                                )))
 
                             }
                         </tbody>
@@ -312,7 +332,7 @@
             )
         }
         
-        function QuerySeriesIDTable({pdSeriesObj,productObj,clearInput}){
+        function QuerySeriesIDTable({pdSeriesObj,productObj,clearInput,showMsg}){
             // let [seriesID,setSeriesID] = React.useState('')
             // let [seriesName,setSeriesName] = React.useState('')
             let {myPdType,setMyPdType,seriesName,setSeriesName} = React.useContext(myContext)
@@ -357,7 +377,6 @@
                             if(!dataObj.series_name){
                                 console.log(dataObj.error)
                                 showMsg(dataObj.error)
-                                // pdName.value = ''
                                 setSeriesName('')
                                 // $('input.fullPdID').each(function(index,fullInput){
                                 //     fullInput.value = ''
@@ -374,7 +393,6 @@
                             console.log(error.error)
                         });
                     }else{
-
                         // console.log('我是else')
                         setPdSeries(event.target.value)
 
@@ -393,9 +411,6 @@
                                 console.log('myProduct',myProduct)
                                 console.log('myProduct.current',myProduct.current)
                                 // console.log('myProduct.current[0].series_name.current',myProduct.current[0].series_name)
-
-                                
-
                                 // console.log('product',product)
                                 // console.log('productArr',productArr)
                             }
@@ -414,8 +429,9 @@
                             <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput}></i></th>
                             <td className="border"><input onBlur={querySeriesID} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} /></td>
                             <th>產品系列名稱</th>
-                            <td className="border"><input value={seriesName} id="pdName" type="text" name="pdName" disabled={myPdType =='insert' || false} onChange={(e)=>{setSeriesName(e.target.value)}}/></td> {/*insert時disabled，update解除disabled*/}
-                        </tr>
+                            <td className="border"><input value={seriesName} id="pdName" type="text" name="pdName" disabled={myPdType =='insert' || false} onChange={(e)=>{setSeriesName(e.target.value)}}/></td> 
+                        </tr> 
+                        {/*insert時disabled，update解除disabled*/}
                     </tbody>
                 </table>
             )
@@ -425,7 +441,7 @@
             // 在父組件定義，兄弟間才可以傳給
             // let [pdSeries,setPdSeries] = React.useState('')
             // let [productArr,setProductArr] = React.useState([])
-            let {myPdType,setMyPdType,clearInput,pdSeries,setPdSeries,productArr,setProductArr} = React.useContext(myContext)
+            let {myPdType,setMyPdType,clearInput,pdSeries,setPdSeries,productArr,setProductArr,showMsg} = React.useContext(myContext)
             // 插入資料表
             function insertTable(){
                 // console.log('insertTable____ pdSeries',pdSeries)
@@ -498,8 +514,8 @@
             return(
                 <React.Fragment>
                     <form id="myPd" method="post" encType="multipart/form-data" className="position-relative">
-                        <QuerySeriesIDTable pdSeriesObj={{pdSeries,setPdSeries}} productObj={{productArr,setProductArr}}  clearInput={clearInput}/>
-                        <AddTable pdSeries={pdSeries} productObj={{productArr,setProductArr}}/>
+                        <QuerySeriesIDTable pdSeriesObj={{pdSeries,setPdSeries}} productObj={{productArr,setProductArr}}  clearInput={clearInput} showMsg={showMsg}/>
+                        <AddTable pdSeries={pdSeries} productObj={{productArr,setProductArr}} />
                     </form>
                     <div className="d-flex justify-content-end">
                         <button onClick={insertTable} id="insertBtn" type="button" form="myPd" >新增產品系列</button>
@@ -516,7 +532,7 @@
             let [pdSeries,setPdSeries] = React.useState('')
             let [seriesName,setSeriesName] = React.useState('')
             let [productArr,setProductArr] = React.useState([])
-
+            let [message,setMessage] = React.useState('');
             // console.log('我是DetailInfo的pdSeries',pdSeries)
             
             function clearInput(){
@@ -528,21 +544,30 @@
                 // console.log('我是clearinput')
                 // setProductArr([]); 
             }
+            function showMsg(msg){
+                $('#myModal').modal('show')
+                // $('#alertMsg').text(msg)
+                setMessage(msg)
+            }
             React.useEffect(() => {
                 console.log('pdSeries 狀態變化:', pdSeries);
             }, [pdSeries]);
+            React.useEffect(() => {
+                console.log('message 狀態變化:', message);
+            }, [message]);
 
             React.useEffect(() => {
                 console.log('seriesName 狀態變化:', seriesName);
             }, [seriesName]);
             return(
                 <React.Fragment>
-                    <myContext.Provider value={{myPdType,setMyPdType,clearInput,rows,setRows,pdSeries,setPdSeries,seriesName,setSeriesName,productArr,setProductArr}}>
+                    <myContext.Provider value={{myPdType,setMyPdType,clearInput,rows,setRows,pdSeries,setPdSeries,seriesName,setSeriesName,productArr,setProductArr,showMsg,message,setMessage}}>
                         <div className=" pdDetailContainer position-relative py-3 mb-2">
                             {/*<button onClick={()=>{console.log('pdSeries',pdSeries, '-----')}}>我是測試DetailInfo______________________</button>*/}
                             <TitieAndAddbtn />
                             <DetailForm />
                         </div>
+                        <AlertModal/>
                     </myContext.Provider>
                 </React.Fragment>
 
