@@ -74,7 +74,7 @@
   margin-top: 5px;
 }
 .fixed-size {
-  height: 250px; /* 固定高度 */
+  height: 320px; /* 固定高度 */
   display: flex;
   flex-direction: column;
 }
@@ -148,7 +148,8 @@ textarea {
   box-shadow: 0px 0px 6px 2px #c5c5c5;
 }
 .myOrderTbody {
-  background-color: #cccccc41;
+  background-color: #cccccc3a;
+  border-color: #c0c0c0cd;
 }
 
 .myOrderTbody tr {
@@ -157,4 +158,7 @@ textarea {
 
 .myOrderTbody td {
   padding: 15px 10px;
+}
+.hotelbackorder {
+  box-shadow: 0px 0px 6px 2px #c5c5c5;
 }
