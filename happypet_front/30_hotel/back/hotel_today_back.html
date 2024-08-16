@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>旅館後台|當日住宿</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/back_header_footer.css" />
-    <link rel="stylesheet" href="./hotel_back.css" />
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/back_header_footer.css" />
+    <link rel="stylesheet" href="../../css/hotel_back.css" />
     <!-- 使用CDN引入bootstrap-icons -->
     <link
       rel="stylesheet"
@@ -30,9 +30,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
-    <script src="./flatpickr.js"></script>
-    <script src="../js/bootstrap.bundle.js"></script>
-    <script src="../js/popper.min.js"></script>
+    <script src="../../js/flatpickr.js"></script>
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/popper.min.js"></script>
   </head>
   <body>
     <!-- nav -->
@@ -41,7 +41,7 @@
         class="row m-0 px-md-5 text-center justify-content-lg-between justify-content-center align-items-center"
       >
         <a href="" class="col-lg-3 col-8"
-          ><img class="img-fluid logo" src="../img/LOGO.png" alt=""
+          ><img class="img-fluid logo" src="../../img/LOGO.png" alt=""
         /></a>
         <ul
           class="nav col-lg-9 p-0 d-flex justify-content-lg-between justify-content-center"
@@ -127,7 +127,6 @@
     <h1 class="text-center mt-5 mb-5 fw-bold">當日住宿</h1>
 
     <!-- calender -->
-
     <div class="container my-3">
       <form>
         <div class="d-flex">
@@ -189,12 +188,14 @@
     <!-- model -->
     <div id="myModal" class="modal">
       <div class="modal-content">
-        <span class="close text-end fs-2 fw-bold">&times;</span>
+        <span class="close text-end fs-2 fw-bold"
+          ><i class="bi bi-x-lg"></i
+        ></span>
         <h2 class="mb-3">訂房明細</h2>
 
         <form id="orderForm">
           <div>
-            <label for="field1">訂房編號</label>
+            <label for="field1">訂單編號</label>
             <input type="text" id="field1" name="field1" />
           </div>
           <div class="row">
@@ -308,26 +309,6 @@
       </div>
     </div>
     <script>
-      // calender
-      document.addEventListener("DOMContentLoaded", function () {
-        var checkin = flatpickr("#checkin", {
-          dateFormat: "Y-m-d",
-          onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-              checkout.set("minDate", selectedDates[0]);
-            }
-          },
-        });
-
-        var checkout = flatpickr("#checkout", {
-          dateFormat: "Y-m-d",
-          onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-              checkin.set("maxDate", selectedDates[0]);
-            }
-          },
-        });
-      });
       // ordermodel
       // 獲取模態框元素
       const modal = document.getElementById("myModal");
