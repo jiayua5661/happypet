@@ -571,3 +571,19 @@ Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser'
 Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
 
 /////////////////////////chen//////////////////////////
+
+//會員中心
+//會員註冊
+Route::post('/member_register', RegisterController::class);
+
+//會員登入
+Route::post('/member_login', [LoginController::class, 'login']);
+
+//會員新增寵物
+Route::post('/member_add_pet', [MyPetController::class, 'add_pet']);
+
+//查看我的寵物資料
+Route::post('/member_mypet', [MyPetController::class, 'mypet_card']);
+
+//編輯我的寵物資料
+Route::post('/member_edit_pet', [MyPetController::class, 'edit_petinfo']);
