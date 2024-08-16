@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Http\Controllers\SeriesProductController; 
 use App\Http\Controllers\DetailProductController; 
+use App\Http\Controllers\HotelOrderController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -481,3 +482,47 @@ Route::post("/productqupdate", function (Request $request) {
     }
 });
 //////////////////////////////////// HUEI ////////////////////////////////////////
+
+
+/////////////////////////chen//////////////////////////
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
+
+// http://localhost/happypet_back/public/api/data
+// 會返回 API 路由的 JSON 數據。-> 'message' => 'Hello from Laravel!'
+Route::get('/data', function () {
+    return response()->json(['message' => 'Hello from Laravel!']);
+});
+
+// 查日期
+// 顯示訂單列表
+// http://localhost/happypet_back/public/api/hotel_orders
+// Route::get('/hotel_orders', [HotelOrderController::class, 'index']);
+Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
+
+// 查全部-後台
+Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
+
+// 查全部-前台
+Route::get('/hotel_orders_all_font', [HotelOrderController::class, 'allOrdersFont']);
+
+
+// 顯示空房
+// http://localhost/happypet_back/public/api/check-availability
+
+Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
+
+
+//刪除訂單
+Route::delete('/hotel_orders/{uid}', [HotelOrderController::class, 'destroy']);
+
+
+// 查詢訂購人
+Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
+
+// 選擇該使用者的寵物
+Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
+
+/////////////////////////chen//////////////////////////
