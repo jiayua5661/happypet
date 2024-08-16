@@ -28,11 +28,6 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 
-    <style>
-        th img {
-            width: 120px;
-        }
-    </style>
 </head>
 
 <body>
@@ -295,7 +290,7 @@
                                     return (
                                         <tr key={i}>
                                             <th>
-                                                <img className="py-2" src={dataUrl} alt="" />
+                                                <img className="py-2 sp_img" src={dataUrl} alt="" />
                                             </th>
                                             <th className="text-start">
                                                 <p>{series_name}</p>

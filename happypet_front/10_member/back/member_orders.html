@@ -10,6 +10,8 @@
 
   <link rel="stylesheet" href="../../css/bootstrap.min.css">
   <link rel="stylesheet" href="../../css/back_header.css">
+  <link rel="stylesheet" href="../../css/orders.css">
+
 
   <script src="../../js/bootstrap.bundle.js"></script>
 
@@ -91,7 +93,7 @@
             <div className="modal-dialog " role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">商品明細</h5>
+                  <h4 className="modal-title">商品明細</h4>
                   <button type="button" className="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="modal"
                     aria-label="Close"></button>
                 </div>
@@ -300,7 +302,7 @@
 
       return (
         <div className="container">
-          <h3 className="col-12 mt-3">會員訂單紀錄</h3>
+          <h2 className="col-12 mt-3">會員訂單紀錄</h2>
           <label htmlFor="search_phone" className="text-center fs-5 ps-5 my-2">手機號碼：</label>
           <input type="tel" name="search_phone" id="search_phone" />
           <a onClick={handleClicksearchphone} ><i className="px-2 fs-5 bi bi-search"></i></a>
