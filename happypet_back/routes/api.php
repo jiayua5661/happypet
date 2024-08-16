@@ -10,6 +10,7 @@ use App\Http\Controllers\DetailProductController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+//                         N                              //
 // main_info區 查詢產品系列號是否已有、類別下拉選單
 Route::get('/product_back/info/select/{seriesID?}', function ($seriesID = null) {
     $seriesIDCount = DB::scalar("SELECT count(*) FROM product_series WHERE series_id = ?", [$seriesID]);
@@ -263,6 +264,31 @@ Route::post('/product_back/warehouse',function(Request $request){
     }
     
 });
+// 搜尋
+Route::post('/productall/select',function(Request $request){
+    $nameKeyword = $request->input('nameKeyword'); //
+    // Log::info('nameKeyword = ',['nameKeyword----->',$nameKeyword]);
+    $results = DB::select("SELECT series_id ,ps.series_ai_id,ps.series_name ,spv.cover_img ,spv.price,ps.category_id
+                            FROM seriespdimg_view spv join product_series ps 
+                            on spv.series_ai_id = ps.series_ai_id 
+                            WHERE ps.series_name LIKE ?
+                            group by ps.series_id,ps.series_ai_id,spv.price,ps.series_name,ps.category_id;
+                            ",["%{$nameKeyword}%"]);
+    // 將封面圖轉base64
+    foreach($results as &$result){
+        if(isset($result->cover_img)){
+            $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($result->cover_img);
+            $result->cover_img = base64_encode($result->cover_img);
+            $src = "data:{$mime_type};base64,{$result->cover_img}";
+           $result->cover_img = $src;
+        }
+    }
+    // Log::info(['result----->',$result]);
+    return response()->json(["result" => $results]);
+});
+
+//                         N                              //
+
 
 
 //////////////////////////////////// HUEI ////////////////////////////////////////

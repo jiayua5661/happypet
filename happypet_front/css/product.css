@@ -140,12 +140,39 @@ header .nav_icon .cart_quantity{
     font-weight: bold;
     color: red;
 }
+.bi-search{
+    cursor:pointer;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+.bi-search:hover{
+    color: var(--color-secondary);
+}
+input[name="nameKeyword"]{
+    /* border: 1px solid var(--color-phover); */
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid var(--color-phover);
+    /* border-radius: 10px; */
+    padding: 3px 10px;
+    color: var(--color-primary);
+    /* color: var(--color-primary); */
+}
+input[name="nameKeyword"]:focus{
+    /* border: 1px solid var(--color-primary); */
+    /* border: none; */
+    /* outline: 1px solid var(--color-primary); */
+    color: var(--color-secondary);
+    outline: none;
+    border-bottom: 1px solid var(--color-secondary);
+}
 @media (max-width: 992px) {
     .container-fluid {
         width: 100%;
     }
     .pet_pdicon {
-        padding: 3% 5%;
+        padding: 4% 5%;
+        /* padding-bottom: 0%; */
     }
     .pet_pdicon li a>p {
         font-size: 1.2rem;
@@ -222,7 +249,6 @@ header .nav_icon .cart_quantity{
     /* background: url(./img/productIcon/dog.png) no-repeat; */
     /* background-image: url('./img/productIcon/dog.png') ; */
     /* background-image: url('../../img/40_product/productIcon/dog.png') ; */
-    background-image: url('happypet_front/img/40_product/productIcon/dog.png') ;
     /* background-image: url('../img/40_product/productIcon/cat.png') ; */
     background-repeat: no-repeat;
     background-size: contain;

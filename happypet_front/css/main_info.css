@@ -133,6 +133,7 @@ button,.btn{
     box-shadow: 2px 2px 3px #569682;
     letter-spacing: 1.5px;
     transition: .2s;
+    /* display: block; */
 }
 button:hover,.btn:hover{
     background-color:#a2c5ba;
