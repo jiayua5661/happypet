@@ -691,9 +691,9 @@
                     // console.log(data);
                     // console.log( parseInt(data[0].date.split('-')[0]+data[0].date.split('-')[1]+data[0].date.split('-')[2]));
 
-                    data.sort(function (a, b) {
-                        return parseInt(b.date.split('-')[0] + b.date.split('-')[1] + b.date.split('-')[2]) - parseInt(a.date.split('-')[0] + a.date.split('-')[1] + a.date.split('-')[2]);
-                    })
+                    // data.sort(function (a, b) {
+                    //     return parseInt(b.date.split('-')[0] + b.date.split('-')[1] + b.date.split('-')[2]) - parseInt(a.date.split('-')[0] + a.date.split('-')[1] + a.date.split('-')[2]);
+                    // })
 
                     data.forEach(element => {
                         history_order.innerHTML += `<p>${element.date} ${element.plan_title}</p>`;

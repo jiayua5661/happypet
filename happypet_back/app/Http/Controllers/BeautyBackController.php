@@ -9,7 +9,7 @@ use finfo; // 檢測文件的 MIME 類型
 class BeautyBackController extends Controller
 {
     function get_beauty_history_order_onepet($pid, $date) {
-        $history_order = DB::select('select beauty_order.date ,beauty_plan.plan_title from beauty_order left join beauty_plan on beauty_order.planid = beauty_plan.planid where pid = ? and date < ?', [$pid, $date]);
+        $history_order = DB::select('select beauty_order.date ,beauty_plan.plan_title from beauty_order left join beauty_plan on beauty_order.planid = beauty_plan.planid where pid = ? and date < ? order by date desc', [$pid, $date]);
         return response()->json($history_order);
     }
 
