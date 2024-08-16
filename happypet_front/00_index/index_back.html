@@ -267,7 +267,7 @@
             loginBtn.onclick = (event) => {
                 event.preventDefault();
 
-                fetch('http://localhost/test/back/back_login.php', {
+                fetch('http://localhost/happypet/happypet_back/jwt/back_login.php', {
                     method: 'POST',
                     body: new FormData(myform)
                 })
