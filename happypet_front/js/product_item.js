@@ -120,6 +120,7 @@ window.onload = ()=>{
         }
         
         let descriptionSet = new Set()
+        console.log('productsssssssss',products)
         products.forEach((product) => {
             // console.log(product)
             for(let i = 1; i <= 5 ; i++){
@@ -156,11 +157,13 @@ window.onload = ()=>{
             return arr
         },[])
         // let colorArr = products.reduce(function(arr,{color,...items}){
-        let colorArr = products.reduce(function(arr,{color}){
+
+        
+        let styleArr = products.reduce(function(arr,{style}){
         // let colorArr = SellingProducts.reduce(function(arr,{color}){
             // return arr.indexOf(color) == -1 ? [...arr,color] : arr
-            if (color && arr.indexOf(color) == -1){
-                arr.push(color);
+            if (style && arr.indexOf(style) == -1){
+                arr.push(style);
             }
             return arr
         },[])
@@ -192,8 +195,9 @@ window.onload = ()=>{
 
         if(flavorArr.length > 0){
             traverseArray(flavorArr,flavorOrColorArea,"flavor")
-        }else if(colorArr.length > 0){
-            traverseArray(colorArr,flavorOrColorArea,"color")
+        }else if(styleArr.length > 0){
+            // traverseArray(colorArr,flavorOrColorArea,"color")
+            traverseArray(styleArr,flavorOrColorArea,"style")
         }
 
         if(weightArr.length > 0){
@@ -226,7 +230,8 @@ window.onload = ()=>{
             // })
             
         if(categoryID == 'ds' || categoryID == 'cs'){
-            flavorOrColor = 'color'
+            // flavorOrColor = 'color'
+            flavorOrColor = 'style'
             weightOrSize = 'size'
         }else{
             flavorOrColor = 'flavor'
