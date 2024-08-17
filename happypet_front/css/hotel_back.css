@@ -1,7 +1,11 @@
 .back-container {
   border: 10px solid black;
 }
-
+h2 {
+  margin: 0;
+  font-weight: normal;
+  color: #000;
+}
 /* calender */
 .input-icon {
   position: relative;

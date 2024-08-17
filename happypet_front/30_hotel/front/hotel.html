@@ -151,19 +151,26 @@
                   <p id="nightdayDisplay">晚數:</p>
                   <p id="hotelCartQuantity">數量:</p>
                   <p id="hotelCartPrice">房價:</p>
-                  <p id="sameRoomCount">同房數(隻):</p>
+                  <p id="sameRoomCount">同房數:</p>
                   <p id="sameroomNightday">同房晚數:</p>
                   <p id="sameRoomPrice">同房價:</p>
                 </span>
+
                 <hr />
                 <p class="fs-5 mb-1 d-flex justify-content-between">
                   <span>總金額:</span>
                   <span id="roomTotal"></span>
                 </p>
                 <div class="text-end">
+                  <!-- <button
+                    class="mb-3 btn btn-secondary opacity-75 "
+                    onclick="window.location.href='hotelorder.html'"
+                  >
+                    立即訂房
+                  </button> -->
                   <button
                     class="mb-3 btn btn-secondary opacity-75"
-                    onclick="window.location.href='hotelorder.html'"
+                    onclick="saveToLocalStorageHotelOrder()"
                   >
                     立即訂房
                   </button>
@@ -449,7 +456,7 @@
           //   }
           // }
 
-          // 待測試-同房數跟同房價*
+          // 同房數跟同房價
           function updateSameRoomCount() {
             // 獲取所有勾選中的勾選框
             const selectedCheckboxes = document.querySelectorAll(
@@ -463,7 +470,7 @@
             // 如果勾選多於一個寵物，從1開始累加；如果只勾選一個，顯示0
             const sameRoomCount =
               selectedCheckboxes.length > 1 ? selectedCheckboxes.length - 1 : 0;
-
+            console.log("selectedCheckboxes", selectedCheckboxes.length);
             // 更新同房數
             if (sameRoomCountElement) {
               sameRoomCountElement.textContent = `同房數: ${sameRoomCount}`;
@@ -510,26 +517,42 @@
               parseInt(
                 roomPriceText.replace("房價:", "").replace("$", "").trim()
               ) || 0;
-            const sameRoomCount =
-              parseInt(sameRoomCountText.replace("同房數(隻):", "").trim()) ||
-              0;
+            const sameRoomCount = parseInt(
+              sameRoomCountText.replace("同房數:", "").trim()
+            );
             const sameRoomPrice =
               parseInt(
                 sameRoomPriceText.replace("同房價:", "").replace("$", "").trim()
               ) || 0;
+            console.log("quantityText", quantityText);
+            console.log("sameRoomCountText", sameRoomCountText);
+            console.log("數---->", quantityText.replace("數量:", "").trim());
+            console.log("sameRoomCount", sameRoomCount);
+            console.log("sameRoomPrice", sameRoomPrice);
+            console.log(
+              "sameRoomPrice------->",
+              sameRoomCountText.replace("同房數:", "").trim()
+            );
 
             // 計算總金額
             const totalPrice =
               nightCount * quantity * roomPrice +
               sameRoomCount * sameRoomPrice * nightCount;
 
-            // 格式化總金額讓他變 NT$x,xxx
+            // 格式化總金額為數字
+            const numericTotalPrice = totalPrice; // 直接使用數字值
+
+            // 格式化總金額讓它變成 $x,xxx
             const formattedTotalPrice = totalPrice.toLocaleString("en-US");
 
-            // 更新總金額顯示
+            // 更新總金額顯示，帶 $ 符號
             document.getElementById(
               "roomTotal"
             ).textContent = `NT$${formattedTotalPrice}`;
+            console.log(formattedTotalPrice);
+
+            // 儲存數字總金額到 localStorage
+            localStorage.setItem("roomTotal", numericTotalPrice.toString());
           }
 
           // 綁定 "加入購物車" 按鈕的事件監聽器
@@ -676,6 +699,43 @@
           checkout.value = "";
         }
       });
+      // 獲取購物車中的資訊
+      function saveToLocalStorageHotelOrder() {
+        const getValue = (id) =>
+          document.getElementById(id).innerText.split(": ")[1] || "";
+
+        const hotelName = getValue("hotelName");
+        const hotelPetName = getValue("hotelPetName");
+        const checkinDisplay = getValue("checkinDisplay");
+        const checkoutDisplay = getValue("checkoutDisplay");
+        const nightdayDisplay = getValue("nightdayDisplay");
+        const hotelCartQuantity = getValue("hotelCartQuantity");
+        const hotelCartPrice = getValue("hotelCartPrice");
+        const sameRoomCount = getValue("sameRoomCount");
+        const sameroomNightday = getValue("sameroomNightday");
+        const sameRoomPrice = getValue("sameRoomPrice");
+        const roomTotal = document
+          .getElementById("roomTotal")
+          .textContent.replace("NT$", "")
+          .replace(",", "")
+          .trim(); // 移除NT$和逗號，保留數字
+
+        // 將純值存儲到 localStorage
+        localStorage.setItem("hotelName", hotelName);
+        localStorage.setItem("hotelPetName", hotelPetName);
+        localStorage.setItem("checkinDisplay", checkinDisplay);
+        localStorage.setItem("checkoutDisplay", checkoutDisplay);
+        localStorage.setItem("nightdayDisplay", nightdayDisplay);
+        localStorage.setItem("hotelCartQuantity", hotelCartQuantity);
+        localStorage.setItem("hotelCartPrice", hotelCartPrice);
+        localStorage.setItem("sameRoomCount", sameRoomCount);
+        localStorage.setItem("sameroomNightday", sameroomNightday);
+        localStorage.setItem("sameRoomPrice", sameRoomPrice);
+        localStorage.setItem("roomTotal", roomTotal); // 儲存數字格式的總金額
+
+        // 跳轉到 hotelorder.html 頁面
+        window.location.href = "hotelorder.html";
+      }
     </script>
     <!--------------- footer ---------------->
 

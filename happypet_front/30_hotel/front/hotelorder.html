@@ -234,13 +234,6 @@
           });
       });
 
-      // order more room
-      document
-        .getElementById("orderMoreRooms")
-        .addEventListener("click", function () {
-          window.location.href = "hotel.html";
-        });
-
       // // 抓訂單-如果是null或是空的顯示為0
       // document.addEventListener("DOMContentLoaded", function () {
       //   fetch("http://localhost/happypet_back/public/api/hotel_orders_all_font")
@@ -306,42 +299,138 @@
       //     .catch((error) => console.error("資料獲取失敗:", error));
       // });
 
-      // 從 localStorage 讀取購物車內容
-      function loadCartFromLocalStorage() {
-        const cartData = JSON.parse(localStorage.getItem("cartData"));
+      document.addEventListener("DOMContentLoaded", function () {
+        // 從 localStorage 中取得存儲的訂單陣列，確保它是一個數組
+        let orders = JSON.parse(localStorage.getItem("hotelorders")) || [];
 
-        if (cartData) {
-          const ordersTableBody = document.getElementById("ordersTable");
+        // 渲染訂單列表的函數
+        function renderOrders() {
+          const ordersTable = document.getElementById("ordersTable");
+          ordersTable.innerHTML = ""; // 清空表格內容
 
-          // 清空表格內容
-          ordersTableBody.innerHTML = "";
-
-          // 創建新的表格行
-          const newRow = document.createElement("tr");
-          newRow.innerHTML = `
-        <td class="pt-4">
-          <p>入住日期 (假設日期)</p>
-          <p>退房日期 (假設日期)</p>
-        </td>
-        <td>${cartData.roomType}</td>
-        <td>(假設寵物名稱)</td>
-        <td>${cartData.nightCount}</td>
-        <td>${cartData.sameRoomCount}</td>
-        <td>${cartData.quantity}</td>
-        <td>$${cartData.total.toLocaleString("en-US")}</td>
-        <td>
-          <button class="btn btn-outline-secondary btn-lg delete-btn">
-            <i class="bi bi-trash3-fill"></i>
-          </button>
-        </td>
+          orders.forEach((orderDetails, index) => {
+            // 生成表格的 HTML
+            const rowHTML = `
+        <tr>
+          <td class="pt-4">
+            <p>入住日期 ${orderDetails.checkinDisplay}</p>
+            <p>退房日期 ${orderDetails.checkoutDisplay}</p>
+          </td>
+          <td>${orderDetails.hotelName}</td>
+          <td>${orderDetails.hotelPetName}</td>
+          <td>${orderDetails.nightdayDisplay}</td>
+          <td>${orderDetails.sameRoomCount}</td>
+          <td>${orderDetails.hotelCartQuantity}</td>
+          <td>NT$${Number(orderDetails.roomTotal).toLocaleString("en-US")}</td>
+          <td>
+            <button class="btn btn-outline-secondary btn-lg delete-btn" data-index="${index}">
+              <i class="bi bi-trash3-fill"></i>
+            </button>
+          </td>
+        </tr>
       `;
 
-          ordersTableBody.appendChild(newRow);
-        }
-      }
+            // 插入新生成的 HTML 到 tbody 中
+            ordersTable.innerHTML += rowHTML;
+          });
 
-      // 在頁面加載時呼叫函數
-      document.addEventListener("DOMContentLoaded", loadCartFromLocalStorage);
+          // 計算所有訂單的總金額
+          const totalAmount = orders.reduce(
+            (sum, order) => sum + parseFloat(order.roomTotal),
+            0
+          );
+
+          // 格式化總金額
+          const formattedTotalAmount = totalAmount.toLocaleString("en-US");
+
+          // 顯示總金額
+          document.querySelector(
+            ".text-end span"
+          ).innerText = `總金額：NT$${formattedTotalAmount}`;
+        }
+
+        // 渲染訂單列表
+        renderOrders();
+
+        // 監聽刪除按鈕點擊事件
+        document
+          .getElementById("ordersTable")
+          .addEventListener("click", function (event) {
+            if (event.target && event.target.closest(".delete-btn")) {
+              const button = event.target.closest(".delete-btn");
+              const index = button.getAttribute("data-index");
+
+              // 刪除該索引的訂單
+              orders.splice(index, 1);
+
+              // 更新 localStorage
+              localStorage.setItem("hotelorders", JSON.stringify(orders));
+
+              // 重新渲染訂單列表
+              renderOrders();
+            }
+          });
+
+        // 存訂房資訊到 localStorage 並跳轉到 hotel.html
+        document
+          .getElementById("orderMoreRooms")
+          .addEventListener("click", function () {
+            // 從 localStorage 中取得現有的訂單陣列，確保它是一個數組
+            let orders = JSON.parse(localStorage.getItem("hotelorders")) || [];
+
+            // 建立新的訂單物件
+            const newOrder = {
+              hotelName: localStorage.getItem("hotelName"),
+              hotelPetName: localStorage.getItem("hotelPetName"),
+              checkinDisplay: localStorage.getItem("checkinDisplay"),
+              checkoutDisplay: localStorage.getItem("checkoutDisplay"),
+              nightdayDisplay: localStorage.getItem("nightdayDisplay"),
+              hotelCartQuantity: localStorage.getItem("hotelCartQuantity"),
+              hotelCartPrice: localStorage.getItem("hotelCartPrice"),
+              sameRoomCount: localStorage.getItem("sameRoomCount"),
+              sameroomNightday: localStorage.getItem("sameroomNightday"),
+              sameRoomPrice: localStorage.getItem("sameRoomPrice"),
+              roomTotal: localStorage.getItem("roomTotal"),
+            };
+
+            // 將新的訂單追加到訂單陣列中
+            orders.push(newOrder);
+
+            // 將更新後的訂單陣列存回 localStorage
+            localStorage.setItem("hotelorders", JSON.stringify(orders));
+
+            // 導航到 hotel.html
+            window.location.href = "hotel.html";
+          });
+      });
+
+      // 確認訂購按鈕事件
+      document
+        .getElementById("nextStep")
+        .addEventListener("click", function () {
+          // 從 localStorage 中取得存儲的訂單陣列，確保它是一個數組
+          let orders = JSON.parse(localStorage.getItem("hotelorders")) || [];
+
+          // 傳送訂單到後端
+          fetch("http://localhost/happypet_back/public//api/hotel_orders", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // 將訂單數據附加到 URL 查詢參數中
+            body: new URLSearchParams({
+              orders: JSON.stringify(orders),
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("成功:", data);
+            })
+            .catch((error) => {
+              console.error("錯誤:", error);
+              // 顯示錯誤訊息或其他處理
+            });
+        });
     </script>
     <!--------------- footer ---------------->
 
