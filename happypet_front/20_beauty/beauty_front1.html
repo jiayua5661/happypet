@@ -230,7 +230,7 @@
                     // console.log(e.target.dataset.pid);
                     console.log(e.target.dataset.pet_species);
                     $(e.target).parent().prev().html($(e.target).html());
-                    let selected_pet = { pid: $(e.target).data("pid"), pet_species: $(e.target).data("pet_species"), pet_weight: $(e.target).data("pet_weight"), pet_fur: $(e.target).data("pet_fur"), pet_name: $(e.target).data("pet_name")};
+                    let selected_pet = { pid: $(e.target).data("pid"), pet_species: $(e.target).data("pet_species"), pet_weight: $(e.target).data("pet_weight"), pet_fur: $(e.target).data("pet_fur"), pet_name: $(e.target).data("pet_name") };
                     // let selected_pet = { pid: e.target.dataset.pid, pet_species: e.target.dataset.pet_species, pet_weight: e.target.dataset.pet_weight, pet_fur: e.target.dataset.pet_fur };
                     // 存選到的寵物資訊
                     sessionStorage.setItem("selected_pid", JSON.stringify(selected_pet));
@@ -240,7 +240,7 @@
                     // console.log($(e.target).parent());
                     // console.log($(e.target).parent().data("pid"));
                     $(e.target).parent().parent().prev().html($(e.target).parent().html());
-                    let selected_pet = { pid: $(e.target).parent().data("pid"), pet_species: $(e.target).parent().data("pet_species"), pet_weight: $(e.target).parent().data("pet_weight"), pet_fur: $(e.target).parent().data("pet_fur"), pet_name: $(e.target).parent().data("pet_name")};
+                    let selected_pet = { pid: $(e.target).parent().data("pid"), pet_species: $(e.target).parent().data("pet_species"), pet_weight: $(e.target).parent().data("pet_weight"), pet_fur: $(e.target).parent().data("pet_fur"), pet_name: $(e.target).parent().data("pet_name") };
                     // 存選到的寵物資訊
                     sessionStorage.setItem("selected_pid", JSON.stringify(selected_pet));
                     get_beauty_price(selected_pet);
@@ -303,6 +303,11 @@
                 if (selelcted_pet.pet_species == '狗') {
                     arr.forEach((element, index) => {
                         let [hour, minute, sec] = beauty_plan_info[index].time.split(':');
+                        const thousandthsFormat = (value) => {
+                            const regex = /\B(?=(\d{3})+(?!\d))/g
+                            value = value.toString()
+                            return value.replace(regex, ',')
+                        }
 
                         // 顯示抓出來的方案資料
                         // console.log(`${element.plan_title} - ${element.plan_instructions} - ${element.beauty_img}+++<br>`);
@@ -321,7 +326,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-12 d-flex flex-column justify-content-between color_primary_self">
-                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${beauty_plan_info[index].price}</div>
+                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${thousandthsFormat(beauty_plan_info[index].price)}</div>
                                     <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid="${element.planid}" data-plan_title="${element.plan_title}">預約時段</button></a>
                                 </div>
                             </div>

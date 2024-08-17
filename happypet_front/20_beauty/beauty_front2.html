@@ -408,6 +408,9 @@
 
         // 選擇日期
         function selectdate(seldate) {
+            $('#appointment_confirmation').css({ "visibility": "hidden" });
+            show_selecttime.innerHTML = "";
+
             const dayofweek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
             let datearr = seldate.dataset.date.split('-');
             // console.log(seldate.dataset.date, datearr);
@@ -569,15 +572,20 @@
             //     })
 
             // lala fetch
-            
+
             fetch(`http://localhost/happypet/happypet_back/public/api/front2_beauty_select_beauty_plan_price_time/${pet_species}/${pet_weight}/${pet_fur}/${planid}`)
                 .then(res => res.json())
                 .then(result => {
+                    const thousandthsFormat = (value) => {
+                        const regex = /\B(?=(\d{3})+(?!\d))/g
+                        value = value.toString()
+                        return value.replace(regex, ',')
+                    }
                     result = result[0];
                     console.log('改變選擇寵物的美容價格時間', result);
                     console.log('改變選擇寵物的美容價格時間', JSON.stringify(result));
                     sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(result));
-                    detail_beauty_plan_price.innerHTML = `NT$ ${result.price}`;
+                    detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(result.price)}`;
                     deatail_beauty_plan_time.innerHTML = `${parseInt(result.time.split(':')[0])}小時${result.time.split(':')[1]}分鐘`;
 
 
@@ -591,6 +599,9 @@
 
         // 選擇寵物
         function select_pet(this_ele) {
+            $('#appointment_confirmation').css({ "visibility": "hidden" });
+            show_selecttime.innerHTML = "";
+
 
             // console.log('選寵物', this_ele);
             select_pet_clear();
@@ -671,12 +682,16 @@
             // 帶上一頁選的資料 初始化這一頁
             function from_front1_info() {
 
-
+                const thousandthsFormat = (value) => {
+                    const regex = /\B(?=(\d{3})+(?!\d))/g
+                    value = value.toString()
+                    return value.replace(regex, ',')
+                }
                 // 預計時長 錢
                 let beauty_plan_data = JSON.parse(sessionStorage.getItem('beauty_plan_price_time'));
                 let beauty_plan_id = sessionStorage.getItem('planid');
                 deatail_beauty_plan_time.innerHTML = `${parseInt(beauty_plan_data[beauty_plan_id - 1].time.split(':')[0])}小時${beauty_plan_data[beauty_plan_id - 1].time.split(':')[1]}分鐘`;
-                detail_beauty_plan_price.innerHTML = `NT$ ${beauty_plan_data[beauty_plan_id - 1].price}`;
+                detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(beauty_plan_data[beauty_plan_id - 1].price)}`;
 
                 console.log('前面帶進來的挑選', beauty_plan_data[beauty_plan_id - 1]);
                 sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(beauty_plan_data[beauty_plan_id - 1]));

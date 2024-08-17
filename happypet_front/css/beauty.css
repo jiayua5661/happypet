@@ -182,6 +182,10 @@ footer i {
     width: 42.6px;
 }
 
+ul#pet_list>li {
+    cursor: pointer;
+}
+
 /* 新增front2 */
 /* 新增front2 */
 /* 新增front2 */
