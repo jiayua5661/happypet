@@ -9,9 +9,8 @@ body{
     font-size: 1.2rem;
 }
 h2{
-    /* height: 80px; */
-    /* border: 1px solid #000; */
-    color: #000;
+   color: var(--color-primary);
+
 }
 .table>:not(caption)>*>* {
     padding: 1rem ;
@@ -23,7 +22,7 @@ input{
     /* --bs-table-accent-bg: #ffc970 ; */
     /* --bs-table-accent-bg: #bfe0d5; */
     /* --bs-table-accent-bg: var(--color-secondary); */
-    /* --bs-table-accent-bg:#f1c6ca; */
+    /* --bs-table-accent-bg:var(--color-primary); */
     --bs-table-accent-bg:#cbe9dd;
 }
 
@@ -141,7 +140,7 @@ button:hover,.btn:hover{
 }
 
 .page{
-    position:absolute;
+    /* position:absolute; */
     right: 200px;
     top: 115px;
 }
@@ -150,4 +149,9 @@ button:hover,.btn:hover{
 }
 .page button.active{
     background-color: var(--color-secondary);
+}
+@media (max-width:992px) {
+    .page{
+        top: 162px;
+    }
 }

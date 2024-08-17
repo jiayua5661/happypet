@@ -64,7 +64,8 @@ window.onload = ()=>{
 
         // 過濾下架產品
         // products = products.filter(product => product.status === 't');
-        products = products.filter(product => product.status == 1);
+        // products = products.filter(product => product.status == 1);
+        products = products.filter(product => product.shelves_status == 1);
         if (products.length === 0) {
             // 如果沒有上架產品，顯示提示或進行其他處理
             alert('產品準備中');
@@ -248,7 +249,8 @@ window.onload = ()=>{
         function productStatus(){
             // 販賣中產品
             SellingProducts = products.filter(p=>{
-                return p.status === 't'
+                // return p.status === 't'
+                return p.shelves_status === 't'
             })
             
         }

@@ -426,8 +426,8 @@
                 <table className="table border" >
                     <tbody>
                         <tr className="querySeriesID">
-                            <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput}></i></th>
-                            <td className="border"><input onBlur={querySeriesID} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} /></td>
+                            <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput} ></i></th>
+                            <td className="border"><input onBlur={querySeriesID} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} placeholder="請搜尋產品系列編號"/></td>
                             <th>產品系列名稱</th>
                             <td className="border"><input value={seriesName} id="pdName" type="text" name="pdName" disabled={myPdType =='insert' || false} onChange={(e)=>{setSeriesName(e.target.value)}}/></td> 
                         </tr> 

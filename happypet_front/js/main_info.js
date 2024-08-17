@@ -44,6 +44,7 @@ let insertBtn = document.getElementById('insertBtn')
             $('#insertPage').removeClass('active')
             $('#updatePage').addClass('active')
             console.log('pdinfoType',pdinfoType)
+            $('#pdSeries').attr("placeholder", "請搜尋產品系列編號");
 
         }
         // 查詢產品系列編號是否使用
@@ -82,12 +83,13 @@ let insertBtn = document.getElementById('insertBtn')
                     // body:formData
                 })
                 .then(response=>{
-                    console.log(response)
-                    // return response.json()
+                    // console.log(response)
                     return response.json()
                 })
                 .then(({seriesProduct,message})=>{ 
-                    console.log('測試 = ',seriesProduct +"與message"+message)
+                    // console.log('測試 = ',seriesProduct +"與message"+message)
+                    showOthersImgs.innerHTML = '';
+                    showDescImgs.innerHTML = '';
                     // 如果系列編號不存在即顯示是訊息
                     if(message){
                         // message ? showMsg(message): null ;
@@ -119,9 +121,10 @@ let insertBtn = document.getElementById('insertBtn')
                             // console.log("seriesProduct[key]",products[descKey])
                             $(elem).val(products[descKey])
                         })
-                        console.log('pic_category_id',pic_category_id)
+                        // console.log('pic_category_id',pic_category_id)
                         // seriesProduct.forEach((elem,i)=>{
                             // console.log('seriesProduct.elem',elem)
+                            
                             switch (pic_category_id) {
                                 case 1:
                                     showCoverImg.innerHTML = `<img src="${seriesPD.img}">`
@@ -130,6 +133,7 @@ let insertBtn = document.getElementById('insertBtn')
                                     showOthersImgs.innerHTML += `<img src="${seriesPD.img}">`
                                     break;
                                 case 3:
+                                  
                                     showDescImgs.innerHTML += `<img src="${seriesPD.img}">`
                                     break;
                             
@@ -162,12 +166,11 @@ let insertBtn = document.getElementById('insertBtn')
                 return response.json()
             })
             .then((data)=>{
-                console.log('data',data)
+                // console.log('data',data)
                 if (data.message) {
-                    console.log(data.message);
+                    // console.log(data.message);
                     showMsg(data.message)
                     setTimeout(()=>{
-                        console.log('settimeout')
                         location.reload()// 刷新頁面
                     },2000)
                 } else if (data.error) {
@@ -175,9 +178,11 @@ let insertBtn = document.getElementById('insertBtn')
                 }
              })
         })
+
         coverimg.onchange = ()=>{
             let imgreader = new FileReader();
-            // console.log('imgreader',imgreader)
+            console.log('imgreader----->',imgreader)
+            console.log('imgreader----->',imgreader)
             imgreader.readAsDataURL(coverimg.files[0])
             showCoverImg.innerHTML = ''
             imgreader.onload = (event)=>{
@@ -185,13 +190,14 @@ let insertBtn = document.getElementById('insertBtn')
                 // src在event裡面的target的result
                 showCoverImg.innerHTML += `<img src="${event.target.result}">`
             }
-            
+           
             // console.log('我是封面圖',descimgs.files[0])
         }
+        
         descimgs.onchange = ()=>{
             // console.log('我是敘述圖',descimgs.files)
-            let descIMGs = Array.from(descimgs.files); // 轉換為陣列
-            descIMGs.forEach((img)=>{
+            let descriptionIMGs = Array.from(descimgs.files); // 轉換為陣列
+            descriptionIMGs.forEach((img)=>{
                 // console.log('我是敘述圖單張',img)
                 let imgreader = new FileReader();
                 imgreader.readAsDataURL(img)
@@ -205,8 +211,9 @@ let insertBtn = document.getElementById('insertBtn')
             // console.log('我是封面圖',descimgs.files[0])
         }
         othersImgs.onchange = ()=>{
-            let othersIMGs = Array.from(othersImgs.files); // 轉換為陣列
-            othersIMGs.forEach((img)=>{
+            // console.log('othersImgs.files---->',othersImgs.files)
+            let othersAllIMGs = Array.from(othersImgs.files); // 轉換為陣列
+            othersAllIMGs.forEach((img)=>{
                 let imgreader = new FileReader();
                 imgreader.readAsDataURL(img)
                 showOthersImgs.innerHTML = ''
@@ -251,7 +258,6 @@ let insertBtn = document.getElementById('insertBtn')
             formData.forEach((value, key) => {
                 console.log('formdata',key, value);
             });
-            // fetch('http://localhost/testpet/public/api/product_back/info/create',{
             fetch('http://localhost/happypet/happypet_back/public/api/product_back/info/create',{
                 method:'post',
                 body:formData
@@ -279,19 +285,7 @@ let insertBtn = document.getElementById('insertBtn')
                     console.log('data.error',data.error)
                     showMsg(data.error)
                 }
-                // if (parsedData.message) {
-                //     console.log(parsedData.message);
-                //     showMsg(parsedData.message)
-                //     // alert(parsedData.message)
-                //     setTimeout(()=>{
-                //         location.reload()// 刷新頁面
-                //     },1000)
-                // } else if (parsedData.error) {
-                //     // console.log('Error:', parsedData.error);
-                //     showMsg(parsedData.error)
-                //     // alert(parsedData.error)
-
-                // }
+          
             })
         }
     }
