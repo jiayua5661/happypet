@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Http\Controllers\SeriesProductController; 
 use App\Http\Controllers\DetailProductController; 
+use App\Http\Controllers\HotelOrderController;
 use App\Http\Controllers\BeautyFrontController; 
 use App\Http\Controllers\BeautyBackController; 
 use App\Http\Controllers\RegisterController;
@@ -531,26 +532,3 @@ Route::get('/front_beauty_pet_info/{uid}', [BeautyFrontController::class, 'front
 Route::get('/front2_beauty_select_beauty_plan_price_time/{pet_species}/{pet_weight}/{pet_fur}/{planid}', [BeautyFrontController::class, 'front2_beauty_select_beauty_plan_price_time']);
 
 //////////////////////////////////// LIN ////////////////////////////////////////
-
-//////////////////////////////////// LEE ////////////////////////////////////////
-//會員註冊
-Route::post('/member_register', RegisterController::class);
-
-//會員登入
-Route::post('/member_login', [LoginController::class, 'login']);
-
-//會員新增寵物
-Route::post('/member_add_pet', [MyPetController::class, 'add_pet']);
-
-//查看我的寵物資料
-Route::post('/member_mypet', [MyPetController::class, 'mypet_card']);
-
-//編輯我的寵物資料
-Route::post('/member_edit_pet', [MyPetController::class, 'edit_petinfo']);
-
-//查看會員資料
-Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
-
-//編輯會員資料
-Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
-//////////////////////////////////// LEE ////////////////////////////////////////
