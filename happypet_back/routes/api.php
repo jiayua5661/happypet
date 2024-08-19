@@ -19,6 +19,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 //                         N                              //
+//                         N                              //
 // main_info區 查詢產品系列號是否已有、類別下拉選單
 Route::get('/product_back/info/select/{seriesID?}', function ($seriesID = null) {
     $seriesIDCount = DB::scalar("SELECT count(*) FROM product_series WHERE series_id = ?", [$seriesID]);
@@ -196,7 +197,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
             // $aaa = DB::select('SELECT count(uid) FROM shopping_cart_item WHERE uid = ?',["qwe123"]);
             // if($aaa >0){
                 // }
-            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',["qwe123"]);
+            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',["2"]);
             Log::info('ordernumber_old :', ['ordernumber_old' => $ordernumber_old]); 
             //  {"ordernumber_old":[{"stdClass":{"order_number":"20240814001"}}]} 
             // Log::info('ordernumber_old :', ['ordernumber_old[0]->order_number' => $ordernumber_old[0]->order_number]); 
@@ -204,7 +205,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
             if($ordernumber_old){
                 $ordernumber_old = $ordernumber_old[0]->order_number;
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                        VALUES(?,'qwe123',?,?,NOW())",[$ordernumber_old,$poductID,$quantity]);    
+                        VALUES(?,'2',?,?,NOW())",[$ordernumber_old,$poductID,$quantity]);    
             }else{
                 DB::select("call giveOrderNumber(@current_order)");
                 $callProcedure = DB::select('select @current_order');
@@ -216,7 +217,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
                 Log::info('今天日期:', ['今天日期' => now()]); 
 
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                            VALUES(?,'qwe123',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
+                            VALUES(?,'2',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
                 // echo "異動筆數".$n;
             }
 
@@ -226,7 +227,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
 });
 // 查詢購物車
 Route::get('/productcart/{uid}',function($uid){
-    session(['uid' => 'qwe123']);
+    session(['uid' => '2']);
     $uid = session('uid');
     // $_SESSION["uid"] = 'qwe123';
     $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = '{$uid}'");
@@ -294,7 +295,14 @@ Route::post('/productall/select',function(Request $request){
     // Log::info(['result----->',$result]);
     return response()->json(["result" => $results]);
 });
-
+// all_product查詢
+Route::get('/product_back/allproducts',function(Request $request){
+    $productName = $request->query('productName');
+    Log::info('查詢產品系列ID:', ['productName' => $productName]); // 日誌查詢的ID
+    $all = DB::select(' SELECT * FROM all_product_view 
+                    WHERE full_name LIKE ?',["%$productName%"]);
+    return response()->json($all);
+});
 //                         N                              //
 
 
@@ -432,7 +440,7 @@ Route::delete("/orderdetail_delete", function (Request $request) {
 
 Route::post("/userinfoforbill", function (Request $request) {
     $uid = $request->input('uid');
-    $sql = "select * FROM users where uid= ?";
+    $sql = "select * FROM user_info where uid= ?";
     $userinfo = DB::select($sql, [$uid]);
 
     return response(json_encode($userinfo))
