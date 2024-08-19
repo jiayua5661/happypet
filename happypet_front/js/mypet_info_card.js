@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // let uid = localStorage.getItem('uid');
 // let uid = 1;
 
@@ -15,16 +14,6 @@ if (!uid) {
 document.getElementById('btnEditMyPet').onclick = (event) => {
     event.preventDefault();
     // console.log('hello', $(event.target)[0].dataset.pid);
-=======
-
-// let uid = localStorage.getItem('uid');
-let uid = 1;
-
-//編輯寵物資料，按下儲存
-document.getElementById('btnEditMyPet').onclick = (event) => {
-    event.preventDefault();
-    console.log('hello', $(event.target)[0].dataset.pid);
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
 
     let form = document.getElementById('formMyPetEdit');
     if (!form) {
@@ -32,7 +21,6 @@ document.getElementById('btnEditMyPet').onclick = (event) => {
         return;
     }
 
-<<<<<<< HEAD
     let formData = new FormData(form);
     formData.append('pid', $(event.target)[0].dataset.pid);
     formData.append('pet_gender', document.querySelector('input[name="pet_gender"]:checked').value);
@@ -63,22 +51,6 @@ document.getElementById('btnEditMyPet').onclick = (event) => {
     //     )
 
     // })
-=======
-    // let formData = new FormData(form);
-
-    fetch('http://localhost/happypet/happypet_back/public/api/member_edit_pet', {
-        method: 'post',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(
-            {
-                "pid": $(event.target)[0].dataset.pid,
-                "pet_name":pet_name.value,
-                "pet_species":pet_species.value,
-            }
-        )
-
-    })
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
         .then(response => {
             console.log(response);
 
@@ -103,11 +75,7 @@ document.getElementById('btnEditMyPet').onclick = (event) => {
     function showAddPetModal(message) {
         $('#add_or_not_Modal').modal('show');
         document.getElementById('alert_message').innerText = message;
-<<<<<<< HEAD
         if (message === "新資料儲存成功！"|| message === "資料已儲存") {
-=======
-        if (message === "編輯成功！") {
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
             setTimeout(() => {
                 window.location.href = '../10_member/member_center.html';
             }, 2000); // 2秒延遲，讓用戶能看到成功消息
@@ -119,23 +87,14 @@ document.getElementById('btnEditMyPet').onclick = (event) => {
 //查看寵物在資料庫的資料
 $('#mypet_card').on('click', '.pet_card_check_detail', function () {
     console.log($('#btnEditMyPet'));
-<<<<<<< HEAD
     // console.log($(this).data('pid'));
     // console.log($('#btnEditMyPet').data('pid'));
 
     //編輯寵物資料的按鈕要抓到該寵物的pid
-=======
-    console.log($(this).data('pid'));
-    console.log($('#btnEditMyPet').data('pid'));
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
     btnEditMyPet.dataset.pid = $(this).data('pid');
     // $('#btnEditMyPet').data('pid', $(this).data('pid'));
     // console.log('card');
     // document.getElementById('pet_name').value = $(this).data('pet_name');
-<<<<<<< HEAD
-
-=======
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
     pet_name.value = $(this).data('pet_name');
     pet_species.value = $(this).data('pet_species');
     // console.log(pet_species.value);
@@ -143,13 +102,9 @@ $('#mypet_card').on('click', '.pet_card_check_detail', function () {
     pet_weight.value = $(this).data('pet_weight');
     pet_fur.value = $(this).data('pet_fur');
     pet_birthday.value = $(this).data('pet_birthday');
-<<<<<<< HEAD
     // 這樣寫顯示不出來
     // pet_gender.value = $(this).data('pet_gender');
     // 要改成判斷資料的值，決定勾選哪一個input的id
-=======
-    // pet_gender.value = $(this).data('pet_gender');
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
     if ($(this).data('pet_gender') == '公') {
         male.checked = true
     } else {

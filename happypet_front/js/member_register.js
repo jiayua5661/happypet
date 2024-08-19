@@ -12,11 +12,7 @@ document.getElementById('btnRegister').onclick = (event) => {
     if (form.checkValidity()) {
         let formData = new FormData(form);
 
-<<<<<<< HEAD
         fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_register', {
-=======
-        fetch('http://localhost/happypet/happypet_back/public/api/member_register', {
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
             method: 'post',
             body: formData
         })

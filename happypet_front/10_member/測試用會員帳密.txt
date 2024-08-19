@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 **登入註冊測試
 **帳號: 
 1. abcdefg@yahoo.com.tw
@@ -10,14 +9,3 @@
 7. petso1992@yahoo.com.tw
 
 **密碼: Abcd1234~
-=======
-1.
-信箱：abcdefg@yahoo.com.tw
-密碼：Abcd1234~
-2.
-信箱：
-密碼：
-3.
-信箱：
-密碼：
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
