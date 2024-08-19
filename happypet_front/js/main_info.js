@@ -1,5 +1,6 @@
-let insertBtn = document.getElementById('insertBtn')
+// let insertBtn = document.getElementById('insertBtn')
     window.onload = ()=>{
+
         let myModal = document.getElementById('myModal')
         let myInput = document.getElementById('myInput')
         // let infoBtn = document.querySelector('.bi-info-circle-fill')
@@ -32,19 +33,53 @@ let insertBtn = document.getElementById('insertBtn')
             console.log('pdinfoType',pdinfoType)
             $('#insertPage').addClass('active')
             $('#updatePage').removeClass('active')
+            clearInput()
+            $('#pdSeries').val('')
 
 
         }
         updatePage.onclick = ()=>{
-            $('#maininfoTitle').text('產品主要資訊(修改)')
-            $('#insertBtn').addClass('d-none')
-            $('#updateBtn').removeClass('d-none')
-            pdInfo.setAttribute('data-type','update')
-            pdinfoType = pdInfo.getAttribute('data-type')
-            $('#insertPage').removeClass('active')
-            $('#updatePage').addClass('active')
-            console.log('pdinfoType',pdinfoType)
-            $('#pdSeries').attr("placeholder", "請搜尋產品系列編號");
+            edit()
+            // showProduct()
+
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode') 
+        const seriesID = urlParams.get('id') 
+        if (mode === 'edit' && seriesID) {
+            console.log('mode裡',seriesID)
+            edit()
+            $('#pdSeries').val(seriesID)
+            showProduct(seriesID)
+            console.log('mode裡pdSeries',pdSeries.innerText)
+
+        }
+        // document.addEventListener('DOMContentLoaded', function() {
+            // console.log('DOM 已加載完成');
+            function edit(){
+                
+                // updatePage.onclick = ()=>{
+                $('#maininfoTitle').text('產品主要資訊(修改)')
+                $('#insertBtn').addClass('d-none')
+                $('#updateBtn').removeClass('d-none')
+                pdInfo.setAttribute('data-type','update')
+                pdinfoType = pdInfo.getAttribute('data-type')
+                $('#insertPage').removeClass('active')
+                $('#updatePage').addClass('active')
+                console.log('pdinfoType',pdinfoType)
+                $('#pdSeries').attr("placeholder", "請搜尋產品系列編號");
+                // }
+            }
+        // });
+        function clearInput(){
+            $('#categoryOptions').val('default')
+            $('#pdName').val('')
+            $('#showCoverImg').html('');
+            $('#showOthersImgs').html('');
+            $('#showDescImgs').html('');
+            $('input[name^="description"]').each((_,elem)=>{
+                $(elem).val('')
+            })
 
         }
         // 查詢產品系列編號是否使用
@@ -78,74 +113,81 @@ let insertBtn = document.getElementById('insertBtn')
                 console.log('我是if')
             }else{
                 console.log('我是else')
-                fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/update/${event.target.value}`,{
-                    method:'post',
-                    // body:formData
-                })
-                .then(response=>{
-                    // console.log(response)
-                    return response.json()
-                })
-                .then(({seriesProduct,message})=>{ 
-                    // console.log('測試 = ',seriesProduct +"與message"+message)
-                    showOthersImgs.innerHTML = '';
-                    showDescImgs.innerHTML = '';
-                    // 如果系列編號不存在即顯示是訊息
-                    if(message){
-                        // message ? showMsg(message): null ;
-                        showMsg(message)
-                        $('select').val('')
-                        $('#pdName').val('')
-                        $('#showCoverImg').html('');
-                        $('#showOthersImgs').html('');
-                        $('#showDescImgs').html('');
-                        $('input[name^="description"]').each((_,elem)=>{
-                            $(elem).val('')
-                        })
-
-                        return
-                    }
-
-                    console.log('seriesProduct = ',seriesProduct)
-                    seriesProduct.forEach((seriesPD)=>{
-                        let {category_id,series_name,pic_category_id,...products} = seriesPD
-
-                        // console.log('data',data)
-                        // console.log('category_id',category_id)
-                        // console.log('series_name',series_name)
-                        pdName.value = series_name
-                        categoryOptions.value = category_id
-                        // console.log('inpuuuuut',$('input[name^="description"]'))
-                        $('input[name^="description"]').each((i,elem)=>{
-                            descKey = `description${i+1}` 
-                            // console.log("seriesProduct[key]",products[descKey])
-                            $(elem).val(products[descKey])
-                        })
-                        // console.log('pic_category_id',pic_category_id)
-                        // seriesProduct.forEach((elem,i)=>{
-                            // console.log('seriesProduct.elem',elem)
-                            
-                            switch (pic_category_id) {
-                                case 1:
-                                    showCoverImg.innerHTML = `<img src="${seriesPD.img}">`
-                                    break;
-                                case 2:
-                                    showOthersImgs.innerHTML += `<img src="${seriesPD.img}">`
-                                    break;
-                                case 3:
-                                  
-                                    showDescImgs.innerHTML += `<img src="${seriesPD.img}">`
-                                    break;
-                            
-                                default:
-                                    break;
-                            }
-                    })
-                })
+                showProduct(event.target.value)
             }
 
         }
-        
+        function showProduct(seriesID){
+            fetch(`http://localhost/happypet/happypet_back/public/api/product_back/info/update/${seriesID}`,{
+                method:'post',
+                // body:formData
+            })
+            .then(response=>{
+                // console.log(response)
+                return response.json()
+            })
+            .then(({seriesProduct,message})=>{ 
+                // console.log('測試 = ',seriesProduct +"與message"+message)
+                // showOthersImgs.innerHTML = '';
+                // showDescImgs.innerHTML = '';
+                clearInput()
+
+                // 如果系列編號不存在即顯示是訊息
+                if(message){
+                    // message ? showMsg(message): null ;
+                    showMsg(message)
+                    // $('select').val('')
+                    // $('#pdName').val('')
+                    // $('#showCoverImg').html('');
+                    // $('#showOthersImgs').html('');
+                    // $('#showDescImgs').html('');
+                    // $('input[name^="description"]').each((_,elem)=>{
+                    //     $(elem).val('')
+                    // })
+                    clearInput()
+                    return
+                }
+
+                console.log('seriesProduct = ',seriesProduct)
+                seriesProduct.forEach((seriesPD)=>{
+                    let {category_id,series_name,pic_category_id,...products} = seriesPD
+
+                    // console.log('data',data)
+                    // console.log('category_id',category_id)
+                    // console.log('series_name',series_name)
+                    // pdName.value = series_name
+                    $('#pdName').val(series_name)
+
+                    // categoryOptions.value = category_id
+                    $('#categoryOptions').val(category_id)
+                    // console.log('inpuuuuut',$('input[name^="description"]'))
+                    $('input[name^="description"]').each((i,elem)=>{
+                        descKey = `description${i+1}` 
+                        // console.log("seriesProduct[key]",products[descKey])
+                        $(elem).val(products[descKey])
+                    })
+                    // console.log('pic_category_id',pic_category_id)
+                    // seriesProduct.forEach((elem,i)=>{
+                        // console.log('seriesProduct.elem',elem)
+                        
+                        switch (pic_category_id) {
+                            case 1:
+                                showCoverImg.innerHTML = `<img src="${seriesPD.img}">`
+                                break;
+                            case 2:
+                                showOthersImgs.innerHTML += `<img src="${seriesPD.img}">`
+                                break;
+                            case 3:
+                              
+                                showDescImgs.innerHTML += `<img src="${seriesPD.img}">`
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                })
+            })
+        }
         updateBtn.addEventListener('click', (event)=>{
             event.preventDefault();
             console.log('Update button clicked, preventing default form submission');
@@ -172,6 +214,7 @@ let insertBtn = document.getElementById('insertBtn')
                     showMsg(data.message)
                     setTimeout(()=>{
                         location.reload()// 刷新頁面
+                        window.location.href = `http://localhost/happypet/happypet_front/40_product/back/main_info.html`;
                     },2000)
                 } else if (data.error) {
                     showMsg(data.error)
@@ -250,7 +293,9 @@ let insertBtn = document.getElementById('insertBtn')
         })
 
 
-        insertBtn.onclick = (event)=>{
+        // insertBtn.onclick = (event)=>{
+        insertBtn.addEventListener('click', (event)=>{
+
             event.preventDefault();
             let formData = new FormData(document.getElementById('pdInfo'));
             formData.append('action', 'insert');
@@ -287,5 +332,6 @@ let insertBtn = document.getElementById('insertBtn')
                 }
           
             })
-        }
+        // }
+        })
     }

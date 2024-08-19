@@ -1,6 +1,8 @@
 :root{
     --color-primary:#90b9ab;
-    --color-secondary:#e4b0b4 ;
+    --color-secondary:#e4b0b4;
+    --color-phover:#afcfc4;
+
 }
 body{
     background: url(../img/00_index/geometry.png);
@@ -19,7 +21,6 @@ form{
 #newItem td:nth-child(7) input,
 #newItem td:nth-child(8) input{
     width: 100%;
-    /* background-color: aqua; */
 }
 
 th:nth-child(1),.querySeriesID th{
@@ -27,22 +28,15 @@ th:nth-child(1),.querySeriesID th{
 }
 
 .pd_id_area input:first-of-type{
-    /* width: 30%; */
-    /* width: 200px; */
-    /* background-color: #e4b0b4; */
-    /* width: 40px; */
     width: 20%;
 }
 .pd_id_area input:last-of-type{
-    /* width: 65%; */
-    /* width: 155px; */
     width: 75%;
-    /* background-color: yellowgreen; */
 }
-th,td{
+/* th,td{
     text-align: center;
     vertical-align: middle;
-}
+} */
 .table-striped>tbody>tr:nth-of-type(odd)>* {
     --bs-table-accent-bg: #cbe9dd;
 }
@@ -50,26 +44,24 @@ th,td{
     background-color: #cbe9dd;
 }
 .querySeriesID td:first-of-type{
-    /* background-color: red; */
     width: 25%;
 }
 #addTable{
     width: 100%;
 }
-input{
-    /* width: 100%; */
-    border: 1px solid #cbe9dd;
-    outline: none;
-    /* border-radius: 5px; */
-}
 .seriesNum{
     width: 60%;
 }
-
+input{
+    border: 1px solid #cbe9dd;
+    outline: none;
+}
+input:focus{
+    outline: 1px solid var(--color-secondary);
+    border: 1px solid transparent;
+}
 input[name="pdSeries"],#pdName{
-    /* width: 200px; */
     width: 95%;
-
 }
 input[readonly] ,input:disabled{
     background-color: #f2f2f2;
@@ -97,7 +89,7 @@ button,.btn{
     transition: .2s;
 }
 button:hover,.btn:hover{
-    background-color:#a2c5ba;
+    background-color:var(--color-phover);
     color: #fff;
 }
 button:active{
@@ -118,17 +110,21 @@ i[class$="Btn"]{
 }
 i[class$="Btn"]:hover{
     color: #aaa;
-
 }
 /* 彈出視窗 */
 .modal-footer{
     border: none;
 }
-
 .deleteBtn{
     top: 22%;
     left: -15%;
     box-shadow: none;
     padding: 1px 5px;
-    /* transform: translateY(-50%); */
+}
+/* header 下拉選項樣式 */
+.dropdown-item:focus {
+    background-color:#fff;
+}
+.dropdown-item:hover, .dropdown-item:active{
+    background-color: var(--color-phover);
 }
