@@ -313,31 +313,31 @@
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "uid": "1"
+                    "uid": "2"
                 })
             });
         let data = await response.json()
-        let { name, email, cellphone, adress } = data[0];
+        let { cname, email, cellphone, address } = data[0];
         // console.log(name);
-        buyername.innerText = name;
+        buyername.innerText = cname;
         buyerphone.innerText = cellphone;
         buyeremail.innerText = email;
         userinfo = data[0];
 
-        order['user_name'] = name;
+        order['user_name'] = cname;
         order['user_phone'] = cellphone;
         order['user_email'] = email;
     }
     getuserinfo();
 
     consignee.onclick = () => {
-        let { name, email, cellphone, adress } = userinfo;
-        // console.log(name);
+        let { cname, email, cellphone, address } = userinfo;
+        // console.log(cname);
 
         if (event.target.checked) {
-            consignee_name.value = name;
+            consignee_name.value = cname;
             consignee_phone.value = cellphone;
-            send_address.value = adress;
+            send_address.value = address;
         } else {
             consignee_name.value = "";
             consignee_phone.value = "";
@@ -486,6 +486,7 @@
         order['pay'] = $('input[type="radio"][name="pay"]:checked').attr('id') == "creditcard" ? "線上付款" : "到店付款";
         // console.log($('input[type="radio"][name="pay"]:checked').attr('id'));
         order['order_number'] = localStorage.getItem('order_number');
+        order['order_status'] = "1";
         console.log('order', order);
         // console.log(Object.value(order));
 

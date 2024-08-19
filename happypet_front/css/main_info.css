@@ -1,6 +1,7 @@
 :root{
     --color-primary:#90b9ab;
     --color-secondary:#e4b0b4 ;
+    --color-phover:#afcfc4;
     /* 狗狗顏色 */
     --color-tertiary:#ffc971 ; 
 }
@@ -9,29 +10,23 @@ body{
     font-size: 1.2rem;
 }
 h2{
-    /* height: 80px; */
-    /* border: 1px solid #000; */
-    color: #000;
+   color: var(--color-primary);
 }
 .table>:not(caption)>*>* {
     padding: 1rem ;
 }
+select{
+   width: 170px; 
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg:#cbe9dd;
+}
 input{
     width: 60%;
 }
-.table-striped>tbody>tr:nth-of-type(odd)>* {
-    /* --bs-table-accent-bg: #ffc970 ; */
-    /* --bs-table-accent-bg: #bfe0d5; */
-    /* --bs-table-accent-bg: var(--color-secondary); */
-    /* --bs-table-accent-bg:#f1c6ca; */
-    --bs-table-accent-bg:#cbe9dd;
-}
-
 input[type="file"]::file-selector-button,#insertBtn,#updateBtn{
-    /* display: inline-block; */
     background-color:var(--color-primary);
-    /* background-color:#7d9b92; */
-    /* background-color:red; */
     color: #fff;
     padding: 5px 10px;
     margin: 5px;
@@ -42,23 +37,24 @@ input[type="file"]::file-selector-button,#insertBtn,#updateBtn{
     box-shadow: 2px 2px 3px #569682;
     font-weight: normal;
     letter-spacing: 1.5px;
-    /* font-family: none; */
-    /* font-family: "Playfair Display", serif; */
     font-size: 1rem;
     transition: .2s;
-
 }
 input[type="file"]::file-selector-button:hover ,#insertBtn:hover,#updateBtn:hover{
-    /* background-color:#fff; */
-    background-color:#a2c5ba;
-    /* color: var(--color-primary); */
+    background-color:var(--color-phover);
     color: #ffffff;
-    /* border: 1px solid var(--color-tertiary); */
     border: 1px solid var(--color-primary);
 }
-/*  */
 input[type="file"]::file-selector-button:active,#insertBtn:active,#updateBtn:active{
     transform: scale(0.97);
+}
+input:not([type="file"]),select{
+    outline: 1px solid transparent;
+    border: 1px solid #cbe9dd;
+}
+input:not([type="file"]):focus,select:focus{
+    outline: 1px solid var(--color-secondary);
+    border: 1px solid transparent;
 }
 #insertBtn{
     right: 0;
@@ -83,18 +79,10 @@ input[name^="description"]{
     transform: translate(-50%,-50%);
     background-color: #ffffff;
     width: 50%;
-    /* height:50%; */
-    /* border: 1px solid #000; */
     box-shadow: 1px 2px 5px #ddd;
     border-radius: 30px;
     overflow: hidden;
-    /* display: none; */
-    /* height: 100%; */
 }
-
-/* i.bi-info-circle-fill:hover .descriptionInfo{
-    display: block;
-} */
 .descriptionInfo img{
     width: 100%;
 }
@@ -141,7 +129,6 @@ button:hover,.btn:hover{
 }
 
 .page{
-    position:absolute;
     right: 200px;
     top: 115px;
 }
@@ -150,4 +137,16 @@ button:hover,.btn:hover{
 }
 .page button.active{
     background-color: var(--color-secondary);
+}
+/* header 下拉選項樣式 */
+.dropdown-item:focus {
+    background-color:#fff;
+}
+.dropdown-item:hover, .dropdown-item:active{
+    background-color: var(--color-phover);
+}
+@media (max-width:992px) {
+    .page{
+        top: 162px;
+    }
 }

@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- 後台header -->
-    <link rel="stylesheet" href="../../css/back_header_footer.css">
+    <link rel="stylesheet" href="../../css/back_header.css">
     <link rel="stylesheet" href="../../css/detail_info.css">
 
     <script src="../../js/bootstrap.bundle.js"></script>
@@ -26,49 +26,58 @@
     
 </head>
 <body>
-    <header class="w-100 position-sticky">
-        <div class="row m-0 px-md-5 text-center justify-content-lg-between justify-content-center align-items-center">
-            <a href="" class="col-lg-3 col-8"><img class="img-fluid logo" src="../../img/LOGO.png" alt=""></a>
-            <ul class="nav col-lg-9 p-0 d-flex justify-content-lg-between justify-content-center">
-                <li class="col-lg-2 col-3 dropdown">
-                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
-                        data-bs-toggle="dropdown" aria-expanded="false">美容預約</a>
-                    <ul class="dropdown-menu" aria-labelledby="beauty">
-                        <li><a href="" class="dropdown-item">美容預約表</a></li>
-                    </ul>
-                </li>
-                <li class="col-lg-2 col-3 dropdown">
-                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
-                        data-bs-toggle="dropdown" aria-expanded="false">寵物住宿</a>
-                    <ul class="dropdown-menu" aria-labelledby="beauty">
-                        <li><a href="" class="dropdown-item">旅館訂單</a></li>
-                        <li><a href="" class="dropdown-item">當日住宿</a></li>
-                    </ul>
-                </li>
-                <li class="col-lg-2 col-3 dropdown">
-                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
-                        data-bs-toggle="dropdown" aria-expanded="false">產品專區</a>
-                    <ul class="dropdown-menu" aria-labelledby="beauty">
-                        <li><a href="http://localhost/happypet/happypet_front/40_product/back/main_info.html" class="dropdown-item" id="product1">產品主要內容</a></li>
-                        <li><a href="http://localhost/happypet/happypet_front/40_product/back/detail_info.html" class="dropdown-item" id="product2">產品詳細資訊</a></li>
-                        <li><a href="http://localhost/happypet/happypet_front/40_product/back/warehouse.html" class="dropdown-item" id="product3">產品入庫</a></li>
-                        <li><a href="http://localhost/happypet/happypet_front/40_product/back/on_shelves.html" class="dropdown-item" id="product4">上架中產品</a></li>
-                        <li><a href="http://localhost/happypet/happypet_front/40_product/back/remove_shelves.html" class="dropdown-item" id="product5">未上架產品</a></li>
-                    </ul>
-                </li>
-                <li class="col-lg-2 col-3 dropdown">
-                    <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="beauty"
-                        data-bs-toggle="dropdown" aria-expanded="false">產品訂單</a>
-                    <ul class="dropdown-menu" aria-labelledby="beauty">
-                        <li><a href="" class="dropdown-item">美容預約表</a></li>
-                    </ul>
-                </li>
-                <div class="nav_icon col-lg-2 ">
-                    <a href="">登出</a>
-                </div>
-            </ul>
+    <!-- Header -->
+    <header id="navbar" class="sticky-top ">
+        <div class="member nav_icon">
+            <a href="#" id="logout_btn">登出</a>
+        </div>
+        <div class="row align-items-center container-xl">
+            <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
+                <a class="" href="#">
+                    <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
+                </a>
+            </div>
+            <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
+                <ul class="nav justify-content-center text-center">
+                    <li class="col-3 mt-3 mb-3 dropdown">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="header_beauty"
+                            data-bs-toggle="dropdown" aria-expanded="false">美容預約</a>
+                        <ul class="dropdown-menu nav_drop" aria-labelledby="header_beauty">
+                            <li><a href="#" class="dropdown-item" id="beauty1">美容預約表</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-3 mt-3 mb-3 dropdown">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="header_hotel"
+                            data-bs-toggle="dropdown" aria-expanded="false">寵物住宿</a>
+                        <ul class="dropdown-menu nav_drop" aria-labelledby="header_hotel">
+                            <li><a href="#" class="dropdown-item" id="hotel1">旅館訂單</a></li>
+                            <li><a href="#" class="dropdown-item" id="hotel2">當日住宿</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-3 mt-3 mb-3 dropdown">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="header_product"
+                            data-bs-toggle="dropdown" aria-expanded="false">產品專區</a>
+                        <ul class="dropdown-menu nav_drop" aria-labelledby="header_product">
+                            <li><a href="http://localhost/happypet/happypet_front/40_product/back/main_info.html" class="dropdown-item" id="product1">產品主要內容</a></li>
+                            <li><a href="http://localhost/happypet/happypet_front/40_product/back/detail_info.html" class="dropdown-item" id="product2">產品詳細資訊</a></li>
+                            <li><a href="http://localhost/happypet/happypet_front/40_product/back/warehouse.html" class="dropdown-item" id="product3">產品入庫</a></li>
+                            <li><a href="http://localhost/happypet/happypet_front/40_product/back/on_shelves.html" class="dropdown-item" id="product4">上架中產品</a></li>
+                            <li><a href="http://localhost/happypet/happypet_front/40_product/back/remove_shelves.html" class="dropdown-item" id="product5">未上架產品</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-3 mt-3 mb-3 dropdown">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button"
+                            id="header_product_order" data-bs-toggle="dropdown" aria-expanded="false">產品訂單</a>
+                        <ul class="dropdown-menu nav_drop" aria-labelledby="header_product_order">
+                            <li><a href="#" class="dropdown-item" id="product_order1">產品訂單資訊</a></li>
+                            <li><a href="#" class="dropdown-item" id="product_order2">會員訂單紀錄</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </header>
+    <!-- Header end -->
     <div id="root"></div>
     <!-- <div class=" pdDetailContainer position-relative py-3">
         <h2 class="m-0 py-3">產品詳細資訊</h2>
@@ -226,7 +235,7 @@
             
             return(
                 <React.Fragment>
-                    <table id="addTable" className="table table-striped align-middle table-bordered ">
+                    <table id="addTable" className="table table-striped align-middle table-bordered text-center">
                         <thead>
                             <tr>
                                 <th>料號</th>
@@ -277,24 +286,23 @@
             )
         }//style={{ left:"-80px",top:"250px"}}
         // function TitieAndAddbtn({clearInput}){
-        function TitieAndAddbtn(){
+            function TitieAndAddbtn(){
             let detailinfoTitle = React.useRef()
             // let [myPdType,setMyPdType] = React.useState('insert');
             let {myPdType,setMyPdType,clearInput,pdSeries,setPdSeries,seriesName,setSeriesName,rows,setRows} = React.useContext(myContext)
-            // React.useEffect(() => {
-                // if(myPdType == 'update'){
-                    // setPdSeries('')
-                    // setSeriesName('')
-                    // clearInput()
-                // console.log('Before clearInput:', { pdSeries, seriesName });
-                // clearInput();
-                // console.log('After clearInput:', { pdSeries, seriesName });
+            React.useEffect(() => {
+                // 讀取 URL 參數，並根據參數設置默認模式
+                const urlParams = new URLSearchParams(window.location.search);
+                const mode = urlParams.get('mode');
+                const seriesID = urlParams.get('id');
+                console.log('url------->',mode,seriesID)
+                if (mode === 'edit') {
+                    handleUpdatePageClick(); // 切換到修改模式
+                } else {
+                    handleInsertPageClick(); // 默認為新增模式
+                }
+            }, []);
 
-                // }
-                // console.log('useEffect clearInput myPdType',myPdType);
-                // console.log('useEffect clearInput pdSeries',pdSeries);
-                
-            // }, []);
             function handleInsertPageClick(){
                 detailinfoTitle.current.innerText = '產品詳細資訊(新增)'
                 $('#updateBtn').addClass('d-none')
@@ -322,11 +330,11 @@
 
             return(
                 <React.Fragment>
-                    <h2 className="m-0 py-3 " ref={detailinfoTitle} id="">產品詳細資訊(新增)</h2>
+                    <h2 className="m-0 py-3 " ref={detailinfoTitle}>產品詳細資訊(新增)</h2>
                     <span className="ms-5 " style={{position:"absolute",right:'0',top:'40px' }}>
                         切換頁面：&nbsp;&nbsp;
-                        <button className="pagebtn" onClick={handleInsertPageClick} style={myPdType =='insert' ? {backgroundColor:'#e4b0b4'}:{backgroundColor:'#90b9ab'}}>新增</button>
-                        <button className="pagebtn ms-2" onClick={handleUpdatePageClick} style={myPdType =='update' ? {backgroundColor:'#e4b0b4'}:{backgroundColor:'#90b9ab'}}>修改</button>
+                        <button className="pagebtn" onClick={handleInsertPageClick} style={{backgroundColor: myPdType == 'insert' ? '#e4b0b4':'#90b9ab'}}>新增</button>
+                        <button className="pagebtn ms-2" onClick={handleUpdatePageClick} style={{backgroundColor: myPdType == 'update' ? '#e4b0b4':'#90b9ab'}}>修改</button>
                     </span>
                 </React.Fragment>
             )
@@ -347,7 +355,34 @@
                 // return ()=>{
                     // setSeriesName('')
                 // }
-           
+            React.useEffect(() => {
+                // 讀取 URL 參數，並根據參數設置默認模式
+                const urlParams = new URLSearchParams(window.location.search);
+                const mode = urlParams.get('mode');
+                const seriesID = urlParams.get('id');
+                console.log('url2------->',mode,seriesID)
+                if (mode === 'edit' && seriesID) {
+                    setPdSeries(seriesID)
+                    console.log('mode裡',seriesID)
+                    // querySeriesID(pdSeries)
+                    
+                }
+            }, [setPdSeries]);
+            React.useEffect(() => {
+                if(pdSeries.length == 11 ){
+                    console.log('長度',pdSeries.length)
+                    querySeriesID(pdSeries)
+                }
+                return ()=>{
+                    setProductArr([])
+                    // setRows([{ id: '', fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:'' }])
+                }
+            }, [pdSeries]);
+            function handleBlur(){
+                if (pdSeries) {
+                    querySeriesID(pdSeries);
+                }
+            }
             function querySeriesID(event){
                 // console.log('有值嗎?',$('[name="pdSeries"]').val().trim(),'seriesName',seriesName)
                 if($('[name="pdSeries"]').val() != ''){
@@ -359,7 +394,7 @@
                     if(myPdType == 'insert'){
                         // console.log('我是if')
                         // console.log('querySeriesID____seriesName',seriesName)
-                        setPdSeries(event.target.value)
+                        // setPdSeries(event.target.value)
 
                         fetch('http://localhost/happypet/happypet_back/public/api/product_back/detail/show',{
                             method:'post',
@@ -378,12 +413,7 @@
                                 console.log(dataObj.error)
                                 showMsg(dataObj.error)
                                 setSeriesName('')
-                                // $('input.fullPdID').each(function(index,fullInput){
-                                //     fullInput.value = ''
-                                //     console.log('fullInput.value',fullInput.value)
-                                // });
                             }else{
-                                // pdName.value = dataObj.series_name
                                 setSeriesName(dataObj.series_name)
                                 // console.log('dataObj.series_name',dataObj.series_name)
                             }
@@ -394,8 +424,7 @@
                         });
                     }else{
                         // console.log('我是else')
-                        setPdSeries(event.target.value)
-
+                        // setPdSeries(event.target.value)
                         $.get({
                             url:`http://localhost/happypet/happypet_back/public/api/product_back/detail/select?pdSeries=${pdSeries}`,
                             success: function({product}){
@@ -423,11 +452,11 @@
             
             // onChange={()=>{setPdSeries('')}}
             return(
-                <table className="table border" >
+                <table className="table border align-middle text-center" >
                     <tbody>
                         <tr className="querySeriesID">
-                            <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput}></i></th>
-                            <td className="border"><input onBlur={querySeriesID} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} /></td>
+                            <th>產品系列編號<i className="bi bi-arrow-clockwise refreshBtn" onClick={clearInput} ></i></th>
+                            <td className="border"><input onBlur={handleBlur} value={pdSeries} type="text" name="pdSeries" onChange={(e)=>{setPdSeries(e.target.value)}} placeholder={myPdType == 'insert' ? "" : "請搜尋產品系列編號"}/></td>
                             <th>產品系列名稱</th>
                             <td className="border"><input value={seriesName} id="pdName" type="text" name="pdName" disabled={myPdType =='insert' || false} onChange={(e)=>{setSeriesName(e.target.value)}}/></td> 
                         </tr> 
@@ -497,7 +526,9 @@
                             showMsg(data.message)
 
                             setTimeout(()=>{
-                                location.reload()// 刷新頁面
+                                // location.reload()// 刷新頁面
+                                // 因為有帶參數的，如果成功就導回沒有url參數的頁面讓畫面變空
+                                window.location.href = `http://localhost/happypet/happypet_front/40_product/back/detail_info.html`;
                             },1000)
                         } else if (data.error) {
                             // console.log('Error:', data.error);
@@ -539,6 +570,10 @@
                 
                 setPdSeries('')
                 setSeriesName('')
+               
+                setProductArr([])
+                setRows([{ id: '', fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:'' }])
+                
                 console.log('清除輸入欄位：', { pdSeries: '', seriesName: '' });
                 // console.log('我是clearinput的pdSeries',pdSeries)
                 // console.log('我是clearinput')
