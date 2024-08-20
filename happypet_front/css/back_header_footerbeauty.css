@@ -222,6 +222,15 @@ main {
     height: 140px;
 }
 
+.beauty_pet_plan_box{
+    border: 2px solid white;
+    border-radius: 15px;
+    background-color: wheat;
+    color: black;
+    font-weight: 800;
+    cursor:pointer;
+}
+
 /* .beauty_back_table div {
     flex: 1;
     margin: 1px;

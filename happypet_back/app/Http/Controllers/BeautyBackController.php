@@ -15,7 +15,7 @@ class BeautyBackController extends Controller
 
     function get_beauty_order_oneweek($first_date, $last_date) {
         $oneweek_order = DB::select('select beauty_order.boid, beauty_order.pid , beauty_order.start_time, beauty_order.use_time, beauty_order.end_time, beauty_plan.plan_title, pet_info.pet_name,pet_info.pet_birthday,
-        pet_info.others, user_info.name, user_info.cellphone, pet_info.pet_headphoto
+        pet_info.others, user_info.cname, user_info.cellphone, pet_info.pet_headphoto
         from beauty_order 
         LEFT JOIN pet_info ON beauty_order.pid = pet_info.pid
         left join beauty_plan on beauty_order.planid = beauty_plan.planid

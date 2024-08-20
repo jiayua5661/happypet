@@ -284,8 +284,7 @@
 
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-
-                <div class="toast-body fs-5 text-center">資料尚未填寫完整</div>
+                <div class="toast-body fs-5 text-center"></div>
             </div>
         </div>
 
@@ -503,7 +502,13 @@
         }
         chechoutBill();
 
-        let toindex = () => { document.location.href = "../../00_index/index.html" }
+        let toindex = () => {
+            $('.toast-body').text('感謝您的購買!');
+            toastBootstrap.show()
+            setTimeout(function () {
+                document.location.href = "../../00_index/index.html"
+            }, 1000 * 5)
+        }
 
 
 
@@ -519,7 +524,10 @@
                     $(`#${narr[0]}`).focus();
                 }
             }
-            if (narr.length) { toastBootstrap.show() }
+            if (narr.length) {
+                $('.toast-body').text('資料尚未填寫完整');
+                toastBootstrap.show()
+            }
 
         }
     }
