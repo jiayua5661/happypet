@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 document.getElementById('btnAddPet').onclick = (event) => {
     event.preventDefault();
 
@@ -21,7 +20,7 @@ document.getElementById('btnAddPet').onclick = (event) => {
     // console.log('照片',pet_headphoto.value);
 
 
-    fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_add_pet', {
+    fetch('http://localhost/happypet/happypet_back/public/api/member_add_pet', {
         method: 'post',
         body: formData
         // headers: { 'Content-Type': 'application/json' },
@@ -41,17 +40,6 @@ document.getElementById('btnAddPet').onclick = (event) => {
         //         "pet_headphoto": petImageUpload.value,
         //     }
         // )
-=======
-//串接新增寵物API
-document.getElementById('btnAddPet').onclick = (event) => {
-    event.preventDefault();
-
-    let formData = new FormData(document.getElementById('formAddPet'));
-
-    fetch('http://localhost/happypet/happypet_back/public/api/member_add_pet', {
-        method: 'post',
-        body: formData
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
     })
         .then(response => {
             console.log(response);
@@ -84,41 +72,4 @@ document.getElementById('btnAddPet').onclick = (event) => {
         }
 
     }
-<<<<<<< HEAD
 }
-=======
-}
-
-// btnAddPet.onclick = (event) => {
-//     event.preventDefault();
-
-//     let formData = new FormData(document.getElementById('formAddPet'));
-//     fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_add_pet', {
-//         method: 'post',
-//         body: formData
-//     })
-//         .then(response => {
-//             console.log(response);
-//             if (!response.ok) {
-//                 throw new Error(`伺服器錯誤(fetch回傳有問題): ${response.statusText}`);
-//             }
-//             // return response.text()
-//             return response.json()
-//         })
-//         .then((data) => {
-//             console.log('我是data1', data.message)
-//             if (data.message){
-//                 showAddPetModal( data.message)
-//             }else{
-//                 showAddPetModal( data.error)
-//             }
-//             // alert_message.innerText = data.message;
-//         })
-
-
-//         function showAddPetModal(message){
-//             $('#add_or_not_Modal').modal('show')
-//             alert_message.innerText = message;
-//         }
-//     }
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d

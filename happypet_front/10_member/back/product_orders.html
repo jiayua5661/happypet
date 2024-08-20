@@ -29,6 +29,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 
+
 </head>
 
 <body>
@@ -390,9 +391,9 @@
 
                 return (
                   <tr key={id} className="click_order" data-bs-toggle="modal" data-bs-target="#shelves_dialog" onClick={handleClickTable}>
-                    <td>{id}</td>
+                    <td style={{"display":"none"}}  >{id}</td>
                     <td>{order_number}</td>
-                    <td>{user_phone}</td>
+                    <td>{user_name}</td>
                     <td>{user_phone}</td>
                     <td>{status(order_status)}</td>
                     <td>{new Date(create_time).toISOString().split('T')[0]}</td>
@@ -422,7 +423,7 @@
             <table className="table table-striped table-hover text-center align-middle justify-content-center">
               <thead className="text-center">
                 <tr>
-                  <th scope="col">編號</th>
+                  <th style={{"display":"none"}}  scope="col">編號</th>
                   <th scope="col">訂單編號</th>
                   <th scope="col">會員姓名</th>
                   <th scope="col">手機號碼</th>

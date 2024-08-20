@@ -15,11 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = form.querySelector('input[name="login_password"]').value;
 
             try {
-<<<<<<< HEAD
-                const response = await fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_login', {
-=======
                 const response = await fetch('http://localhost/happypet/happypet_back/public/api/member_login', {
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -30,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (response.ok) {
-<<<<<<< HEAD
                     // 登入成功後儲存 uid 到 localStorage
                     localStorage.setItem('uid', result.uid);
 
@@ -38,9 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     //確認後跳轉至首頁
                     window.location.href = '../10_member/member_center.html';
-=======
-                    alert('登入成功！');
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
                 } else {
                     alert(result.message || '登入失敗，請檢查您的電子信箱和密碼。');
                 }
@@ -52,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         form.classList.add('was-validated');
     });
-<<<<<<< HEAD
 });
 
 document.getElementById('btnLogout').addEventListener('click', function() {
@@ -68,6 +59,4 @@ document.getElementById('btnLogout').addEventListener('click', function() {
 
     // 重新導向到登入頁面
     window.location.href = '../10_member/member_center.html'; // 調整為你的登入頁面路徑
-=======
->>>>>>> 9ed2c47d2f0ee8eb6183055cf3749de644a0f94d
 });

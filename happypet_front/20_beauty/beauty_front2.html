@@ -573,11 +573,19 @@
             fetch(`http://localhost/happypet/happypet_back/public/api/front2_beauty_select_beauty_plan_price_time/${pet_species}/${pet_weight}/${pet_fur}/${planid}`)
                 .then(res => res.json())
                 .then(result => {
+                    const thousandthsFormat = (value) => {
+  const regex = /\B(?=(\d{3})+(?!\d))/g
+  value = value.toString()
+  return value.replace(regex, ',')
+}
+
                     result = result[0];
+                    console.log('價格',thousandthsFormat(result.price));
+                    
                     console.log('改變選擇寵物的美容價格時間', result);
                     console.log('改變選擇寵物的美容價格時間', JSON.stringify(result));
                     sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(result));
-                    detail_beauty_plan_price.innerHTML = `NT$ ${result.price}`;
+                    detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(result.price) }`;
                     deatail_beauty_plan_time.innerHTML = `${parseInt(result.time.split(':')[0])}小時${result.time.split(':')[1]}分鐘`;
 
 
@@ -655,7 +663,8 @@
 
                 // 這邊還要改   我在這裡
                 // uid 飼主id
-                let uid = 1;
+                let uid = localStorage.getItem('uid');
+                // let uid = 1;
 
                 // 確定預約按鈕要拿的資料 uid
                 sessionStorage.setItem('appointment_confirmation_uid', uid);
@@ -670,13 +679,17 @@
 
             // 帶上一頁選的資料 初始化這一頁
             function from_front1_info() {
-
+                const thousandthsFormat = (value) => {
+  const regex = /\B(?=(\d{3})+(?!\d))/g
+  value = value.toString()
+  return value.replace(regex, ',')
+}
 
                 // 預計時長 錢
                 let beauty_plan_data = JSON.parse(sessionStorage.getItem('beauty_plan_price_time'));
                 let beauty_plan_id = sessionStorage.getItem('planid');
                 deatail_beauty_plan_time.innerHTML = `${parseInt(beauty_plan_data[beauty_plan_id - 1].time.split(':')[0])}小時${beauty_plan_data[beauty_plan_id - 1].time.split(':')[1]}分鐘`;
-                detail_beauty_plan_price.innerHTML = `NT$ ${beauty_plan_data[beauty_plan_id - 1].price}`;
+                detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(beauty_plan_data[beauty_plan_id - 1].price) }`;
 
                 console.log('前面帶進來的挑選', beauty_plan_data[beauty_plan_id - 1]);
                 sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(beauty_plan_data[beauty_plan_id - 1]));
@@ -745,7 +758,7 @@
 
                 if (sessionStorage.getItem('appointment_confirmation_start_time')) {
                     console.log('有時間');
-                    fetch(`http://localhost/test/testlaravel/public/api/beauty_front2_insert_order`, {
+                    fetch(`http://localhost/happypet/happypet_back/public/api/beauty_front2_insert_order`, {
                         method: 'POST',
                         body: JSON.stringify({
                             uid: order_uid,
@@ -761,7 +774,9 @@
                         headers: {
                             'Content-Type': 'application/json; charset=utf-8'
                         }
-                    }).then(res => res.json())
+                    }).then(res => {
+                        console.log('res',res)
+                        return res.json()})
                         .then(result => {
                             console.log(result);
                             sessionStorage.removeItem("plan_title");

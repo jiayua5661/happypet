@@ -1,7 +1,7 @@
 // let uid = 1; // 假設使用者的 UID 為 1
 
 // 發送請求以獲取使用者資訊
-fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_userinfo', {
+fetch('http://localhost/happypet/happypet_back/public/api/member_userinfo', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ uid: uid })
@@ -45,7 +45,7 @@ document.getElementById('btnEditUserInfo').onclick = (event) => {
     let formData = new FormData(form);
     formData.append('uid', 1); // 假設你的 `uid` 是 1，你可以根據情況動態設置
 
-    fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_userinfo_update', {
+    fetch('http://localhost/happypet/happypet_back/public/api/member_userinfo_update', {
         method: 'post',
         body: formData
     })
