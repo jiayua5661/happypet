@@ -122,7 +122,7 @@
 
             <!-- 下面生成function要在預約btn 父元素加<a> -->
             <!-- 美容方案範本 -->
-            <div class="mx-5 mt-4">
+            <!-- <div class="mx-5 mt-4">
                 <div class="row border p-4 shadow rounded-4">
                     <div class="col-lg-3 col-md-4 col-12">
                         <img src="../img/20_beauty/beauty_plan1.jpg" alt="" class="img-fluid">
@@ -137,13 +137,13 @@
                     </div>
                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-between color_primary_self">
                         <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ 600</div>
-                        <!-- 我在這邊  重要  要加 <a> -->
-                        <!-- <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></a> -->
+                        我在這邊  重要  要加 <a>
+                        <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></a>
                         <div><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100"
                                 onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -257,7 +257,7 @@
                     if (element.pet_species == '貓') {
                         pet_list.innerHTML += `
                         <li class="dropdown-item d-flex align-items-center justify-content-between py-1 px-3" data-pid="${element.pid}" data-pet_species="${element.pet_species}" data-pet_weight="${element.pet_weight}" data-pet_fur="${element.pet_fur}" data-pet_name="${element.pet_name}">
-                            <img src="${element.pet_headphoto.split(',')[1] ? element.pet_headphoto : "../img/20_beauty/petheadshot_none.png"}" class="rounded-circle" alt="">
+                            <img src="${element.pet_headphoto.split(',')[1] ? element.pet_headphoto : "../img/20_beauty/petheadshot_none.png"}" class="rounded-circle img-fluid" alt="">
                             <span>${element.pet_name}</span>
                             <span>${element.pet_species} | ${element.pet_fur}</span>
                         </li>`;

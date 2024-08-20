@@ -222,6 +222,10 @@ main {
     height: 140px;
 }
 
+#select_week>button {
+    width: 130px;
+}
+
 /* .beauty_back_table div {
     flex: 1;
     margin: 1px;

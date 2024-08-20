@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>好寵你 | 後台首頁</title>
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/back_header_footerbeauty.css">
-    <script src="../js/bootstrap.bundle.js"></script>
-    <script src="../js/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/back_header_footerbeauty.css">
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/jquery-3.7.1.js"></script>
 
     <!-- 使用CDN引入bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -20,7 +20,16 @@
     <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
 
 </head>
-
+<style>
+    .beauty_pet_plan_box{
+        border: 2px solid white;
+        border-radius: 15px;
+        background-color: wheat;
+        color: black;
+        font-weight: 800;
+        cursor:pointer;
+    }
+</style>
 <body>
     <!-- Header -->
     <!-- Header -->
@@ -34,7 +43,7 @@
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
                 <a class="" href="#">
-                    <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
+                    <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
                 </a>
             </div>
             <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
@@ -63,6 +72,7 @@
                             <li><a href="#" class="dropdown-item" id="product3">產品入庫</a></li>
                             <li><a href="#" class="dropdown-item" id="product4">上架中產品</a></li>
                             <li><a href="#" class="dropdown-item" id="product5">未上架產品</a></li>
+                            <li><a href="#" class="dropdown-item" id="product6">產品明細</a></li>
                         </ul>
                     </li>
                     <li class="col-3 mt-3 mb-3 dropdown">
@@ -89,8 +99,8 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="ps-5 mb-0 color_primary_self">美容預約表</h2>
                 <div id="select_week">
-                    <button class="me-4 px-4 py-2" id="last_week">上一週</button>
-                    <button class="me-5 px-4 py-2" id="next_week">下一週</button>
+                    <button class="me-4 px-4 py-2 bgc_primary_self text-white rounded border-white" id="last_week">上一週</button>
+                    <button class="me-5 px-4 py-2 bgc_primary_self text-white rounded border-white" id="next_week">下一週</button>
                 </div>
             </div>
 
@@ -460,9 +470,9 @@
                         </div>
                         <div class="modal-body row">
                             <div class="d-flex container col-12">
-                                <div class="me-4 back_petimg_div">
-                                    <img id="show_window_pet_headphoto" src="../img/20_beauty/petheadshot_none.png"
-                                        alt="" class="img-fluid rounded-circle">
+                                <div class="me-4 back_petimg_div  d-flex align-items-center">
+                                    <img id="show_window_pet_headphoto" src="../../img/20_beauty/petheadshot_none.png"
+                                        alt="" class="img-fluid">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <p>名字 : <span id="show_window_pet_name">小白</span></p>
@@ -541,7 +551,7 @@
         // 顯示已預約訂單 到畫面上
         function draw(arr, order_create_day) {
             canvas_div.innerHTML = '';
-            console.log(arr);
+            // console.log(arr);
             // 周一
             let this_week_first_day = new Date(order_create_day);
             this_week_first_day.setDate(this_week_first_day.getDate() + 1 - this_week_first_day.getDay());
@@ -549,7 +559,7 @@
             this_week_first_day.setMinutes(0);
             this_week_first_day.setSeconds(0);
             this_week_first_day.setMilliseconds(0);
-            console.log('第一天', this_week_first_day);
+            // console.log('第一天', this_week_first_day);
 
             // 周六
             let this_week_last_day = new Date(order_create_day);
@@ -558,7 +568,7 @@
             this_week_last_day.setMinutes(0);
             this_week_last_day.setSeconds(0);
             this_week_last_day.setMilliseconds(0);
-            console.log('最後一天', this_week_last_day);
+            // console.log('最後一天', this_week_last_day);
 
             // 宣告三維陣列 要放 order 同一時段順序
             let beauty_plan_order_sort_num = [];
@@ -577,11 +587,11 @@
                 // console.log(start_time);
 
                 // 預約日期
-                console.log(element.start_time.split(" ")[0]);
+                // console.log(element.start_time.split(" ")[0]);
                 let start_day = new Date(element.start_time.split(" ")[0]);
-                console.log('開始日', start_day);
+                // console.log('開始日', start_day);
                 let iDays = parseInt(Math.abs(start_day - this_week_first_day) / 1000 / 60 / 60 / 24);
-                console.log('相差天數', iDays);
+                // console.log('相差天數', iDays);
 
                 // 方案時間長度有幾個半小時
                 // console.log(element.use_time.split(":"));
@@ -606,7 +616,7 @@
                     }
                     if (order_in) {
                         canvas_div.innerHTML += `
-                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.name}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.463%; background-color: white;">${element.pet_name}</div>
+                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.name}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="beauty_pet_plan_box  order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.463%;">${element.pet_name}</div>
                         `;
                         break;
                     }
@@ -638,27 +648,31 @@
     <script>
         window.onload = () => {
 
+            console.log(sessionStorage.getItem('ahref'));
+            
             // 複製 這裡
-            if (localStorage.getItem('ahref')) {
-                let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5'], ['product_order1', 'product_order2']];
-                localStorage.getItem('ahref').split('**').map(element => element.split(',')).forEach((element, index) => {
-                    element.forEach((ele, ind) => {
-                        if (ele != "#") {
-                            document.getElementById(`${ahref[index][ind]}`).href = ele;
-                        }
-                    })
-                });
+            if (sessionStorage.getItem('ahref')) {
+                console.log('超連結');
+                
+                let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5', 'product6'], ['product_order1', 'product_order2']];
+                let sess_herf = sessionStorage.getItem('ahref').split('**').map(element => element.split(','));
+                // 進網頁給超連結
+                for (let i = 0; i < sess_herf.length; i++) {
+                    for (k = 0; k < sess_herf[i].length; k++) {
+                        document.getElementById(`${ahref[i][k]}`).href = sess_herf[i][k];
+                    }
+                }
             }
 
             logout_btn.onclick = () => {
                 console.log('登出');
 
-                localStorage.removeItem('token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('uid');
-                localStorage.removeItem('ahref');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('refreshToken');
+                sessionStorage.removeItem('uid');
+                sessionStorage.removeItem('ahref');
 
-                window.location.href = "../00_index/index_back.html";
+                window.location.href = "../../00_index/back/index_back.html";
             }
 
             $('.nav>li>ul>li').on('click', 'a', function () {
@@ -682,7 +696,7 @@
                 show_window_cellphone.innerHTML = $(this).data('cellphone');
                 show_window_plan_title.innerHTML = $(this).data('plan_title');
                 show_window_other.innerHTML = $(this).data('others');
-                show_window_pet_headphoto.src = $(this).data('pet_head').split(',')[1] ? $(this).data('pet_head') : '../img/20_beauty/petheadshot_none.png';
+                show_window_pet_headphoto.src = $(this).data('pet_head').split(',')[1] ? $(this).data('pet_head') : '../../img/20_beauty/petheadshot_none.png';
                 history_order.innerHTML = '';
 
                 // lala fetch
@@ -733,16 +747,16 @@
                 // 週一
                 let create_week_first_day = new Date(order_creatweek);
                 create_week_first_day.setDate(create_week_first_day.getDate() + 1 - create_week_first_day.getDay());
-                console.log(create_week_first_day);
+                // console.log(create_week_first_day);
                 // 週六
                 let create_week_last_day = new Date(order_creatweek);
                 create_week_last_day.setDate(create_week_last_day.getDate() + 1 - create_week_last_day.getDay() + 5);
-                console.log(create_week_last_day);
+                // console.log(create_week_last_day);
 
                 let first_date = `${create_week_first_day.getFullYear()}-${create_week_first_day.getMonth() + 1}-${create_week_first_day.getDate()}`;
                 let last_date = `${create_week_last_day.getFullYear()}-${create_week_last_day.getMonth() + 1}-${create_week_last_day.getDate()}`;
 
-                console.log(first_date, last_date);
+                // console.log(first_date, last_date);
 
                 // lala fetch
                 let beauty_order_info = await (await fetch(`http://localhost/happypet/happypet_back/public/api/back_beauty_get_order_oneweek/${first_date}/${last_date}`)).json();
@@ -779,7 +793,7 @@
                 let create_week = new Date(creatweek);
 
                 create_week.setDate(create_week.getDate() + 1 - create_week.getDay());
-                console.log('生成', create_week);
+                // console.log('生成', create_week);
 
                 const week_day = ['一', '二', '三', '四', '五', '六'];
 
