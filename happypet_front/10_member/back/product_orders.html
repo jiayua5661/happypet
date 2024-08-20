@@ -35,7 +35,9 @@
   <header id="navbar" class="sticky-top headerbackPage"></header>
 
 
-  <main id="root"></main>
+  <main id="root">
+    
+  </main>
   <!-- <div id="modal_show"></div> -->
 
 
@@ -147,6 +149,8 @@
         )
 
       }
+      const toastLiveExample = document.getElementById('liveToast')
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
       //我是儲存按鈕
       function handleClickSaveNote() {
@@ -161,7 +165,7 @@
               })
             });
         }
-        save_info();
+        save_info();      
         setmstatus(status_value.value);
         settxtnote(note_str.value);
 
@@ -182,79 +186,82 @@
       // settxtnote();
       console.log('note', txtnote);
       return (
-        <div className="modal-body row">
-          {/* 訂單管理資訊  */}
-          <span className="col-6">訂單編號：{order_number}</span>
-          <span className="col-6">會員姓名：{user_name}</span>
-          <span className="col-6">會員電話：{user_phone}</span>
-          <span className="col-6">會員信箱：{user_email}</span>
-          <span className="col-6">付款方式：{pay}</span>
-          <span className="col-6">總計： NT ${numberComma(total)}</span>
-          <span className="col-6">收件人姓名：{consignee_name}</span>
-          <span className="col-6">收件人電話：{consignee_phone}</span>
-          <span className="col-6">寄送方式：{send}</span>
-          <span className="col-6">收件地址：{send_address}</span>
-          {/* 商品呈現 */}
-          <table className="table text-center align-middle justify-content-center col-12">
-            <thead>
-              <tr>
-                <th className="col-1">產品圖</th>
-                <th className="col-2">產品編號</th>
-                <th className="col-2">產品名稱</th>
-                <th className="col-2">規格</th>
-                <th className="col-1">單價</th>
-                <th className="col-1">數量</th>
-                <th className="col-1">小計</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                productInfo.map((value) => {
-                  let { product_id, product_pic, price, quantity, series_name, flavor, weight, style, size } = value;
-                  // let product_pic_temp = atob(product_pic);
-                  // console.log('product_pic_temp', product_pic_temp);
-                  const dataUrl = `data:image/png;base64,${product_pic}`;
-                  let subtotal = (price * quantity);
-                  // console.log('subtotal',subtotal);
-                  //規格
-                  function Specification(flavor, weight, style, size) {
-                    let sp = [];
-                    // str = str + (flavor ? <p> 口味： {flavor} </p> : '');
-                    sp.push(flavor ? `口味： ${flavor}` : '');
-                    sp.push(weight ? `淨重： ${weight}` : '');
-                    sp.push(style ? `款式： ${style}` : '');
-                    sp.push(size ? `尺寸： ${size}` : '');
-                    // console.log('str', sp);
-                    return sp;
-                  }
+        <React.Fragment>
+          
+          <div className="modal-body row ">
+            {/* 訂單管理資訊  */}
+            <span className="col-6">訂單編號：{order_number}</span>
+            <span className="col-6">會員姓名：{user_name}</span>
+            <span className="col-6">會員電話：{user_phone}</span>
+            <span className="col-6">會員信箱：{user_email}</span>
+            <span className="col-6">付款方式：{pay}</span>
+            <span className="col-6">總計： NT ${numberComma(total)}</span>
+            <span className="col-6">收件人姓名：{consignee_name}</span>
+            <span className="col-6">收件人電話：{consignee_phone}</span>
+            <span className="col-6">寄送方式：{send}</span>
+            <span className="col-6">收件地址：{send_address}</span>
+            {/* 商品呈現 */}
+            <table className="table text-center align-middle justify-content-center col-12">
+              <thead>
+                <tr>
+                  <th className="col-1">產品圖</th>
+                  <th className="col-2">產品編號</th>
+                  <th className="col-2">產品名稱</th>
+                  <th className="col-2">規格</th>
+                  <th className="col-1">單價</th>
+                  <th className="col-1">數量</th>
+                  <th className="col-1">小計</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  productInfo.map((value) => {
+                    let { product_id, product_pic, price, quantity, series_name, flavor, weight, style, size } = value;
+                    // let product_pic_temp = atob(product_pic);
+                    // console.log('product_pic_temp', product_pic_temp);
+                    const dataUrl = `data:image/png;base64,${product_pic}`;
+                    let subtotal = (price * quantity);
+                    // console.log('subtotal',subtotal);
+                    //規格
+                    function Specification(flavor, weight, style, size) {
+                      let sp = [];
+                      // str = str + (flavor ? <p> 口味： {flavor} </p> : '');
+                      sp.push(flavor ? `口味： ${flavor}` : '');
+                      sp.push(weight ? `淨重： ${weight}` : '');
+                      sp.push(style ? `款式： ${style}` : '');
+                      sp.push(size ? `尺寸： ${size}` : '');
+                      // console.log('str', sp);
+                      return sp;
+                    }
 
-                  return (
-                    <tr key={product_id}>
-                      <td><img src={dataUrl} className="w-100" /></td>
-                      <td>{product_id}</td>
-                      <td>{series_name}</td>
-                      <td className=" align-middle align-items-center fs-5">{Specification(flavor, weight, style, size).map(value => <p className=" fs-6 fw-light">{value}</p>)}</td>
-                      <td>$ {numberComma(price)}</td>
-                      <td>{quantity}</td>
-                      <td>$ {numberComma(subtotal)}</td>
-                    </tr>
-                  )
-                })
-              }
+                    return (
+                      <tr key={product_id}>
+                        <td><img src={dataUrl} className="w-100" /></td>
+                        <td>{product_id}</td>
+                        <td>{series_name}</td>
+                        <td className=" align-middle align-items-center fs-5">{Specification(flavor, weight, style, size).map(value => <p className=" fs-6 fw-light">{value}</p>)}</td>
+                        <td>$ {numberComma(price)}</td>
+                        <td>{quantity}</td>
+                        <td>$ {numberComma(subtotal)}</td>
+                      </tr>
+                    )
+                  })
+                }
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
 
-          <Text_area note={note} settxtnote={settxtnote} />
+            <Text_area note={note} settxtnote={settxtnote} />
 
-          <Select_status order_status={order_status} />
+            <Select_status order_status={order_status} />
 
-          <div className="col-8 position-relative">
-            <button className="btn position-absolute bottom-0 end-0 mt-2" onClick={handleClickSaveNote}>儲存</button>
+
+            <div className="col-8 position-relative">
+              <button className="btn position-absolute bottom-0 end-0 mt-2" onClick={handleClickSaveNote}>儲存</button>
+            </div>
           </div>
-
-        </div>
-
+        
+        </React.Fragment>
       )
     }
 
@@ -431,6 +438,11 @@
           <MyContext.Provider value={{ orderdata_ref, click_value_id, setchoose_orderdata, setmstatus }} >
             <Model />
           </MyContext.Provider>
+          <div className="position-absolute button-0 end-0 p-2" style={{ "z-index": "5" }}>
+            <div id="liveToast" className="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+              <div className="toast-body fs-5 text-center"></div>
+            </div>
+          </div>
         </React.Fragment>
 
       )

@@ -56,6 +56,15 @@
             handleClickDelete(clickpid)
         }
 
+        function makezero() {
+            // console.log($('.chooseno').attr('data-zero'));
+            if ($('.chooseno').attr('data-zero') == 0) {
+                $('.quantity').attr('data-q', 1);
+                setmakesure_(++makesure_);
+                $('.chooseno').removeAttr('data-zero')
+            }
+        }
+
         return (
             <React.Fragment>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,7 +74,7 @@
                                 <h4>請問是否要刪除此項產品？</h4>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn secondcolor" data-bs-dismiss="modal">否</button>
+                                <button type="button" className="btn secondcolor chooseno" data-bs-dismiss="modal" onClick={() => { makezero() }}>否</button>
                                 <button type="button" className="btn primarycolor" data-bs-dismiss="modal" onClick={() => { maketrue() }}>是</button>
                             </div>
                         </div>
@@ -80,7 +89,13 @@
         let [quantity, setquantity] = React.useState(0);
 
         React.useEffect(function () {
-            setquantity(quantity_temp)
+            console.log($('.quantity').attr('data-q'));
+
+            if ($('.quantity').attr('data-q') == 1) {
+                setquantity(1);
+            } else {
+                setquantity(quantity_temp)
+            }
         }, [makesure_])
 
         let handleClickadd = () => {
@@ -114,6 +129,7 @@
             if (quantity == 0) {
                 var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
                 myModal.show();
+                $('.chooseno').attr('data-zero', 0);
             }
         }
 
@@ -126,7 +142,7 @@
                 <th >
                     <div>
                         <i className="bi bi-dash-square px-2" data-bs-target="#exampleModal" onClick={handleClickdash}></i>
-                        <label>{quantity}</label>
+                        <label className="quantity">{quantity}</label>
                         <i className="bi bi-plus-square px-2" onClick={handleClickadd}></i>
                     </div>
                 </th>
@@ -198,9 +214,11 @@
                 );
                 let data = await response.json()
                 setproductitem(data);
-                //存order_number
-                let { order_number } = data[0];
-                localStorage.setItem('order_number', order_number);
+                if (data[0]) {
+                    //存order_number
+                    let { order_number } = data[0];
+                    localStorage.setItem('order_number', order_number);
+                }
 
             }
             getproductData();
@@ -214,19 +232,22 @@
                     method: "DELETE",
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        "uid": "apple007",
+                        "uid": "2",
                         "product_id": pid
                     })
                 }
             );
         }
-        let showdelete_modal=()=>{
+        let showdelete_modal = () => {
             var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
             myModal.show();
+            setclickpid(event.target.id);
+            // handleClickDelete(event.target.id);
         }
 
-        let handleClickDelete = (pid = event.target.id) => {
+        let handleClickDelete = (pid) => {
             // showdelete_modal();
+            // console.log(pid);
             let temp = productitem.filter(value => value.product_id != pid ? value : '');
             setproductitem(temp);
             setmakesure_(++makesure_);
@@ -242,7 +263,7 @@
                     body: JSON.stringify({ "nupdatedata": updatedata })
                 });
 
-            console.log('updatedata', updatedata);
+            // console.log('updatedata', updatedata);
 
         }
 
@@ -300,7 +321,7 @@
                                             </th>
                                             <th >{species(product_id)}</th>
                                             <Money quantity_temp={quantity} price={price} setclickpid={setclickpid} makesure_={makesure_} numberComma={numberComma} setproductitem={setproductitem} productitem={productitem} />
-                                            <th><i id={product_id} className=" fs-3 bi bi-trash-fill" onClick={() => { handleClickDelete() }}></i></th>
+                                            <th><i id={product_id} className=" fs-3 bi bi-trash-fill" onClick={() => { showdelete_modal() }}></i></th>
                                         </tr>
                                     )
                                 })
@@ -311,7 +332,7 @@
                         <Count productitem={productitem} numberComma={numberComma} />
 
                         <div className="text-center d-flex justify-content-center">
-                            <div onClick={()=>{}}
+                            <div onClick={() => { document.location.href = "./product.html" }}
                                 className="col-3 border border-secondary rounded-3 order_time_check cursor_pointer text-center p-2 mx-5">
                                 繼續購物
                             </div>

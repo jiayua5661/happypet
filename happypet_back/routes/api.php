@@ -339,23 +339,25 @@ Route::post("/orders_search", function (Request $request) {
     $searchOrdernumber = $request->input('searchOrdernumber');
     $phone = $request->input('phone');
     $sql = "select * FROM orders ";
+    $orderby=" order by create_time desc";
 
     if ($status == 'all') {
         if (Str::length($searchOrdernumber)) {
-            $sql = $sql . "where order_number like ? ";
+            $sql = $sql . "where order_number like ?" .$orderby;
             $orders = DB::select($sql, [$searchOrdernumber]);
         } elseif (Str::length($phone)) {
-            $sql = $sql . "where user_phone like ? ";
+            $sql = $sql . "where user_phone like ? " .$orderby;
             $orders = DB::select($sql, [$phone]);
         } else {
+            $sql = $sql . $orderby;
             $orders = DB::select($sql);
         }
     } else {
         if (Str::length($searchOrdernumber)) {
-            $sql = $sql . "where order_status=? and  order_number like ?";
+            $sql = $sql . "where order_status=? and  order_number like ?" . $orderby;
             $orders = DB::select($sql, [$status, $searchOrdernumber]);
         } else {
-            $sql = $sql . "where order_status=?";
+            $sql = $sql . "where order_status=?" . $orderby;
             $orders = DB::select($sql, [$status]);
         }
     }
