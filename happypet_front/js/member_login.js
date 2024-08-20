@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = form.querySelector('input[name="login_password"]').value;
 
             try {
-                const response = await fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_login', {
+                const response = await fetch('http://localhost/happypet/happypet_back/public/api/member_login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

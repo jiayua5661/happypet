@@ -12,7 +12,7 @@ document.getElementById('btnRegister').onclick = (event) => {
     if (form.checkValidity()) {
         let formData = new FormData(form);
 
-        fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_register', {
+        fetch('http://localhost/happypet/happypet_back/public/api/member_register', {
             method: 'post',
             body: formData
         })
@@ -53,7 +53,7 @@ document.getElementById('btnRegister').onclick = (event) => {
 // btnRegister.onclick = (event) => {
 //     event.preventDefault();
 //     let formData = new FormData(document.getElementById('myregister'));
-//     fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_register', {
+//     fetch('http://localhost/happypet/happypet_back/public/api/member_register', {
 //         method: 'post',
 //         body: formData
 //     })

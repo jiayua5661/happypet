@@ -20,7 +20,7 @@ document.getElementById('btnAddPet').onclick = (event) => {
     // console.log('照片',pet_headphoto.value);
 
 
-    fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_add_pet', {
+    fetch('http://localhost/happypet/happypet_back/public/api/member_add_pet', {
         method: 'post',
         body: formData
         // headers: { 'Content-Type': 'application/json' },

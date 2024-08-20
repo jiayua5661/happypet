@@ -25,13 +25,13 @@ document.getElementById('btnEditMyPet').onclick = (event) => {
     formData.append('pid', $(event.target)[0].dataset.pid);
     formData.append('pet_gender', document.querySelector('input[name="pet_gender"]:checked').value);
 
-    fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_edit_pet', {
+    fetch('http://localhost/happypet/happypet_back/public/api/member_edit_pet', {
         method: 'post',
         body: formData
     })
     
     // let pet_gender = document.querySelector('input[name="pet_gender"]:checked').value;
-    // fetch('http://localhost/happypet_Lee/happypet_back/public/api/member_edit_pet', {
+    // fetch('http://localhost/happypet/happypet_back/public/api/member_edit_pet', {
     //     method: 'post',
     //     headers:{'Content-Type':'application/json'},
     //     body: JSON.stringify(
@@ -176,7 +176,7 @@ function show(mymypetdata) {
 //串接我的寵物資料API
 function mypet_info_card() {
 
-    fetch(`http://localhost/happypet_Lee/happypet_back/public/api/member_mypet`, {
+    fetch(`http://localhost/happypet/happypet_back/public/api/member_mypet`, {
         method: 'post',
         body: JSON.stringify({ uid: uid }),
         headers: { 'Content-Type': 'application/json' }

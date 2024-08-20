@@ -122,7 +122,7 @@
 
             <!-- 下面生成function要在預約btn 父元素加<a> -->
             <!-- 美容方案範本 -->
-            <div class="mx-5 mt-4">
+            <!-- <div class="mx-5 mt-4">
                 <div class="row border p-4 shadow rounded-4">
                     <div class="col-lg-3 col-md-4 col-12">
                         <img src="../img/20_beauty/beauty_plan1.jpg" alt="" class="img-fluid">
@@ -137,13 +137,13 @@
                     </div>
                     <div class="col-lg-3 col-12 d-flex flex-column justify-content-between color_primary_self">
                         <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ 600</div>
-                        <!-- 我在這邊  重要  要加 <a> -->
-                        <!-- <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></a> -->
+                        我在這邊  重要  要加 <a>
+                        <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></a>
                         <div><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100"
                                 onclick="beauty_plan_order()" data-planid='1' data-plan_title="小美容">預約時段</button></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -283,6 +283,8 @@
 
             // 顯示美容方案
             async function show_beauty_plan(arr) {
+
+
                 let selelcted_pet = JSON.parse(sessionStorage.getItem('selected_pid'));
                 console.log('show方案', selelcted_pet);
 
@@ -304,6 +306,12 @@
                     arr.forEach((element, index) => {
                         let [hour, minute, sec] = beauty_plan_info[index].time.split(':');
 
+                        const thousandthsFormat = (value) => {
+                    const regex = /\B(?=(\d{3})+(?!\d))/g
+                    value = value.toString()
+                    return value.replace(regex, ',')
+                }
+
                         // 顯示抓出來的方案資料
                         // console.log(`${element.plan_title} - ${element.plan_instructions} - ${element.beauty_img}+++<br>`);
                         beauty_plan_div.innerHTML += `
@@ -321,7 +329,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-12 d-flex flex-column justify-content-between color_primary_self">
-                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${beauty_plan_info[index].price}</div>
+                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${thousandthsFormat(beauty_plan_info[index].price) }</div>
                                     <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid="${element.planid}" data-plan_title="${element.plan_title}">預約時段</button></a>
                                 </div>
                             </div>
@@ -332,6 +340,11 @@
                     arr.forEach((element, index) => {
                         let [hour, minute, sec] = beauty_plan_info[index].time.split(':');
 
+                        const thousandthsFormat = (value) => {
+                    const regex = /\B(?=(\d{3})+(?!\d))/g
+                    value = value.toString()
+                    return value.replace(regex, ',')
+                }
                         // 顯示抓出來的方案資料
                         // console.log(`${element.plan_title} - ${element.plan_instructions} - ${element.beauty_img}+++<br>`);
                         beauty_plan_div.innerHTML += `
@@ -349,7 +362,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-12 d-flex flex-column justify-content-between color_primary_self">
-                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${beauty_plan_info[index].price}</div>
+                                    <div class="fw-bolder fs-4 d-flex flex-row-reverse">NT$ ${thousandthsFormat(beauty_plan_info[index].price)}</div>
                                     <a href="./beauty_front2.html"><button class="fs-5 bgc_primary_self text-white rounded p-2 border-white w-100" onclick="beauty_plan_order()" data-planid="${element.planid}" data-plan_title="${element.plan_title}">預約時段</button></a>
                                 </div>
                             </div>
@@ -383,7 +396,8 @@
 
                 // 這邊還要改   我在這裡
                 // uid 飼主id
-                let uid = 1;
+                
+                let uid = localStorage.getItem('uid');
                 // fetch(`http://localhost/test/back/front_get_pet_info.php?uid=${uid}`)
                 //     .then(res => res.json())
                 //     .then(data => {
