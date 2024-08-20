@@ -21,6 +21,12 @@
 
 </head>
 
+<style>
+    .pet_span {
+        width: 200px;
+    }
+</style>
+
 <body>
     <!-- Header -->
     <!-- Header -->
@@ -259,7 +265,7 @@
                         <li class="dropdown-item d-flex align-items-center justify-content-between py-1 px-3" data-pid="${element.pid}" data-pet_species="${element.pet_species}" data-pet_weight="${element.pet_weight}" data-pet_fur="${element.pet_fur}" data-pet_name="${element.pet_name}">
                             <img src="${element.pet_headphoto.split(',')[1] ? element.pet_headphoto : "../img/20_beauty/petheadshot_none.png"}" class="rounded-circle" alt="">
                             <span>${element.pet_name}</span>
-                            <span>${element.pet_species} | ${element.pet_fur}</span>
+                            <span class="pet_span text-center">${element.pet_species} | ${element.pet_fur}</span>
                         </li>`;
                     } else {
                         let size = ['小型犬', '中型犬', '大型犬'];
@@ -275,7 +281,7 @@
                         <li class="dropdown-item d-flex align-items-center justify-content-between py-1 px-3" data-pid="${element.pid}" data-pet_species="${element.pet_species}" data-pet_weight="${element.pet_weight}" data-pet_fur="${element.pet_fur}" data-pet_name="${element.pet_name}">
                             <img src="${element.pet_headphoto.split(',')[1] ? element.pet_headphoto : "../img/20_beauty/petheadshot_none.png"}" class="rounded-circle" alt="">
                             <span>${element.pet_name}</span>
-                            <span>${element.pet_species} | ${size[pet_size]} | ${element.pet_fur}</span>
+                            <span class="pet_span text-center">${element.pet_species} | ${size[pet_size]} | ${element.pet_fur}</span>
                         </li>`;
                     }
                 });

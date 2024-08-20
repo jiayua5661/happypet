@@ -607,7 +607,7 @@
                     }
                     if (order_in) {
                         canvas_div.innerHTML += `
-                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.cname}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.463%; background-color: white;">${element.pet_name}</div>
+                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.cname}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="beauty_pet_plan_box order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.463%;">${element.pet_name}</div>
                         `;
                         break;
                     }
@@ -639,27 +639,29 @@
     <script>
         window.onload = () => {
 
-            // 複製 這裡
-            if (localStorage.getItem('ahref')) {
+                        // 複製 這裡
+            if (sessionStorage.getItem('ahref')) {
+                console.log('超連結');
+                
                 let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5', 'product6'], ['product_order1', 'product_order2']];
-                localStorage.getItem('ahref').split('**').map(element => element.split(',')).forEach((element, index) => {
-                    element.forEach((ele, ind) => {
-                        if (ele != "#") {
-                            document.getElementById(`${ahref[index][ind]}`).href = ele;
-                        }
-                    })
-                });
+                let sess_herf = sessionStorage.getItem('ahref').split('**').map(element => element.split(','));
+                // 進網頁給超連結
+                for (let i = 0; i < sess_herf.length; i++) {
+                    for (k = 0; k < sess_herf[i].length; k++) {
+                        document.getElementById(`${ahref[i][k]}`).href = sess_herf[i][k];
+                    }
+                }
             }
 
             logout_btn.onclick = () => {
                 console.log('登出');
 
-                localStorage.removeItem('token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('uid');
-                localStorage.removeItem('ahref');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('refreshToken');
+                sessionStorage.removeItem('uid');
+                sessionStorage.removeItem('ahref');
 
-                window.location.href = "../../00_index/index_back.html";
+                window.location.href = "../../00_index/back/index_back.html";
             }
 
             $('.nav>li>ul>li').on('click', 'a', function () {
