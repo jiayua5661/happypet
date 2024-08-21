@@ -1,7 +1,11 @@
 .back-container {
   border: 10px solid black;
 }
-
+h2 {
+  margin: 0;
+  font-weight: normal;
+  color: #000;
+}
 /* calender */
 .input-icon {
   position: relative;
@@ -43,25 +47,25 @@
 .nohotel::after {
   content: ""; /*確保偽元素顯示 */
   display: inline-block;
-  width: 40px; /* 線的長度 */
-  height: 25px; /* 線的高度 */
-  background-color: #ffc970; /* 線的顏色 */
+  width: 40px;
+  height: 25px;
+  background-color: #ffc970;
   margin-left: 5px;
-  margin-right: 5px; /* 線和文字之間的距離 */
+  margin-right: 5px;
   vertical-align: middle;
 }
 .outhotel::after {
-  content: ""; /*確保偽元素顯示 */
+  content: "";
   display: inline-block;
-  width: 40px; /* 線的長度 */
-  height: 25px; /* 線的高度 */
-  background-color: #bbbbbb; /* 線的顏色 */
+  width: 40px;
+  height: 25px;
+  background-color: #bbbbbb;
   margin-left: 5px;
-  margin-right: 5px; /* 線和文字之間的距離 */
+  margin-right: 5px;
   vertical-align: middle;
 }
-/* pet-先寫死的 */
-.inpetName {
+
+.inpetNamehotel {
   background-color: #90b9ab;
   margin-top: 5px;
 }

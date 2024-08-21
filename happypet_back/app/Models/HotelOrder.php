@@ -1,5 +1,4 @@
 <?php
-// model 用來處理資料，不涉及任何使用者介面，例如資料庫存取
 
 namespace App\Models;
 
@@ -11,24 +10,40 @@ class HotelOrder extends Model
     use HasFactory;
 
     protected $table = 'hotel_orders';
-    protected $primaryKey = 'oid';
-    public $incrementing = true;
-    protected $keyType = 'string';
+    protected $primaryKey = 'nid'; // 更新為 `nid`，因為它是自動遞增主鍵
+    public $incrementing = true; // `nid` 是自動遞增的欄位
+    protected $keyType = 'int'; // `nid` 是整數型別
+
+    // 禁用時間戳功能
+    // public $timestamps = false;
+
+    // 定義可批量填充的欄位
     protected $fillable = [
-        'checkin', 'checkout', 'room_type', 'nightday', 'sameroom', 
-        'roomquantity', 'room_total', 'pid', 'name'
+        'uid',
+        'pid',
+        'oid',
+        'room_type',
+        'checkin',
+        'checkout',
+        'nightday',
+        'roomquantity',
+        'sameroom',
+        'room_total',
+        'order_remark',
+        'sameroomNightday',
+        'nid',
+        'room_number', // 確保這裡包含 room_number
     ];
 
+    // 定義與 PetInfo 模型的關聯
     public function pet()
     {
         return $this->belongsTo(PetInfo::class, 'pid', 'pid');
     }
 
-    // uid主鍵(hotel_orders)、uid外鍵(pet_info)
+    // 定義與 UserInfo 模型的關聯
     public function user()
     {
         return $this->belongsTo(UserInfo::class, 'uid', 'uid');
     }
 }
-
-
