@@ -506,7 +506,7 @@ Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
 Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
 
 // 查全部-前台
-Route::get('/hotel_orders_all_font', [HotelOrderController::class, 'allOrdersFont']);
+// Route::get('/hotel_orders_all_font', [HotelOrderController::class, 'allOrdersFont']);
 
 
 // 顯示空房
@@ -515,14 +515,18 @@ Route::get('/hotel_orders_all_font', [HotelOrderController::class, 'allOrdersFon
 Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
 
 
-//刪除訂單
-Route::delete('/hotel_orders/{uid}', [HotelOrderController::class, 'destroy']);
-
-
 // 查詢訂購人
 Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
 
 // 選擇該使用者的寵物
 Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
+
+
+// 訂單進資料庫
+Route::post('/hotel_orders', [HotelOrderController::class, 'store']);
+
+// 排房間
+Route::post('/assign_rooms', [HotelOrderController::class, 'assignRoomNumber']);
+
 
 /////////////////////////chen//////////////////////////

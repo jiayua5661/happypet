@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\HotelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class HotelOrderController extends Controller
 {
-    
+  
 
      // 日期訂單
      public function ordersByDate(Request $request)
@@ -134,6 +135,7 @@ class HotelOrderController extends Controller
         ]);
     }
 
+
    // 查詢訂購人
    public function ordersByUser(Request $request)
    {
@@ -167,9 +169,9 @@ class HotelOrderController extends Controller
        // 如果沒有提供 'name' 參數，返回空的 JSON
        return response()->json([]);
    }
-   // 取得使用者的寵物名稱
+
    public function userPetName(Request $request)
-    {
+{
         // 假設要查詢 UID 為 3 的寵物名稱
         $uid = 3;
 
@@ -178,17 +180,91 @@ class HotelOrderController extends Controller
 
         // 使用 DB::select 查詢
         $petNames = DB::select("
-         SELECT 
-             p.pet_name
-         FROM 
+        SELECT 
+            p.pet_name,
+            p.pid
+        FROM 
             pet_info p
-         WHERE 
+        WHERE 
             p.uid = ?", [$uid]
         );
 
         // 返回查詢結果作為 JSON
         return response()->json($petNames);
+}
+
+// 傳訂單 & 自動傳房間      
+public function store(Request $request)
+{
+    $data = $request->input('hotelorders'); // 檢查是否正確接收到 `hotelorders`
+    $data2 = $request->input('petIds'); // 檢查是否正確接收到 `petIds`
+
+    if (is_array($data) && !empty($data)) {
+        foreach ($data as $order) {
+            Log::info('訂單詳細資訊', ['order' => $order]);
+
+            // 查詢已訂房間號碼
+            $room_number_result = DB::select('SELECT room_number FROM hotel_orders
+                WHERE room_type = ?
+                AND ((? < checkin AND ? >= checkin)
+                OR (? >= checkin AND ? < checkout))', [
+                $order['hotelName'],
+                $order['checkinDisplay'],
+                $order['checkoutDisplay'],
+                $order['checkinDisplay'],
+                $order['checkinDisplay']
+            ]);
+
+            // 將查詢結果轉換為純數值陣列
+            $room_number = array_column($room_number_result, 'room_number');
+
+            // 設置房間地圖
+            if ($order['hotelName'] == '深景房') {
+                $roomMap = [101, 102, 103];
+            } elseif ($order['hotelName'] == '奢華房') {
+                $roomMap = [201, 202, 203];
+            } elseif ($order['hotelName'] == '總統房') {
+                $roomMap = [301, 302, 303];
+            } elseif ($order['hotelName'] == '喵皇房') {
+                $roomMap = [401, 402, 403];
+            }
+
+            // 計算可用房間號碼
+            $order_room_number = array_diff($roomMap, $room_number);
+
+            // 取得第一個可用房間號碼
+            $first_available_room_number = reset($order_room_number);
+
+            if ($first_available_room_number === false) {
+                Log::error('找不到可用房間', ['order' => $order]);
+                continue; // 如果沒有可用房間，跳過當前訂單
+            }
+
+            // 儲存訂單
+            HotelOrder::create([
+                'uid' => 'apple',
+                'pid' => $data2, // 寵物 ID
+                'room_type' => $order['hotelName'],
+                'checkin' => $order['checkinDisplay'],
+                'checkout' => $order['checkoutDisplay'],
+                'nightday' => $order['nightdayDisplay'],
+                'roomquantity' => $order['hotelCartQuantity'],
+                'sameroom' => $order['sameRoomCount'],
+                'room_total' => $order['roomTotal'],
+                'sameroomNightday' => $order['sameroomNightday'],
+                'nid' => $request->input('nid'),
+                'room_number' => $first_available_room_number
+            ]);
+
+            Log::info('訂單已儲存', ['order' => $order]);
+        }
+        return response()->json(['message' => '訂單已成功儲存'], 200);
+    } else {
+        Log::error('無效的訂單資料', ['data' => $data]);
+        return response()->json(['message' => '無效的訂單資料'], 400);
     }
+}
+
 
 }
 
