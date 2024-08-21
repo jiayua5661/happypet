@@ -245,7 +245,7 @@ class SeriesProductController extends Controller
             return "產品系列編號不可為空"; 
         }else if(strlen($pdSeries) != 11){
             return "產品系列編號為11碼";
-        }else if(empty($category)){ 
+        }else if(empty($category) || $category == 'default'){ 
             return "產品類別不可為空";
         }else if(empty($pdName)){ 
             return "產品系列名稱不可為空";

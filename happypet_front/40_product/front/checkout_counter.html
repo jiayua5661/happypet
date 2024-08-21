@@ -284,8 +284,7 @@
 
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-
-                <div class="toast-body fs-5 text-center">資料尚未填寫完整</div>
+                <div class="toast-body fs-5 text-center"></div>
             </div>
         </div>
 
@@ -313,31 +312,31 @@
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "uid": "1"
+                    "uid": "2"
                 })
             });
         let data = await response.json()
-        let { name, email, cellphone, adress } = data[0];
+        let { cname, email, cellphone, address } = data[0];
         // console.log(name);
-        buyername.innerText = name;
+        buyername.innerText = cname;
         buyerphone.innerText = cellphone;
         buyeremail.innerText = email;
         userinfo = data[0];
 
-        order['user_name'] = name;
+        order['user_name'] = cname;
         order['user_phone'] = cellphone;
         order['user_email'] = email;
     }
     getuserinfo();
 
     consignee.onclick = () => {
-        let { name, email, cellphone, adress } = userinfo;
-        // console.log(name);
+        let { cname, email, cellphone, address } = userinfo;
+        // console.log(cname);
 
         if (event.target.checked) {
-            consignee_name.value = name;
+            consignee_name.value = cname;
             consignee_phone.value = cellphone;
-            send_address.value = adress;
+            send_address.value = address;
         } else {
             consignee_name.value = "";
             consignee_phone.value = "";
@@ -486,6 +485,7 @@
         order['pay'] = $('input[type="radio"][name="pay"]:checked').attr('id') == "creditcard" ? "線上付款" : "到店付款";
         // console.log($('input[type="radio"][name="pay"]:checked').attr('id'));
         order['order_number'] = localStorage.getItem('order_number');
+        order['order_status'] = "1";
         console.log('order', order);
         // console.log(Object.value(order));
 
@@ -502,7 +502,13 @@
         }
         chechoutBill();
 
-        let toindex = () => { document.location.href = "../../00_index/index.html" }
+        let toindex = () => {
+            $('.toast-body').text('感謝您的購買!');
+            toastBootstrap.show()
+            setTimeout(function () {
+                document.location.href = "../../00_index/index.html"
+            }, 1000 * 5)
+        }
 
 
 
@@ -518,7 +524,10 @@
                     $(`#${narr[0]}`).focus();
                 }
             }
-            if (narr.length) { toastBootstrap.show() }
+            if (narr.length) {
+                $('.toast-body').text('資料尚未填寫完整');
+                toastBootstrap.show()
+            }
 
         }
     }

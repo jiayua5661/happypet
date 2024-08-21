@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>好寵你 | 後台首頁</title>
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/back_header_footerbeauty.css">
-    <script src="../js/bootstrap.bundle.js"></script>
-    <script src="../js/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/back_header_footerbeauty.css">
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/jquery-3.7.1.js"></script>
 
     <!-- 使用CDN引入bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -18,7 +18,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
-
 
 </head>
 
@@ -35,7 +34,7 @@
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
                 <a class="" href="#">
-                    <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
+                    <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
                 </a>
             </div>
             <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
@@ -64,6 +63,7 @@
                             <li><a href="#" class="dropdown-item" id="product3">產品入庫</a></li>
                             <li><a href="#" class="dropdown-item" id="product4">上架中產品</a></li>
                             <li><a href="#" class="dropdown-item" id="product5">未上架產品</a></li>
+                            <li><a href="#" class="dropdown-item" id="product6">產品查詢</a></li>
                         </ul>
                     </li>
                     <li class="col-3 mt-3 mb-3 dropdown">
@@ -102,7 +102,7 @@
             <div class="">
                 <div class="service_item m-auto text-center p-5">
                     <a class=" " href="">
-                        <img class="img-fluid" src="../img/00_index/pet-salon.png" alt="">
+                        <img class="img-fluid" src="../../img/00_index/pet-salon.png" alt="">
                         <p class="py-4">美容預約</p>
                     </a>
                 </div>
@@ -110,7 +110,7 @@
             <div class="">
                 <div class="service_item m-auto text-center p-5">
                     <a href="">
-                        <img class="img-fluid" src="../img/00_index/pet-hotel.png" alt="">
+                        <img class="img-fluid" src="../../img/00_index/pet-hotel.png" alt="">
                         <p class="py-4">寵物住宿</p>
                     </a>
                 </div>
@@ -118,7 +118,7 @@
             <div class="">
                 <div class="service_item m-auto text-center p-5">
                     <a href="">
-                        <img class="img-fluid" src="../img/00_index/pet-food.png" alt="">
+                        <img class="img-fluid" src="../../img/00_index/pet-food.png" alt="">
                         <p class="py-4">產品專區</p>
                     </a>
                 </div>
@@ -145,18 +145,31 @@
     <script>
         window.onload = () => {
 
-            // 登入後拿到的連結  
+            $('#logout_btn').css({'visibility':'hidden'});
+
+            // 已登入後進首頁跳轉回去
             // console.log("連結", localStorage.getItem('ahref').split('**').map(element => element.split(',')));
-            if (localStorage.getItem('ahref')) {
-                localStorage.getItem('ahref').split('**').map(element => element.split(',')).forEach((element, index) => {
-                    element.some(function (item) {
-                        if (item != "#") {
-                            console.log('登入之後', item);
-                            window.location.href = item;
-                            return true;
+            if (sessionStorage.getItem('ahref')) {
+
+                // 各個a的id
+                let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5', 'product6'], ['product_order1', 'product_order2']];
+                let sess_herf = sessionStorage.getItem('ahref').split('**').map(element => element.split(','));
+                // 進網頁給超連結
+                for (let i = 0; i < sess_herf.length; i++) {
+                    for (k = 0; k < sess_herf[i].length; k++) {
+                        document.getElementById(`${ahref[i][k]}`).href = sess_herf[i][k];
+                    }
+                }
+                // 登入後點選首頁自動跳轉
+                for (let i = 0; i < sess_herf.length; i++) {
+                    for (k = 0; k < sess_herf[i].length; k++) {
+                        if (sess_herf[i][k] != "#") {
+                            console.log("近來", sess_herf[i][k]);
+                            // window.location.href = data2[i][k];
+                            break;
                         }
-                    })
-                });
+                    }
+                }
             }
 
             $('.nav>li>ul>li').on('click', 'a', function () {
@@ -168,11 +181,12 @@
                 // console.log($(this).attr("href"));
             })
 
+            // 666666666666666666666666
             // let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5'], ['product_order1', 'product_order2']];
-            let manager__ = "../20_beauty/beauty_back.html**../30_hotel/hotel.html,hotel2**../40_product/product.html,product2,product3,product4,product5**../40_product/product_order.html,product_order2";
-            let beaury__ = "../20_beauty/beauty_back.html**#**#,#,#,#,#**#,#";
-            let hotel__ = "#**../30_hotel/hotel.html,hotel2**#,#,#,#,#**#,#";
-            let product__ = "../20_beauty/beauty_front1.html**../30_hotel/hotel.html,hotel2**../40_product/product.html,product2,product3,product4,product5**../40_product/product_order.html";
+            // let manager__ = "../20_beauty/beauty_back.html**../30_hotel/back/order_back.html,../30_hotel/back/hotel_today_back.html**../40_product/back/main_info.html,../40_product/back/detail_info.html,../40_product/back/warehouse.html,../40_product/back/on_shelves.html,../40_product/back/remove_shelves.html,../40_product/back/all_product.html**../10_member/back/product_orders.html,../10_member/back/member_orders.html";
+            // let beaury__ = "../20_beauty/beauty_back.html**#**#,#,#,#,#**#,#";
+            // let hotel__ = "#**../30_hotel/hotel.html,hotel2**#,#,#,#,#**#,#";
+            // let product__ = "../20_beauty/beauty_front1.html**../30_hotel/hotel.html,hotel2**../40_product/product.html,product2,product3,product4,product5**../40_product/product_order.html";
 
             // let data1 = hrefsss.split('**');
             // let data2 = data1.map(element => element.split(','));
@@ -255,12 +269,12 @@
             logout_btn.onclick = () => {
                 console.log('登出');
 
-                localStorage.removeItem('token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('uid');
-                localStorage.removeItem('ahref');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('refreshToken');
+                sessionStorage.removeItem('uid');
+                sessionStorage.removeItem('ahref');
 
-                window.location.href = "../00_index/index_back.html";
+                window.location.href = "../../00_index/index_back.html";
 
             }
 
@@ -280,22 +294,17 @@
                     })
                     .then(data => {
                         if (data.token) {
-                            localStorage.setItem('token', data.token);
-                            localStorage.setItem('refreshToken', data.refreshToken);
-                            localStorage.setItem('uid', data.id);
-                            localStorage.setItem('ahref', data.ahref);
+                            sessionStorage.setItem('token', data.token);
+                            sessionStorage.setItem('refreshToken', data.refreshToken);
+                            sessionStorage.setItem('uid', data.id);
+                            sessionStorage.setItem('ahref', data.ahref);
 
-                            let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5'], ['product_order1', 'product_order2']];
+                            let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5', 'product6'], ['product_order1', 'product_order2']];
 
                             let data1 = data.ahref.split('**');
                             let data2 = data1.map(element => element.split(','));
                             console.log(data2);
 
-                            data2.forEach((element, index) => {
-                                element.forEach((ele, ind) => {
-                                    document.getElementById(`${ahref[index][ind]}`).href = ele;
-                                })
-                            });
 
                             console.log('登入成功');
                             console.log(data.message);
@@ -304,24 +313,28 @@
                             console.log(data.permission);
                             console.log(data.id);
 
-                            // data2.forEach((element, index) => {
-                            //     element.forEach((ele, ind) => {
-                            //         if (ele != "#") {
-                            //             ahrefcount = 1;
-                            //             console.log('登入之後', ele);
-                            //             // window.location.href = ele;
-                            //             return true;
-                            //         }
-                            //     })
-                            // });
-
-                            data2.some(function (item) {
-                                if (item != "#") {
-                                    console.log('登入之後', item);
-                                    window.location.href = item;
-                                    return true;
+                            for (let i = 0; i < data2.length; i++) {
+                                let gethref = 0;
+                                for (k = 0; k < data2[i].length; k++) {
+                                    if (data2[i][k] != "#") {
+                                        gethref = 1
+                                        console.log("登入拿到", data2[i][k]);
+                                        window.location.href = data2[i][k];
+                                        break;
+                                    }
                                 }
-                            })
+                                if (gethref) {
+                                    break;
+                                }
+                            }
+
+                            // data2.some(function (item) {
+                            //     if (item != "#") {
+                            //         console.log('登入之後', item);
+                            //         // window.location.href = item;
+                            //         return true;
+                            //     }
+                            // })
                             // sessionStorage.setItem('permission', text);
                             // set_staff_state();
 

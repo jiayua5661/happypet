@@ -16,7 +16,6 @@ function headerChange(){
         pdNavbar.style.position = "static";  
     }
     // console.log('window.innerWidth',window.innerWidth)
-    // window.innerWidth == 1200 ? pdNavbar.style.top = "148px" : pdNavbar.style.top = "95px"; 
 }
 
 
@@ -198,7 +197,8 @@ window.onload = function(){
                     if(seriesProduct){
                         let productItem = document.createElement('div')
                         // productItem.classList.add('product_item','col-md-3','position-relative')
-                        let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? `${seriesPriceObj[series_ai_id].min}` : `${seriesPriceObj[series_ai_id].min} ~ ${seriesPriceObj[series_ai_id].max}`
+                        let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? 
+                                `${seriesPriceObj[series_ai_id].min.toLocaleString()}` : `${seriesPriceObj[series_ai_id].min.toLocaleString()} ~ ${seriesPriceObj[series_ai_id].max.toLocaleString()}`
                         console.log('我是上面的seriesPriceObj',seriesPriceObj)
                         productItem.classList.add('product_item','position-relative')
                         // <p class="pd_price">${price.toLocaleString()}</p>

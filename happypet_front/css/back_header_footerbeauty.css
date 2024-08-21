@@ -203,7 +203,7 @@ main {
     width: 90%;
     position: relative;
     display: inline-block;
-    left: 1px;
+    left: 0.08%;
     top: 1px;
 }
 
@@ -220,6 +220,15 @@ main {
 .back_petimg_div {
     width: 140px;
     height: 140px;
+}
+
+.beauty_pet_plan_box{
+    border: 2px solid white;
+    border-radius: 15px;
+    background-color: wheat;
+    color: black;
+    font-weight: 800;
+    cursor:pointer;
 }
 
 /* .beauty_back_table div {

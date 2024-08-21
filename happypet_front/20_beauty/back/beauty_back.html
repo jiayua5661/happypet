@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>好寵你 | 後台首頁</title>
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/back_header_footerbeauty.css">
-    <script src="../js/bootstrap.bundle.js"></script>
-    <script src="../js/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/back_header_footerbeauty.css">
+    <script src="../../js/bootstrap.bundle.js"></script>
+    <script src="../../js/jquery-3.7.1.js"></script>
 
     <!-- 使用CDN引入bootstrap-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -34,7 +34,7 @@
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
                 <a class="" href="#">
-                    <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
+                    <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
                 </a>
             </div>
             <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
@@ -63,6 +63,7 @@
                             <li><a href="#" class="dropdown-item" id="product3">產品入庫</a></li>
                             <li><a href="#" class="dropdown-item" id="product4">上架中產品</a></li>
                             <li><a href="#" class="dropdown-item" id="product5">未上架產品</a></li>
+                            <li><a href="#" class="dropdown-item" id="product6">產品查詢</a></li>
                         </ul>
                     </li>
                     <li class="col-3 mt-3 mb-3 dropdown">
@@ -89,8 +90,8 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="ps-5 mb-0 color_primary_self">美容預約表</h2>
                 <div id="select_week">
-                    <button class="me-4 px-4 py-2" id="last_week">上一週</button>
-                    <button class="me-5 px-4 py-2" id="next_week">下一週</button>
+                    <button class="me-4 px-4 py-2 bgc_primary_self text-white rounded border-white" id="last_week">上一週</button>
+                    <button class="me-5 px-4 py-2 bgc_primary_self text-white rounded border-white" id="next_week">下一週</button>
                 </div>
             </div>
 
@@ -460,9 +461,9 @@
                         </div>
                         <div class="modal-body row">
                             <div class="d-flex container col-12">
-                                <div class="me-4 back_petimg_div">
-                                    <img id="show_window_pet_headphoto" src="../img/20_beauty/petheadshot_none.png"
-                                        alt="" class="img-fluid rounded-circle">
+                                <div class="me-4 back_petimg_div  d-flex align-items-center">
+                                    <img id="show_window_pet_headphoto" src="../../img/20_beauty/petheadshot_none.png"
+                                        alt="" class="img-fluid">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <p>名字 : <span id="show_window_pet_name">小白</span></p>
@@ -606,7 +607,7 @@
                     }
                     if (order_in) {
                         canvas_div.innerHTML += `
-                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.name}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.473%; background-color: white;">${element.pet_name}</div>
+                        <div id="order_box_id${element.boid}" data-bs-toggle="modal" data-bs-target="#exampleModalshowpet" data-pid="${element.pid}" data-pet_name="${element.pet_name}" data-pet_birthday="${element.pet_birthday}" data-user_name="${element.cname}" data-cellphone="${element.cellphone}" data-plan_title="${element.plan_title}" data-others="${element.others}" data-pet_head="${element.pet_headphoto}" class="beauty_pet_plan_box order_box d-flex align-items-center justify-content-center" style="top: ${start_time * 40}px;  left: ${(iDays * 3 + c) * 5.55}%;  height: ${half_hour * 40 - 1}px;  width: 5.463%;">${element.pet_name}</div>
                         `;
                         break;
                     }
@@ -638,27 +639,29 @@
     <script>
         window.onload = () => {
 
-            // 複製 這裡
-            if (localStorage.getItem('ahref')) {
-                let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5'], ['product_order1', 'product_order2']];
-                localStorage.getItem('ahref').split('**').map(element => element.split(',')).forEach((element, index) => {
-                    element.forEach((ele, ind) => {
-                        if (ele != "#") {
-                            document.getElementById(`${ahref[index][ind]}`).href = ele;
-                        }
-                    })
-                });
+                        // 複製 這裡
+            if (sessionStorage.getItem('ahref')) {
+                console.log('超連結');
+                
+                let ahref = [['beauty1'], ['hotel1', 'hotel2'], ['product1', 'product2', 'product3', 'product4', 'product5', 'product6'], ['product_order1', 'product_order2']];
+                let sess_herf = sessionStorage.getItem('ahref').split('**').map(element => element.split(','));
+                // 進網頁給超連結
+                for (let i = 0; i < sess_herf.length; i++) {
+                    for (k = 0; k < sess_herf[i].length; k++) {
+                        document.getElementById(`${ahref[i][k]}`).href = sess_herf[i][k];
+                    }
+                }
             }
 
             logout_btn.onclick = () => {
                 console.log('登出');
 
-                localStorage.removeItem('token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('uid');
-                localStorage.removeItem('ahref');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('refreshToken');
+                sessionStorage.removeItem('uid');
+                sessionStorage.removeItem('ahref');
 
-                window.location.href = "../00_index/index_back.html";
+                window.location.href = "../../00_index/back/index_back.html";
             }
 
             $('.nav>li>ul>li').on('click', 'a', function () {
@@ -682,7 +685,7 @@
                 show_window_cellphone.innerHTML = $(this).data('cellphone');
                 show_window_plan_title.innerHTML = $(this).data('plan_title');
                 show_window_other.innerHTML = $(this).data('others');
-                show_window_pet_headphoto.src = $(this).data('pet_head').split(',')[1] ? $(this).data('pet_head') : '../img/20_beauty/petheadshot_none.png';
+                show_window_pet_headphoto.src = $(this).data('pet_head').split(',')[1] ? $(this).data('pet_head') : '../../img/20_beauty/petheadshot_none.png';
                 history_order.innerHTML = '';
 
                 // lala fetch
@@ -691,9 +694,9 @@
                     // console.log(data);
                     // console.log( parseInt(data[0].date.split('-')[0]+data[0].date.split('-')[1]+data[0].date.split('-')[2]));
 
-                    data.sort(function (a, b) {
-                        return parseInt(b.date.split('-')[0] + b.date.split('-')[1] + b.date.split('-')[2]) - parseInt(a.date.split('-')[0] + a.date.split('-')[1] + a.date.split('-')[2]);
-                    })
+                    // data.sort(function (a, b) {
+                    //     return parseInt(b.date.split('-')[0] + b.date.split('-')[1] + b.date.split('-')[2]) - parseInt(a.date.split('-')[0] + a.date.split('-')[1] + a.date.split('-')[2]);
+                    // })
 
                     data.forEach(element => {
                         history_order.innerHTML += `<p>${element.date} ${element.plan_title}</p>`;
