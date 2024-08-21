@@ -21,52 +21,103 @@
   <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
 
-  <body>
+<body>
     <!-- Header -->
     <!-- Header -->
     <!-- Header -->
     <!-- Header -->
     <!-- Header -->
 
-    <header id="navbar" class="sticky-top">
+    <header id="navbar" class="sticky-top ">
       <div class="member nav_icon">
-        <a href="#"><i class="bi-person"></i></a>
-        <a href="#"><i class="bi-cart"></i></a>
+          <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="bi-person"></i></a>
+          <a href="#"><i class="bi-cart"></i></a>
       </div>
       <div class="row align-items-center container-xl">
-        <div
-          class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12"
-        >
-          <a class="" href="#">
-            <img class="nav-logo m-2" src="../img/LOGO.png" alt="" />
-          </a>
-        </div>
-        <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
-          <ul class="nav justify-content-center text-center">
-            <li class="col-3 mt-3 mb-3">
-              <a class="p-2" href="#">美容預約</a>
-            </li>
-            <li class="col-3 mt-3 mb-3">
-              <a class="p-2" href="#">寵物住宿</a>
-            </li>
-            <li class="col-3 mt-3 mb-3">
-              <a class="p-2" href="#">產品專區</a>
-            </li>
-            <li class="col-3 mt-3 mb-3">
-              <a class="p-2" href="#">獸醫門診</a>
-            </li>
-          </ul>
-        </div>
+          <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
+              <a class="" href="../00_index/index.html">
+                  <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
+              </a>
+          </div>
+          <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
+              <ul class="nav justify-content-center text-center">
+                  <li class="col-3 mt-3 mb-3">
+                      <a class="p-2" href="#">美容預約</a>
+                  </li>
+                  <li class="col-3 mt-3 mb-3">
+                      <a class="p-2" href="#">寵物住宿</a>
+                  </li>
+                  <li class="col-3 mt-3 mb-3">
+                      <a class="p-2" href="#">產品專區</a>
+                  </li>
+                  <li class="col-3 mt-3 mb-3">
+                      <a class="p-2" href="#">獸醫門診</a>
+                  </li>
+              </ul>
+          </div>
       </div>
-    </header>
-    <!-- Header end -->
-    <!-- Header end -->
-    <!-- Header end -->
-    <!-- Header end -->
-    <!-- Header end -->
+  </header>
+  <!-- 會員登入Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">會員登入</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formLoginCustomer" class="row g-3" novalidate>
+                      <div class="col-md-12">
+                          <label for="" class="form-label">電子信箱 / e-mail :</label>
+                          <input name="login_email" type="email" class="form-control" required>
+                          <div class="invalid-feedback">
+                              請輸入正確格式
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <label for="" class="form-label">密碼 / password :</label>
+                          <input name="login_password" type="password" class="form-control" required minlength="8"
+                              maxlength="16" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$">
+                          <div class="invalid-feedback">
+                              請輸入8~16個字元且包含數字、英文字母大小寫及特殊符號的密碼
+                          </div>
+                      </div>
+                      <div class="col-12">
+                          <button class="btn btn-secondary" type="reset">取消</button>
+                          <button class="btn btn-success" type="submit" id="btnLoginCustomer">登入</button>
+                      </div>
+                  </form>
+                  <!-- <form>
+                    <div class="mb-3">
+                        <label for="recipient-name1" class="col-form-label">電子信箱 / e-mail :</label>
+                        <input type="email" class="form-control" id="recipient-name1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name2" class="col-form-label">密碼 / password :</label>
+                        <input type="password" class="form-control" id="recipient-name2">
+                    </div>
+                </form> -->
+              </div>
+              <div class="modal-footer">
+                  <p><a href="#">忘記密碼?</a>&ensp;或&ensp;<a
+                          href="../10_member/member_register.html">註冊會員</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                  </p>
+                  <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                <button type="button" class="btn btn-success">登入</button> -->
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- 會員登入Modal end-->
 
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  <!-- Header end -->
+  <!-- Header end -->
+  <!-- Header end -->
+  <!-- Header end -->
+  <!-- Header end -->
+   
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
   <!--------------- footer ---------------->
   <!--------------- footer ---------------->
