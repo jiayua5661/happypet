@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // 獲取所有訂單
 function fetchOrders() {
-  fetch("http://localhost/happypet_back/public/api/hotel_orders_all")
+  fetch("http://localhost/happypet/happypet_back/public/api/hotel_orders_all")
     .then((response) => response.json())
     .then((data) => {
       renderOrders(data);
@@ -50,7 +50,7 @@ function fetchOrders() {
 // 根據日期篩選訂單
 function fetchOrdersByDate(checkinDate) {
   fetch(
-    `http://localhost/happypet_back/public/api/hotel_orders_day?checkin=${encodeURIComponent(
+    `http://localhost/happypet/happypet_back/public/api/hotel_orders_day?checkin=${encodeURIComponent(
       checkinDate
     )}`
   )
@@ -79,7 +79,7 @@ function fetchOrdersByDate(checkinDate) {
 function fetchOrdersByUser(userName) {
   console.log("fetch orders:", userName);
   fetch(
-    `http://localhost/happypet_back/public/api/hotel_orders_by_user?name=${encodeURIComponent(
+    `http://localhost/happypet/happypet_back/public/api/hotel_orders_by_user?name=${encodeURIComponent(
       userName
     )}`
   )

@@ -314,10 +314,9 @@ window.onload = ()=>{
         }
 
         // 更新購物車數量(紅點圖標數量)
-        // let cartQuantity = document.querySelector('header .cart_quantity')
         queryQuantity()
         function queryQuantity(){
-            fetch('http://localhost/happypet/happypet_back/public/api/productcart/2')
+            fetch('http://localhost/happypet/happypet_back/public/api/productcart/1')
             .then(response=>response.text())
             .then(quantity=>{
                 console.log('購物車quantity',quantity)

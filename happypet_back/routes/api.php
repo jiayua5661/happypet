@@ -227,7 +227,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
 });
 // 查詢購物車
 Route::get('/productcart/{uid}',function($uid){
-    session(['uid' => '2']);
+    session(['uid' => '1']);
     $uid = session('uid');
     // $_SESSION["uid"] = 'qwe123';
     $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = '{$uid}'");
