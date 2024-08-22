@@ -95,6 +95,7 @@ $('#mypet_card').on('click', '.pet_card_check_detail', function () {
     // $('#btnEditMyPet').data('pid', $(this).data('pid'));
     // console.log('card');
     // document.getElementById('pet_name').value = $(this).data('pet_name');
+
     pet_name.value = $(this).data('pet_name');
     pet_species.value = $(this).data('pet_species');
     // console.log(pet_species.value);

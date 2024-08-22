@@ -47,7 +47,6 @@ document.getElementById('btnRegister').onclick = (event) => {
         }
     }
 
-
 }
 
 // btnRegister.onclick = (event) => {

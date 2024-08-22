@@ -542,6 +542,7 @@ Route::get('/front_beauty_pet_info/{uid}', [BeautyFrontController::class, 'front
 Route::get('/front2_beauty_select_beauty_plan_price_time/{pet_species}/{pet_weight}/{pet_fur}/{planid}', [BeautyFrontController::class, 'front2_beauty_select_beauty_plan_price_time']);
 
 //////////////////////////////////// LIN ////////////////////////////////////////
+
 /////////////////////////////////////LEE/////////////////////////////////////////
 //會員註冊
 Route::post('/member_register', RegisterController::class);
@@ -558,11 +559,28 @@ Route::post('/member_mypet', [MyPetController::class, 'mypet_card']);
 //編輯我的寵物資料
 Route::post('/member_edit_pet', [MyPetController::class, 'edit_petinfo']);
 
+<<<<<<< HEAD
 
 //查看會員資料
 Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
+=======
+//查看會員資料
+Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
+
+//編輯會員資料
+Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
+
+/////////////////////////////////////LEE/////////////////////////////////////////
+
+/////////////////////////chen//////////////////////////
+// 查日期
+// 顯示訂單列表
+// http://localhost/happypet_back/public/api/hotel_orders
+Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
+>>>>>>> 24cbf63a80e42c76d4a79089a60da67b6d2f9ebc
 
 
+<<<<<<< HEAD
 //編輯會員資料
 Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
 /////////////////////////////////////LEE/////////////////////////////////////////
@@ -570,15 +588,24 @@ Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinf
 
 /////////////////////////////////////chen//////////////////////////////////////
 
+=======
+Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
+
+// 查詢訂購人
+Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
+>>>>>>> 24cbf63a80e42c76d4a79089a60da67b6d2f9ebc
 
 // 查日期
 // 顯示訂單列表
 // http://localhost/happypet_back/public/api/hotel_orders
 Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
 
+<<<<<<< HEAD
 // 顯示房型跟數量
 Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
 
+=======
+>>>>>>> 24cbf63a80e42c76d4a79089a60da67b6d2f9ebc
 // 訂單進資料庫
 Route::post('/hotel_orders', [HotelOrderController::class, 'store']);
 
@@ -602,6 +629,7 @@ Route::get('/getPetDetailsById', [HotelOrderController::class, 'getPetDetailsByI
 // 抓訂單明細
 Route::get('/getOrderDetailsByRoomNumber', [HotelOrderController::class, 'getOrderDetailsByRoomNumber']);
 
+<<<<<<< HEAD
 
 // 查全部-後台
 Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
@@ -614,3 +642,6 @@ Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser'
 Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
 
 /////////////////////////////////////chen//////////////////////////////////////
+=======
+/////////////////////////chen//////////////////////////
+>>>>>>> 24cbf63a80e42c76d4a79089a60da67b6d2f9ebc
