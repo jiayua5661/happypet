@@ -131,6 +131,30 @@ textarea {
 textarea {
   resize: vertical;
 }
+#saveBtn {
+  background-color: #90b9ab;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+#saveBtn:hover {
+  background-color: #90b9ab8e;
+  color: white;
+  border: none;
+}
+#cancelBtn {
+  background-color: #7d7b7bd6;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+#cancelBtn:hover {
+  background-color: #7d7b7b8b;
+  color: white;
+  border: none;
+}
 
 .col-6 {
   flex: 1;

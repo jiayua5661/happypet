@@ -558,26 +558,26 @@ Route::post('/member_mypet', [MyPetController::class, 'mypet_card']);
 //編輯我的寵物資料
 Route::post('/member_edit_pet', [MyPetController::class, 'edit_petinfo']);
 
+
+//查看會員資料
+Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
+
+
+//編輯會員資料
+Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
+/////////////////////////////////////LEE/////////////////////////////////////////
+
+
+/////////////////////////////////////chen//////////////////////////////////////
+
+
 // 查日期
 // 顯示訂單列表
 // http://localhost/happypet_back/public/api/hotel_orders
 Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
-//查看會員資料
-Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
 
-// 查全部-後台
-Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
-
-
+// 顯示房型跟數量
 Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
-
-
-// 查詢訂購人
-Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
-
-// 選擇該使用者的寵物
-Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
-
 
 // 訂單進資料庫
 Route::post('/hotel_orders', [HotelOrderController::class, 'store']);
@@ -602,7 +602,15 @@ Route::get('/getPetDetailsById', [HotelOrderController::class, 'getPetDetailsByI
 // 抓訂單明細
 Route::get('/getOrderDetailsByRoomNumber', [HotelOrderController::class, 'getOrderDetailsByRoomNumber']);
 
-/////////////////////////chen//////////////////////////
-//編輯會員資料
-Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
-/////////////////////////////////////LEE/////////////////////////////////////////
+
+// 查全部-後台
+Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
+
+
+// 查詢訂購人
+Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
+
+// 選擇該使用者的寵物
+Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
+
+/////////////////////////////////////chen//////////////////////////////////////

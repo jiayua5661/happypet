@@ -126,9 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .then((response) => {
           if (!response.ok) {
-            throw new Error(
-              `Network response was not ok: ${response.statusText}`
-            );
           }
           return response.json();
         })
@@ -138,11 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // 設定訂單編號到 input 框中
             document.getElementById("field1").value = data.order_number;
           } else {
-            console.error("Order number not found in response data.");
+            console.error("找不到Order number");
           }
-        })
-        .catch((error) => {
-          console.error("Error fetching order number:", error);
         });
     });
   });
@@ -163,9 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
         )
           .then((response) => {
             if (!response.ok) {
-              throw new Error(
-                `Network response was not ok: ${response.statusText}`
-              );
             }
             return response.json();
           })
@@ -178,32 +169,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 `http://localhost/happypet_back/public/api/getUserDetailsByUid?uid=${orderData.uid}`
               );
             } else {
-              throw new Error("UID not found in order data.");
+              throw new Error("找不到uid");
             }
           })
           .then((response) => {
             if (!response.ok) {
-              throw new Error(
-                `Network response was not ok: ${response.statusText}`
-              );
             }
             return response.json();
           })
           .then((userData) => {
             // 確認 userData 中包含用戶信息
-            if (userData.name && userData.cellphone) {
+            if (userData.cname && userData.cellphone) {
               // 設定用戶信息到 input 框中
-              document.getElementById("field2").value = userData.name;
+              document.getElementById("field2").value = userData.cname;
               document.getElementById("field3").value = userData.cellphone;
             } else {
-              console.error("User information not found in response data.");
+              console.error("找不到User information");
             }
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
           });
-      } else {
-        console.error("No room number found.");
       }
     });
   });
@@ -237,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 `http://localhost/happypet_back/public/api/getPetDetailsById?pet_id=${orderData.pet_id}`
               );
             } else {
-              throw new Error("Pet ID not found in response data.");
+              throw new Error("找不到Pet ID");
             }
           })
           .then((response) => {
@@ -264,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("field9").value =
                 petData.pet_weight || "0"; // 寵物體重
             } else {
-              console.error("Pet information not found in response data.");
+              console.error("找不到Pet information");
             }
           })
           .then(() => {
@@ -275,9 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
           })
           .then((response) => {
             if (!response.ok) {
-              throw new Error(
-                `Network response was not ok: ${response.statusText}`
-              );
             }
             return response.json();
           })
@@ -298,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("field15").value =
                 orderData.nightday || "0";
             } else {
-              console.error("Order details not found in response data.");
+              console.error("找不到Order details");
             }
           })
           .catch((error) => {
@@ -310,6 +290,65 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+// // 定義房間狀態對應的 CSS 類名
+// const statusClasses = {
+//   inhotel: "inpetNamehotel",
+//   nohotel: "nopetName",
+//   outhotel: "outpetName",
+// };
+
+// // 記錄要更新背景顏色的元素
+// let selectedPetElement = null;
+
+// // 監聽點擊事件以選擇要更改背景顏色的寵物名稱
+// document.querySelectorAll("p[data-room-number]").forEach((element) => {
+//   element.addEventListener("click", () => {
+//     console.log("Selected element:", element);
+//     selectedPetElement = element;
+//   });
+// });
+
+// // 根據選擇的狀態更新背景顏色
+// function updateBackgroundColor() {
+//   const status = document.getElementById("status").value;
+
+//   console.log("Updating background color. Status:", status);
+//   console.log("Selected pet element:", selectedPetElement);
+
+//   if (selectedPetElement) {
+//     Object.values(statusClasses).forEach((className) => {
+//       selectedPetElement.classList.remove(className);
+//     });
+
+//     if (statusClasses[status]) {
+//       selectedPetElement.classList.add(statusClasses[status]);
+//     }
+//   } else {
+//     console.log("No pet element selected.");
+//   }
+// }
+
+// // 監聽儲存按鈕點擊事件
+// const saveBtn = document.getElementById("saveBtn");
+// saveBtn.addEventListener("click", (event) => {
+//   event.preventDefault();
+
+//   // 在儲存後更新背景顏色
+//   updateBackgroundColor();
+
+//   // 清空 selectedPetElement 以防下次未選中時影響結果
+//   selectedPetElement = null;
+
+//   // 關閉模態窗口並提示儲存成功
+//   const modal = document.getElementById("myModal");
+//   if (modal) {
+//     modal.style.display = "none";
+//   } else {
+//     console.error("Modal not found.");
+//   }
+//   alert("儲存成功！");
+// });
+
 // 定義房間狀態對應的 CSS 類名
 const statusClasses = {
   inhotel: "inpetNamehotel",
@@ -317,14 +356,21 @@ const statusClasses = {
   outhotel: "outpetName",
 };
 
-// 記錄要更新背景顏色的元素
+// 儲存已選擇元素的狀態
 let selectedPetElement = null;
 
 // 監聽點擊事件以選擇要更改背景顏色的寵物名稱
 document.querySelectorAll("p[data-room-number]").forEach((element) => {
   element.addEventListener("click", () => {
-    console.log("Selected element:", element);
+    // 先移除上一個已選擇元素的背景顏色
+    if (selectedPetElement) {
+      Object.values(statusClasses).forEach((className) => {
+        selectedPetElement.classList.remove(className);
+      });
+    }
+    // 更新已選擇的寵物元素
     selectedPetElement = element;
+    console.log("Selected element:", selectedPetElement);
   });
 });
 
@@ -332,19 +378,19 @@ document.querySelectorAll("p[data-room-number]").forEach((element) => {
 function updateBackgroundColor() {
   const status = document.getElementById("status").value;
 
-  console.log("Updating background color. Status:", status);
+  console.log("更新背景顏色Status:", status);
   console.log("Selected pet element:", selectedPetElement);
 
   if (selectedPetElement) {
+    // 清除該元素的所有狀態類別
     Object.values(statusClasses).forEach((className) => {
       selectedPetElement.classList.remove(className);
     });
 
+    // 依據選擇的狀態新增對應的背景顏色
     if (statusClasses[status]) {
       selectedPetElement.classList.add(statusClasses[status]);
     }
-  } else {
-    console.log("No pet element selected.");
   }
 }
 
@@ -353,7 +399,7 @@ const saveBtn = document.getElementById("saveBtn");
 saveBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  // 在儲存後更新背景顏色
+  // 更新背景顏色
   updateBackgroundColor();
 
   // 清空 selectedPetElement 以防下次未選中時影響結果
@@ -363,8 +409,6 @@ saveBtn.addEventListener("click", (event) => {
   const modal = document.getElementById("myModal");
   if (modal) {
     modal.style.display = "none";
-  } else {
-    console.error("Modal not found.");
   }
   alert("儲存成功！");
 });
