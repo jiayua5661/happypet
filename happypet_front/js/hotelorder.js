@@ -147,8 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
       currentStep++;
       // 為新的當前步驟添加 active 類別
       steps[currentStep].classList.add("active");
-    } else {
-      alert("已訂購完成!");
     }
   });
 });

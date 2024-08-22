@@ -111,3 +111,52 @@ footer a,footer i{
 .was-validated .form-control:valid {
     background-image: none; /* 移除默認的打勾符號 */
 }
+
+.container-sm {
+    max-width: 100%; /* 使容器可以擴展到全寬 */
+}
+
+.service_items_container {
+    display: flex; /* 使用 Flexbox 來並排圖片 */
+    flex-wrap: wrap; /* 如果容器太窄，讓圖片換行 */
+    justify-content: center; /* 居中對齊圖片 */
+    gap: 1rem; /* 設置圖片之間的間距 */
+}
+
+.service_item {
+    flex: 1 1 calc(25% - 1rem); /* 確保每個項目佔據 25% 寬度，減去間距 */
+    max-width: 25%; /* 限制項目的最大寬度 */
+    box-sizing: border-box; /* 包含 padding 和 border 在內的寬度計算 */
+    text-align: center; /* 圖片和文字居中對齊 */
+}
+.service_item a {
+    text-decoration: none;
+    color: #579d86;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    display: block; /* 使 a 標籤填滿父元素 */
+    text-align: center; /* 圖片和文字居中對齊 */
+    position: relative; /* 為子元素定位提供基準 */
+    transition: transform 0.3s ease; /* 平滑的過渡效果 */
+}
+
+.service_item img {
+    max-width: 100%; /* 確保圖片不超過容器的寬度 */
+    height: auto; /* 保持圖片比例 */
+}
+
+.service_item p {
+    margin: 0; /* 取消預設外邊距 */
+    padding: 0.5rem 0; /* 添加內邊距 */
+    transition: transform 0.3s ease; /* 平滑的過渡效果 */
+}
+
+.service_item:hover a {
+    transform: translateY(-10px); /* 鼠標懸停時向上移動 */
+}
+
+.service_item:hover img,
+.service_item:hover p {
+    transform: translateY(-10px); /* 鼠標懸停時向上移動 */
+}

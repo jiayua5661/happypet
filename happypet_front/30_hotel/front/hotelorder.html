@@ -176,10 +176,51 @@
       <button id="orderMoreRooms" class="btn btn-outline-secondary btn-lg me-3">
         訂購更多房間
       </button>
-      <button id="nextStep" class="btn btn-outline-secondary btn-lg">
+      <button
+        id="nextStep"
+        class="btn btn-outline-secondary btn-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#orderModal"
+      >
         確認訂購
       </button>
     </div>
+
+    <div class="modal" tabindex="-1" id="orderModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fs-6">通知框</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body fs-4 fw-bold text-center">
+            <p>訂購完成！</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              關閉
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              確定
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="../../js/hotelorder.js"></script>
 
     <!--------------- footer ---------------->
