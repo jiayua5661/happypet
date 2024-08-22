@@ -22,7 +22,7 @@ class HotelOrderController extends Controller
             $orders = DB::select("
                 SELECT 
                     o.oid, 
-                    u.name AS user_name, 
+                    u.cname AS user_name, 
                     p.pet_name, 
                     o.room_type, 
                     o.checkin, 
@@ -49,7 +49,7 @@ class HotelOrderController extends Controller
            $orders = DB::select("
                SELECT 
                    o.oid, 
-                   u.name AS user_name, 
+                   u.cname AS user_name, 
                    p.pet_name, 
                    o.room_type, 
                    o.checkin, 
@@ -147,7 +147,7 @@ class HotelOrderController extends Controller
            $orders = DB::select("
                SELECT 
                    o.oid, 
-                   u.name AS user_name, 
+                   u.cname AS user_name, 
                    p.pet_name, 
                    o.room_type, 
                    o.checkin, 
@@ -159,7 +159,7 @@ class HotelOrderController extends Controller
                LEFT JOIN 
                    pet_info p ON o.pid = p.pid
                WHERE 
-                   u.name LIKE ?", ['%' . $userName . '%']
+                   u.cname LIKE ?", ['%' . $userName . '%']
            );
    
            // 返回 JSON 格式的訂單數據
@@ -173,7 +173,7 @@ class HotelOrderController extends Controller
    public function userPetName(Request $request)
 {
         // 假設要查詢 UID 為 3 的寵物名稱
-        $uid = 3;
+        $uid = 6;
 
         // 從請求中獲取 'uid' 參數->會員登入後再用
         // $uid = $request->input('uid');
@@ -286,7 +286,7 @@ class HotelOrderController extends Controller
                 ho.checkin <= ? AND ho.checkout >= ?
             ", [$selectedDate, $selectedDate]);
 
-            \Log::info('Detailed SQL Query Results: ', ['orders' => $orders]);
+            Log::info('Detailed SQL Query Results: ', ['orders' => $orders]);
 
             return response()->json($orders);
         }
@@ -335,12 +335,12 @@ class HotelOrderController extends Controller
         // 查詢用戶信息
         $user = DB::table('user_info')
                 ->where('uid', $uid)
-                ->select('name', 'cellphone')
+                ->select('cname', 'cellphone')
                 ->first();
         
         if ($user) {
             return response()->json([
-                'name' => $user->name,
+                'cname' => $user->cname,
                 'cellphone' => $user->cellphone
             ]);
         } else {

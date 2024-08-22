@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const petContainer = button.nextElementSibling;
 
         // 發送 AJAX 請求獲取 UID 3 的寵物名稱
-        fetch("http://localhost/happypet_back/public/api/hotel_user_pets")
+        fetch("http://localhost/happypet/happypet_back/public/api/hotel_user_pets")
           .then((response) => {
             if (!response.ok) {
               throw new Error("Network response was not ok");
@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fetchAndRenderRooms(query = "") {
     fetch(
-      `http://localhost/happypet_back/public/api/check-availability${query}`,
+      `http://localhost/happypet/happypet_back/public/api/check-availability${query}`,
       {
         method: "GET",
         headers: {

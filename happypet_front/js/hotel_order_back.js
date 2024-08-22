@@ -46,7 +46,7 @@ document.getElementById("checkin").addEventListener("change", function () {
 
   // 發送請求到後端 API
   fetch(
-    `http://localhost/happypet_back/public/api/chooseRoomNumber?date=${selectedDate}`
+    `http://localhost/happypet/happypet_back/public/api/chooseRoomNumber?date=${selectedDate}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 向後端發送請求，根據 roomNumber 獲取訂單編號
       fetch(
-        `http://localhost/happypet_back/public/api/getOrderNumberByRoomNumber?room_number=${roomNumber}`
+        `http://localhost/happypet/happypet_back/public/api/getOrderNumberByRoomNumber?room_number=${roomNumber}`
       )
         .then((response) => {
           if (!response.ok) {
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (roomNumber) {
         // 向後端發送請求，根據 roomNumber 獲取訂單的 uid
         fetch(
-          `http://localhost/happypet_back/public/api/getUidByRoomNumber?room_number=${roomNumber}`
+          `http://localhost/happypet/happypet_back/public/api/getUidByRoomNumber?room_number=${roomNumber}`
         )
           .then((response) => {
             if (!response.ok) {
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (orderData.uid) {
               // 根據 uid 獲取用戶資料
               return fetch(
-                `http://localhost/happypet_back/public/api/getUserDetailsByUid?uid=${orderData.uid}`
+                `http://localhost/happypet/happypet_back/public/api/getUserDetailsByUid?uid=${orderData.uid}`
               );
             } else {
               throw new Error("UID not found in order data.");
@@ -191,9 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
           })
           .then((userData) => {
             // 確認 userData 中包含用戶信息
-            if (userData.name && userData.cellphone) {
+            if (userData.cname && userData.cellphone) {
               // 設定用戶信息到 input 框中
-              document.getElementById("field2").value = userData.name;
+              document.getElementById("field2").value = userData.cname;
               document.getElementById("field3").value = userData.cellphone;
             } else {
               console.error("User information not found in response data.");
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (roomNumber) {
         // 向後端發送請求，根據 roomNumber 獲取訂單的 pet_id
         fetch(
-          `http://localhost/happypet_back/public/api/getPetIdByRoomNumber?room_number=${roomNumber}`
+          `http://localhost/happypet/happypet_back/public/api/getPetIdByRoomNumber?room_number=${roomNumber}`
         )
           .then((response) => {
             if (!response.ok) {
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (orderData.pet_id) {
               // 根據 pet_id 獲取寵物詳細信息
               return fetch(
-                `http://localhost/happypet_back/public/api/getPetDetailsById?pet_id=${orderData.pet_id}`
+                `http://localhost/happypet/happypet_back/public/api/getPetDetailsById?pet_id=${orderData.pet_id}`
               );
             } else {
               throw new Error("Pet ID not found in response data.");
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .then(() => {
             // 根據 roomNumber 獲取訂單詳細信息
             return fetch(
-              `http://localhost/happypet_back/public/api/getOrderDetailsByRoomNumber?room_number=${roomNumber}`
+              `http://localhost/happypet/happypet_back/public/api/getOrderDetailsByRoomNumber?room_number=${roomNumber}`
             );
           })
           .then((response) => {
