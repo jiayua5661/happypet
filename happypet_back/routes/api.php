@@ -542,6 +542,7 @@ Route::get('/front_beauty_pet_info/{uid}', [BeautyFrontController::class, 'front
 Route::get('/front2_beauty_select_beauty_plan_price_time/{pet_species}/{pet_weight}/{pet_fur}/{planid}', [BeautyFrontController::class, 'front2_beauty_select_beauty_plan_price_time']);
 
 //////////////////////////////////// LIN ////////////////////////////////////////
+
 /////////////////////////////////////LEE/////////////////////////////////////////
 //會員註冊
 Route::post('/member_register', RegisterController::class);
@@ -558,9 +559,59 @@ Route::post('/member_mypet', [MyPetController::class, 'mypet_card']);
 //編輯我的寵物資料
 Route::post('/member_edit_pet', [MyPetController::class, 'edit_petinfo']);
 
+
 //查看會員資料
 Route::post('/member_userinfo', [UserinfoController::class, 'show_userinfo']);
+
 
 //編輯會員資料
 Route::post('/member_userinfo_update', [UserinfoController::class, 'edit_userinfo']);
 /////////////////////////////////////LEE/////////////////////////////////////////
+
+
+/////////////////////////////////////chen//////////////////////////////////////
+
+
+// 查日期
+// 顯示訂單列表
+// http://localhost/happypet_back/public/api/hotel_orders
+Route::get('/hotel_orders_day', [HotelOrderController::class, 'ordersByDate']);
+
+// 顯示房型跟數量
+Route::get('/check-availability', [HotelOrderController::class, 'checkAvailability']);
+
+// 訂單進資料庫
+Route::post('/hotel_orders', [HotelOrderController::class, 'store']);
+
+// 排房間
+Route::post('/assign_rooms', [HotelOrderController::class, 'assignRoomNumber']);
+
+// 後台選日期
+Route::get('/chooseRoomNumber', [HotelOrderController::class, 'chooseRoomNumber']);
+
+// 抓model訂單號
+Route::get('/getOrderNumberByRoomNumber', [HotelOrderController::class, 'getOrderNumberByRoomNumber']);
+
+// 抓user_info
+Route::get('/getUidByRoomNumber', [HotelOrderController::class, 'getUidByRoomNumber']);
+Route::get('/getUserDetailsByUid', [HotelOrderController::class, 'getUserDetailsByUid']);
+
+// 抓寵物資料
+Route::get('/getPetIdByRoomNumber', [HotelOrderController::class, 'getPetIdByRoomNumber']);
+Route::get('/getPetDetailsById', [HotelOrderController::class, 'getPetDetailsById']);
+
+// 抓訂單明細
+Route::get('/getOrderDetailsByRoomNumber', [HotelOrderController::class, 'getOrderDetailsByRoomNumber']);
+
+
+// 查全部-後台
+Route::get('/hotel_orders_all', [HotelOrderController::class, 'allOrders']);
+
+
+// 查詢訂購人
+Route::get('/hotel_orders_by_user', [HotelOrderController::class, 'ordersByUser']);
+
+// 選擇該使用者的寵物
+Route::get('/hotel_user_pets', [HotelOrderController::class, 'userPetName']);
+
+/////////////////////////////////////chen//////////////////////////////////////

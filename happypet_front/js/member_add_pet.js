@@ -1,3 +1,29 @@
+document.getElementById('petImageChange').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.getElementById('pet_headphoto');
+            imgElement.src = e.target.result;
+            imgElement.style.display = 'block'; // 顯示圖片預覽
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('petImageUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.getElementById('new_pet_headphoto');
+            imgElement.src = e.target.result;
+            imgElement.style.display = 'block'; // 顯示圖片預覽
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
 document.getElementById('btnAddPet').onclick = (event) => {
     event.preventDefault();
 

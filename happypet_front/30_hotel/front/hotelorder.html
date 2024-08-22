@@ -99,33 +99,15 @@
               <tr>
                 <th scope="col">住宿期間</th>
                 <th scope="col">房型</th>
-                <th scope="col">寵物名稱</th>
-                <th scope="col">晚數</th>
-                <th scope="col">同房數</th>
                 <th scope="col">數量</th>
+                <th scope="col">寵物名稱</th>
+                <th scope="col">同房數</th>
+                <th scope="col">晚數</th>
                 <th scope="col">小計</th>
                 <th scope="col">刪除</th>
               </tr>
             </thead>
-            <tbody id="ordersTable" class="fs-4">
-              <!-- <tr>
-                <td class="pt-4">
-                  <p>入住日期 2024/07/16</p>
-                  <p>退房日期 2024/07/17</p>
-                </td>
-                <td>深景房</td>
-                <td>小桃</td>
-                <td>1</td>
-                <td>0</td>
-                <td>1</td>
-                <td>$600</td>
-                <td>
-                  <button class="btn btn-outline-secondary btn-lg delete-btn">
-                    <i class="bi bi-trash3-fill"></i>
-                  </button>
-                </td>
-              </tr> -->
-            </tbody>
+            <tbody id="ordersTable" class="fs-4"></tbody>
           </table>
         </div>
       </div>
@@ -194,155 +176,53 @@
       <button id="orderMoreRooms" class="btn btn-outline-secondary btn-lg me-3">
         訂購更多房間
       </button>
-      <button id="nextStep" class="btn btn-outline-secondary btn-lg">
+      <button
+        id="nextStep"
+        class="btn btn-outline-secondary btn-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#orderModal"
+      >
         確認訂購
       </button>
     </div>
 
-    <script>
-      // question
-      function toggleText(id) {
-        var element = document.getElementById(id);
-        if (element.style.display === "none" || element.style.display === "") {
-          element.style.display = "block";
-        } else {
-          element.style.display = "none";
-        }
-      }
+    <div class="modal" tabindex="-1" id="orderModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fs-6">通知框</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body fs-4 fw-bold text-center">
+            <p>訂購完成！</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              關閉
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              確定
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      // progress
-      document.addEventListener("DOMContentLoaded", function () {
-        const steps = document.querySelectorAll(".progress-step");
-        // 初始化
-        let currentStep = 0;
+    <script src="../../js/hotelorder.js"></script>
 
-        document
-          .getElementById("nextStep")
-          .addEventListener("click", function () {
-            // 檢查當前步驟索引是否小於步驟總數減一
-            if (currentStep < steps.length - 1) {
-              // 移除當前步驟的 active 類別
-              steps[currentStep].classList.remove("active");
-              // 進入下一步
-              currentStep++;
-              // 為新的當前步驟添加 active 類別
-              steps[currentStep].classList.add("active");
-            } else {
-              // 顯示訂購完成的訊息框
-              alert("已訂購完成!");
-            }
-          });
-      });
-
-      // order more room
-      document
-        .getElementById("orderMoreRooms")
-        .addEventListener("click", function () {
-          window.location.href = "hotel.html";
-        });
-
-      // // 抓訂單-如果是null或是空的顯示為0
-      // document.addEventListener("DOMContentLoaded", function () {
-      //   fetch("http://localhost/happypet_back/public/api/hotel_orders_all_font")
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       console.log(data);
-      //       const ordersTable = document.getElementById("ordersTable");
-      //       ordersTable.innerHTML = "";
-
-      //       data.forEach((order) => {
-      //         const row = document.createElement("tr");
-      //         row.innerHTML = `
-      //         <td>
-      //             <p>入住日期 ${order.checkin || "0"}</p>
-      //             <p>退房日期 ${order.checkout || "0"}</p>
-      //           </td>
-      //           <td>${order.room_type || "0"}</td>
-      //           <td>${order.pet?.pet_name || "0"}</td>
-      //           <td>${order.nightday || "0"}</td>
-      //           <td>${order.sameroom || "0"}</td>
-      //           <td>${order.roomquantity || "0"}</td>
-      //           <td>$${order.room_total || "0"}</td>
-      //           <td>
-      //             <button class="btn btn-outline-secondary btn-lg delete-btn" data-uid="${
-      //               order.uid
-      //             }">
-      //               <i class="bi bi-trash3-fill"></i>
-      //             </button>
-      //           </td>
-      //       `;
-      //         ordersTable.appendChild(row);
-      //       });
-      //       // 刪除訂單
-      //       document.querySelectorAll(".delete-btn").forEach((button) => {
-      //         button.addEventListener("click", function () {
-      //           // 取得按鈕元素的值 並獲取值 (訂單相對應的uid)
-      //           const orderUid = this.getAttribute("data-uid");
-
-      //           if (confirm("您確定要刪除這個訂單嗎？")) {
-      //             const row = this.closest("tr");
-      //             row.remove();
-
-      //             fetch(`http://localhost:3000/api/hotel_orders/${orderUid}`, {
-      //               method: "DELETE",
-      //               headers: {
-      //                 "Content-Type": "application/json",
-      //               },
-      //             })
-      //               // 檢查HTTP響應的狀態是否為false
-      //               .then((response) => {
-      //                 if (!response.ok) {
-      //                   throw new Error("訂單刪除請求失敗");
-      //                 }
-      //                 console.log("訂單刪除成功");
-      //               })
-      //               .catch((error) => {
-      //                 console.error("訂單刪除失敗:", error);
-      //               });
-      //           }
-      //         });
-      //       });
-      //     })
-      //     .catch((error) => console.error("資料獲取失敗:", error));
-      // });
-
-      // 從 localStorage 讀取購物車內容
-      function loadCartFromLocalStorage() {
-        const cartData = JSON.parse(localStorage.getItem("cartData"));
-
-        if (cartData) {
-          const ordersTableBody = document.getElementById("ordersTable");
-
-          // 清空表格內容
-          ordersTableBody.innerHTML = "";
-
-          // 創建新的表格行
-          const newRow = document.createElement("tr");
-          newRow.innerHTML = `
-        <td class="pt-4">
-          <p>入住日期 (假設日期)</p>
-          <p>退房日期 (假設日期)</p>
-        </td>
-        <td>${cartData.roomType}</td>
-        <td>(假設寵物名稱)</td>
-        <td>${cartData.nightCount}</td>
-        <td>${cartData.sameRoomCount}</td>
-        <td>${cartData.quantity}</td>
-        <td>$${cartData.total.toLocaleString("en-US")}</td>
-        <td>
-          <button class="btn btn-outline-secondary btn-lg delete-btn">
-            <i class="bi bi-trash3-fill"></i>
-          </button>
-        </td>
-      `;
-
-          ordersTableBody.appendChild(newRow);
-        }
-      }
-
-      // 在頁面加載時呼叫函數
-      document.addEventListener("DOMContentLoaded", loadCartFromLocalStorage);
-    </script>
     <!--------------- footer ---------------->
 
     <footer>
