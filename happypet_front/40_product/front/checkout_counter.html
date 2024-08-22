@@ -95,9 +95,9 @@
                             <select onchange="handleChangeSelect()" class="form-select w-25 h-25"
                                 aria-label="Default select example">
                                 <option selected value="0">請選擇</option>
-                                <option value="1">仁愛店</option>
-                                <option value="2">大安店</option>
-                                <option value="3">內湖店</option>
+                                <option value="1">台中店</option>
+                                <option value="2">台北店</option>
+                                <option value="3">台南店</option>
                             </select>
                         </div>
                         <div id="store_open" class="d-block pt-3 visually-hidden ms-5">
@@ -426,18 +426,18 @@
 
         switch (event.target.value) {
             case '1':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
-                store_phone.innerText = "+886-0227752749";
+                store_address.innerText = "420臺中市豐原區陽明街36號";
+                store_phone.innerText = "04-2228-9111";
                 $('#store_open').removeClass("visually-hidden");
                 break;
             case '2':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
+                store_address.innerText = "台北市信義區市府路1號";
                 store_phone.innerText = "+886-0227752749";
                 $('#store_open').removeClass("visually-hidden");
                 break;
             case '3':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
-                store_phone.innerText = "+886-0227752749";
+                store_address.innerText = "708台南市安平區永華路二段6號7樓";
+                store_phone.innerText = "06-299-1111";
                 $('#store_open').removeClass("visually-hidden");
                 break;
             default:
