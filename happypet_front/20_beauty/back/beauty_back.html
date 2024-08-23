@@ -680,7 +680,7 @@
                 let today_date = new Date();
                 today_date = `${today_date.getFullYear()}-${today_date.getMonth() + 1}-${today_date.getDate()}`;
                 show_window_pet_name.innerHTML = $(this).data('pet_name');
-                show_window_pet_birthday.innerHTML = $(this).data('pet_birthday');
+                show_window_pet_birthday.innerHTML = $(this).data('pet_birthday').replaceAll('-', ' / ');
                 show_window_username.innerHTML = $(this).data('user_name');
                 show_window_cellphone.innerHTML = $(this).data('cellphone');
                 show_window_plan_title.innerHTML = $(this).data('plan_title');

@@ -22,17 +22,17 @@ function headerChange(){
 window.onload = function(){
     let isFetching = false  //預設沒有執行fetch
 
-    let cartQuantity = localStorage.getItem("cartQuantity")
-    if(!cartQuantity ){
-        // cartQuantity.style.display = 'none'
-        $('.nav_icon .cart_quantity').addClass('d-none');
-    }else{
-        // cartQuantity.style.display = 'block'
-        $('.nav_icon .cart_quantity').removeClass('d-none');
-        $('.nav_icon .cart_quantity').text(cartQuantity);
-        // console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
-    }
-    console.log('cartQuantity  = ',cartQuantity)
+    // let cartQuantity = localStorage.getItem("cartQuantity")
+    // if(!cartQuantity || cartQuantity == 0){
+    //     // cartQuantity.style.display = 'none'
+    //     $('.nav_icon .cart_quantity').addClass('d-none');
+    // }else{
+    //     // cartQuantity.style.display = 'block'
+    //     $('.nav_icon .cart_quantity').removeClass('d-none');
+    //     $('.nav_icon .cart_quantity').text(cartQuantity);
+    //     // console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
+    // }
+    // console.log('cartQuantity  = ',cartQuantity)
 
     // changePathname('df',false)
     // changePathname('df')
@@ -81,7 +81,7 @@ window.onload = function(){
     function changeTagImg(tag,dogOrCat){
         
         // tags.forEach((tag)=>{
-            console.log('changeTagImg----->',tag)
+            // console.log('changeTagImg----->',tag)
             // if(categoryID.startsWith('d')){
                 tag.style.backgroundImage = `url(../../img/40_product/productIcon/${dogOrCat}.png)`
             // }else{
@@ -102,7 +102,7 @@ window.onload = function(){
         let pdBannerImg = document.getElementById('pdBannerImg')
         pdBannerImg.src = `../../img/40_product/banner/banner-${category}.jpg`
         // pdBannerImg.src = `./img/banner/banner-${category}.jpg`
-        console.log('pdBannerImg',pdBannerImg)
+        // console.log('pdBannerImg',pdBannerImg)
     }
 
     // 彙總
@@ -129,7 +129,7 @@ window.onload = function(){
 
             updateSeriesTitle(category.startsWith('d') ? 'd' : 'c');
             productContainer.innerHTML = ''
-            console.log('event.target',category) 
+            // console.log('event.target',category) 
             changePathname(category)
             changeBanner(category)
 
@@ -141,7 +141,7 @@ window.onload = function(){
         // const fetchURL = new URL('http://localhost/testpet/public/product/ds')
         // console.log('我是fetchURL = ',fetchURL)
         // let originPathname = "/testpet/public/product/"
-        console.log('changePathname的category',category)
+        // console.log('changePathname的category',category)
         // 如果正在進行請求，就返回
         if(isFetching){ return }
         
@@ -159,7 +159,7 @@ window.onload = function(){
                 return response.json()  //陣列
             })
             .then(products=>{
-                console.log('products',products)
+                // console.log('products',products)
                 let oneSeries = new Set()
                 let seriesPriceObj = {};
                 uniqueSeriesAndPriceRange(products,oneSeries,seriesPriceObj)
@@ -181,7 +181,7 @@ window.onload = function(){
                 //     }
                    
                 // })
-                console.log('我是objjjjj',seriesPriceObj)
+                // console.log('我是objjjjj',seriesPriceObj)
                 // console.log('我是SET集合',oneSeries)
                 
                 // let productContainer = document.querySelector('.product_container');
@@ -193,16 +193,16 @@ window.onload = function(){
                     let {category_id,series_ai_id,cover_img,series_name,price} = seriesProduct
                     // console.log('我是636行category_id',category_id)
                     // console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
-                    console.log('我是seriesProduct',seriesProduct)
+                    // console.log('我是seriesProduct',seriesProduct)
                     if(seriesProduct){
                         let productItem = document.createElement('div')
                         // productItem.classList.add('product_item','col-md-3','position-relative')
                         let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? 
                                 `${seriesPriceObj[series_ai_id].min.toLocaleString()}` : `${seriesPriceObj[series_ai_id].min.toLocaleString()} ~ ${seriesPriceObj[series_ai_id].max.toLocaleString()}`
-                        console.log('我是上面的seriesPriceObj',seriesPriceObj)
+                        // console.log('我是上面的seriesPriceObj',seriesPriceObj)
                         productItem.classList.add('product_item','position-relative')
                         // <p class="pd_price">${price.toLocaleString()}</p>
-                        console.log('category_id',category_id)
+                        // console.log('category_id',category_id)
                         productItem.innerHTML = `
                             <a href="http://localhost/happypet/happypet_front/40_product/front/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${series_ai_id}">
                                 <div class="img_wrapper">
