@@ -149,7 +149,7 @@ function show(mymypetdata) {
                     <div class="card-body">
                         <h5 class="card-title">${element.pet_name}</h5>
                         <p class="card-text">品種：${element.pet_variety}</p>
-                        <p class="card-text">生日：${element.pet_birthday}</p>  
+                        <p class="card-text">生日：${element.pet_birthday.replaceAll('-', '/')}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-center gap-2">
                         <button class="btn btn-secondary btn-sm pet_card_check_detail" data-pid="${element.pid}" data-pet_name = ${element.pet_name} data-pet_species = ${element.pet_species} data-pet_variety = ${element.pet_variety} data-pet_weight = ${element.pet_weight} data-pet_fur = ${element.pet_fur} data-pet_birthday = ${element.pet_birthday} data-pet_gender = ${element.pet_gender} data-neutered=${element.neutered} data-others=${element.others} data-pet_headphoto=${element.pet_headphoto} data-bs-toggle="modal" data-bs-target="#showModal"">編輯資料</button>
