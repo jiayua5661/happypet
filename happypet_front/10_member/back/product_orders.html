@@ -396,7 +396,7 @@
                     <td>{user_name}</td>
                     <td>{user_phone}</td>
                     <td>{status(order_status)}</td>
-                    <td>{new Date(create_time).toISOString().split('T')[0]}</td>
+                    <td>{new Date(create_time).toISOString().split('T')[0].replaceAll('-', '/')}</td>
                   </tr>
                 )
               }))

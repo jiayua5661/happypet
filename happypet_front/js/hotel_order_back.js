@@ -290,66 +290,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-// // 定義房間狀態對應的 CSS 類名
-// const statusClasses = {
-//   inhotel: "inpetNamehotel",
-//   nohotel: "nopetName",
-//   outhotel: "outpetName",
-// };
 
-// // 記錄要更新背景顏色的元素
-// let selectedPetElement = null;
-
-// // 監聽點擊事件以選擇要更改背景顏色的寵物名稱
-// document.querySelectorAll("p[data-room-number]").forEach((element) => {
-//   element.addEventListener("click", () => {
-//     console.log("Selected element:", element);
-//     selectedPetElement = element;
-//   });
-// });
-
-// // 根據選擇的狀態更新背景顏色
-// function updateBackgroundColor() {
-//   const status = document.getElementById("status").value;
-
-//   console.log("Updating background color. Status:", status);
-//   console.log("Selected pet element:", selectedPetElement);
-
-//   if (selectedPetElement) {
-//     Object.values(statusClasses).forEach((className) => {
-//       selectedPetElement.classList.remove(className);
-//     });
-
-//     if (statusClasses[status]) {
-//       selectedPetElement.classList.add(statusClasses[status]);
-//     }
-//   } else {
-//     console.log("No pet element selected.");
-//   }
-// }
-
-// // 監聽儲存按鈕點擊事件
-// const saveBtn = document.getElementById("saveBtn");
-// saveBtn.addEventListener("click", (event) => {
-//   event.preventDefault();
-
-//   // 在儲存後更新背景顏色
-//   updateBackgroundColor();
-
-//   // 清空 selectedPetElement 以防下次未選中時影響結果
-//   selectedPetElement = null;
-
-//   // 關閉模態窗口並提示儲存成功
-//   const modal = document.getElementById("myModal");
-//   if (modal) {
-//     modal.style.display = "none";
-//   } else {
-//     console.error("Modal not found.");
-//   }
-//   alert("儲存成功！");
-// });
-
-// 定義房間狀態對應的 CSS 類名
+// 定義房間狀態對應的 CSS 類名 ok
 const statusClasses = {
   inhotel: "inpetNamehotel",
   nohotel: "nopetName",
