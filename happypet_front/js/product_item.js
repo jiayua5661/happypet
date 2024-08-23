@@ -296,10 +296,7 @@ window.onload = ()=>{
                             addCartCheckIcon.style.opacity = "0"
                             addCartText.style.opacity = "1"
                         }, 2500);
-                        console.log('queryQuantity的fetch執行前')
                         queryQuantity(user)
-                        console.log('queryQuantity的fetch執行後')
-
                     }else{
                         $('#add_cart').html()
                     }
@@ -359,7 +356,7 @@ window.onload = ()=>{
             productPrice.innerText = selectedProduct.price.toLocaleString()
             // console.log('xxxxxxxx',selectedProduct)
             productID = selectedProduct.product_id
-            console.log('productID',productID)
+            // console.log('productID',productID)
             $('#price').removeClass("d-none")
 
         }
@@ -400,8 +397,6 @@ window.onload = ()=>{
                     }
                     // console.log('!selectWeightOrSizeValue ',!selectWeightOrSizeValue,"||","product[weightOrSize] ",product[weightOrSize] ,'=== selectWeightOrSizeValue = ',selectWeightOrSizeValue)
                     // return product[flavorOrColor] === input.value && (!selectWeightOrSizeValue || product[weightOrSize] === selectWeightOrSizeValue) 
-
-
                 })
                 input.disabled = flag;
                 // input.disabled = isDisabledStatus;
@@ -425,30 +420,11 @@ window.onload = ()=>{
                 // console.log('input.disabled',input.disabled)
             })
         }
-        
-        
-
-// ----------------------------------------------------------------
-
         addCartBtn.onclick = ()=>{
-            
-            // if(!currentQuantity){
-                //     // pdQuantity.value
-                // }
             getProductInfo(localStorage.getItem("uid"),productID,currentQuantity ? currentQuantity : pdQuantity.value)
             queryQuantity(localStorage.getItem("uid"))
-           
-                // getProductInfo(productID,currentQuantity)
-            // fetch(`http://localhost/testpet/public/product/insert/${poductID}/${quantity}`,{
-            //     method:'get'
-            // }).then(response=>response.text())
-            // .then(data=>{
-            //     console.log('插入資料',data)
-            // })
         }    
-
-
-                
+     
     })
     .catch(error => {
         console.error('Error:', error);
