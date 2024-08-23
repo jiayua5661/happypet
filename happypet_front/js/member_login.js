@@ -46,40 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.getElementById('btnLogout').addEventListener('click', function() {
-    console.log('5566');
-    
-    // 清除 LocalStorage 或 SessionStorage 中的 uid 或 token
-    localStorage.removeItem('uid');  // 假設 uid 是儲存在 localStorage 中
-    // 或者如果有使用 token
-    // localStorage.removeItem('token');
+if(document.getElementById('btnLogout')){
+    document.getElementById('btnLogout').addEventListener('click', function() {
+        console.log('5566');
+        
+        // 清除 LocalStorage 或 SessionStorage 中的 uid 或 token
+        localStorage.removeItem('uid');  // 假設 uid 是儲存在 localStorage 中
+        // 或者如果有使用 token
+        // localStorage.removeItem('token');
 
-    // 可選：清除所有 localStorage 項目
-    // localStorage.clear();
+        // 可選：清除所有 localStorage 項目
+        // localStorage.clear();
 
-    // 重新導向到登入頁面
-    window.location.href = '../10_member/member_center.html'; // 調整為你的登入頁面路徑
-});
-
-// 更新購物車數量(紅點圖標數量)
-queryQuantity()
-function queryQuantity(){
-    fetch('http://localhost/happypet/happypet_back/public/api/productcart/1')
-    .then(response=>response.text())
-    .then(quantity=>{
-        console.log('購物車quantity',quantity)
-
-        if(!quantity ){
-            // cartQuantity.style.display = 'none'
-            $('.nav_icon .cart_quantity').addClass('d-none');
-        }else{
-            // cartQuantity.style.display = 'block'
-            $('.nav_icon .cart_quantity').removeClass('d-none');
-            $('.nav_icon .cart_quantity').text(quantity);
-            localStorage.setItem("cartQuantity", quantity);
-            console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
-            // cartQuantity.innerText = quantity
-        }
-    })
+        // 重新導向到登入頁面
+        window.location.href = 'http://localhost/happypet/happypet_front/00_index/index.html'; // 調整為你的登入頁面路徑
+    });
 }
-console.log(localStorage.getItem("cartQuantity"))
+

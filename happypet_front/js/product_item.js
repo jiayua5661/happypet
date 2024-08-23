@@ -309,6 +309,9 @@ window.onload = ()=>{
         console.log('id',localStorage.getItem("uid"))
         if(localStorage.getItem("uid")){
             queryQuantity(localStorage.getItem("uid"))
+        }else{
+            localStorage.removeItem("uid")
+            localStorage.removeItem("cartQuantity")
         }
         // 更新購物車數量(紅點圖標數量)
         // function queryQuantity(){
