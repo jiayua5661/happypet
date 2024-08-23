@@ -173,7 +173,7 @@ class HotelOrderController extends Controller
    public function userPetName(Request $request)
 {
         // 假設要查詢 UID 為 3 的寵物名稱
-        $uid = 6;
+        $uid = 1;
 
         // 從請求中獲取 'uid' 參數->會員登入後再用
         // $uid = $request->input('uid');
