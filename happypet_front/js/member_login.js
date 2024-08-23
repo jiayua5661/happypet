@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('登入成功！');
                     
                     //確認後跳轉至首頁
-                    window.location.href = '../10_member/member_center.html';
+                    window.location.href = 'http://localhost/happypet/happypet_front/00_index/index.html';
                 } else {
                     alert(result.message || '登入失敗，請檢查您的電子信箱和密碼。');
                 }

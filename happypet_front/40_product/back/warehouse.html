@@ -183,7 +183,7 @@
                 })
             }
             let datObj = new Date()
-            let [dateFormat,setDateFormat] = React.useState(`${ datObj.getFullYear() }-${ (datObj.getMonth()+1).toString().padStart(2,0) }-${ (datObj.getDate()).toString().padStart(2,0) }`)
+            let [dateFormat,setDateFormat] = React.useState(`${ datObj.getFullYear() }/${ (datObj.getMonth()+1).toString().padStart(2,0) }/${ (datObj.getDate()).toString().padStart(2,0) }`)
             function addStockQuantity(event){
                
                     event.preventDefault();

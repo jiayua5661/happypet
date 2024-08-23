@@ -176,8 +176,17 @@ Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
 });
 
 // 插入購物車
-Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity){
+// Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity){
+Route::get('/product/insert/{user}/{poductID}/{quantity}',function($user,$poductID,$quantity){
+    Log::info('====>', ['productcart的user' => $user,'我是pdID'=>$poductID,'我是數量'=>$quantity]); 
+
     // 會傳回異動筆數
+    if(!$user){
+        echo '尚未登入';
+    }
+    // Log::info('我是登入user編號 ====>',$user);
+    Log::info('我是登入user編號 :', ['user' => $user]); // 日誌查詢的ID
+
     if(!isset($poductID) || !isset($quantity)){
         echo '尚未選擇產品';
     }else{
@@ -197,7 +206,7 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
             // $aaa = DB::select('SELECT count(uid) FROM shopping_cart_item WHERE uid = ?',["qwe123"]);
             // if($aaa >0){
                 // }
-            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',["2"]);
+            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',[$user]);
             Log::info('ordernumber_old :', ['ordernumber_old' => $ordernumber_old]); 
             //  {"ordernumber_old":[{"stdClass":{"order_number":"20240814001"}}]} 
             // Log::info('ordernumber_old :', ['ordernumber_old[0]->order_number' => $ordernumber_old[0]->order_number]); 
@@ -205,20 +214,24 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
             if($ordernumber_old){
                 $ordernumber_old = $ordernumber_old[0]->order_number;
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                        VALUES(?,'2',?,?,NOW())",[$ordernumber_old,$poductID,$quantity]);    
+                        VALUES(?,?,?,?,NOW())",[$ordernumber_old,$user,$poductID,$quantity]);   
+                Log::info('====>', ['我是if的insert數量' => $n]); 
+                 
             }else{
                 DB::select("call giveOrderNumber(@current_order)");
                 $callProcedure = DB::select('select @current_order');
                 
-                Log::info('callProcedure:', $callProcedure); // 日誌查詢的ID
-                // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'}); // 日誌查詢的ID
+                // Log::info('callProcedure:', $callProcedure);
+                // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'});
                 $orderNumber = $callProcedure[0]->{'@current_order'}; //取得orderNumber
-                Log::info('orderNumber_2 :', ['orderNumber' => $orderNumber]); // 日誌查詢的ID
-                Log::info('今天日期:', ['今天日期' => now()]); 
+                // Log::info('orderNumber_2 :', ['orderNumber' => $orderNumber]); 
+                // Log::info('今天日期:', ['今天日期' => now()]); 
 
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                            VALUES(?,'2',?,?,NOW())",[$orderNumber,$poductID,$quantity]);
+                            VALUES(?,?,?,?,NOW())",[$orderNumber,$user,$poductID,$quantity]);
                 // echo "異動筆數".$n;
+                Log::info('====>', ['我是else的insert數量' => $n]); 
+
             }
 
             echo $n;
@@ -226,11 +239,11 @@ Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity)
     }
 });
 // 查詢購物車
-Route::get('/productcart/{uid}',function($uid){
-    session(['uid' => '1']);
-    $uid = session('uid');
-    // $_SESSION["uid"] = 'qwe123';
-    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = '{$uid}'");
+Route::get('/productcart/{user}',function($user){
+    if(!isset($user)) return;
+    
+    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = ?",[$user]);
+    Log::info('====>', ['productcart的user' => $user,'我是數量'=>$totalAmount]); 
     echo $totalAmount;
 });
 

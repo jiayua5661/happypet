@@ -75,6 +75,8 @@ window.onload = ()=>{
         // console.log('第二個',products)
 
         // console.log(productImgs)
+        $('.QuantityArea').removeClass('d-none')
+        $('.QuantityArea').addClass('d-flex')
         $('.breadcrumb').removeClass("d-none")
         $('.choose').removeClass("d-none")
     
@@ -121,7 +123,7 @@ window.onload = ()=>{
         }
         
         let descriptionSet = new Set()
-        console.log('productsssssssss',products)
+        // console.log('productsssssssss',products)
         products.forEach((product) => {
             // console.log(product)
             for(let i = 1; i <= 5 ; i++){
@@ -238,27 +240,14 @@ window.onload = ()=>{
             flavorOrColor = 'flavor'
             weightOrSize = 'weight'
         }
-        console.log('種類',flavorOrColor,weightOrSize)
+        // console.log('種類',flavorOrColor,weightOrSize)
         document.querySelectorAll('.flavorOrColorArea input,.weightOrSizeArea input').forEach(input => {
             input.addEventListener('change',checkInput)
             
         });
         
         
-        // 上下架狀態
-        function productStatus(){
-            // 販賣中產品
-            SellingProducts = products.filter(p=>{
-                // return p.status === 't'
-                return p.shelves_status === 't'
-            })
-            
-        }
-        // let SellingProducts;
-        // productStatus()
-        // console.log('SellingProduct',SellingProducts)
-
-        // let productID = '';
+    //    
         
        
         // ----------------------------------------------------------------------------------------------
@@ -273,7 +262,7 @@ window.onload = ()=>{
         }
        
         // 取得產品資訊後新增購物車
-        function getProductInfo(poductID,quantity){
+        function getProductInfo(user,poductID,quantity){
             let addCartText = document.querySelector('#add_cart p')
             let addCartIcon = document.querySelector('#add_cart i.bi-cart-fill')
             let addCartCheckIcon = document.querySelector('#add_cart i.bi-cart-check-fill')
@@ -290,7 +279,9 @@ window.onload = ()=>{
             }else{
                 addCartText.style.opacity = "0"
                 addCartIcon.style.opacity = "1"
-                fetch(`http://localhost/happypet/happypet_back/public/api/product/insert/${poductID}/${quantity}`,{
+                console.log('我是user',user,'我是poductID',poductID,'我是數量',quantity)
+                fetch(`http://localhost/happypet/happypet_back/public/api/product/insert/${user}/${poductID}/${quantity}`,{
+                // fetch(`http://localhost/happypet/happypet_back/public/api/product/insert/${poductID}/${quantity}`,{
                     method:'get'
                 })
                 .then(response=>response.text())
@@ -305,23 +296,30 @@ window.onload = ()=>{
                             addCartCheckIcon.style.opacity = "0"
                             addCartText.style.opacity = "1"
                         }, 2500);
-                        queryQuantity()
+                        console.log('queryQuantity的fetch執行前')
+                        queryQuantity(user)
+                        console.log('queryQuantity的fetch執行後')
+
                     }else{
                         $('#add_cart').html()
                     }
                 })
             }
         }
-
+        console.log('id',localStorage.getItem("uid"))
+        if(localStorage.getItem("uid")){
+            queryQuantity(localStorage.getItem("uid"))
+        }
         // 更新購物車數量(紅點圖標數量)
-        queryQuantity()
-        function queryQuantity(){
-            fetch('http://localhost/happypet/happypet_back/public/api/productcart/1')
+        // function queryQuantity(){
+            // fetch('http://localhost/happypet/happypet_back/public/api/productcart/1')
+        function queryQuantity(user){
+            fetch(`http://localhost/happypet/happypet_back/public/api/productcart/${user}`)
             .then(response=>response.text())
             .then(quantity=>{
                 console.log('購物車quantity',quantity)
 
-                if(!quantity ){
+                if(!quantity || quantity == 0){
                     // cartQuantity.style.display = 'none'
                     $('.nav_icon .cart_quantity').addClass('d-none');
                 }else{
@@ -334,26 +332,8 @@ window.onload = ()=>{
                 }
             })
         }
-        console.log(localStorage.getItem("cartQuantity"))
+        // console.log(localStorage.getItem("cartQuantity"))
 
-// ----------------------------------------------------------------
-// function checkInput() {
-//     let selectFlavorOrColor = document.querySelector('.flavorOrColorArea input[type="radio"]:checked')?.value;
-//     let selectWeightOrSize = document.querySelector('.weightOrSizeArea input[type="radio"]:checked')?.value;
-
-//     let selectedProduct = products.find(product => {
-//         return product[flavorOrColor] === selectFlavorOrColor && product[weightOrSize] === selectWeightOrSize;
-//     });
-
-//     if (selectedProduct) {
-//         productPrice.innerText = selectedProduct.price;
-//         price.style.display = 'block';
-//     } else {
-//         productPrice.innerText = '';
-//         price.style.display = 'none';
-//     }
-//     findDisableInput(); // 在此處呼叫更新禁用選項狀態的函數
-// }
         // 選擇按鈕後更新價格
         function checkInput(){
             let selectFlavorOrColor = document.querySelector('.flavorOrColorArea input[type="radio"]:checked')?.value
@@ -452,8 +432,8 @@ window.onload = ()=>{
             // if(!currentQuantity){
                 //     // pdQuantity.value
                 // }
-            getProductInfo(productID,currentQuantity ? currentQuantity : pdQuantity.value)
-            queryQuantity()
+            getProductInfo(localStorage.getItem("uid"),productID,currentQuantity ? currentQuantity : pdQuantity.value)
+            queryQuantity(localStorage.getItem("uid"))
            
                 // getProductInfo(productID,currentQuantity)
             // fetch(`http://localhost/testpet/public/product/insert/${poductID}/${quantity}`,{
