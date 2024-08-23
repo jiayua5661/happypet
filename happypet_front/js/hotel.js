@@ -6,7 +6,7 @@ document.addEventListener("scroll", function () {
   const footerRect = footer.getBoundingClientRect(); //傳回元素的大小及其相對於視口的位置
   const shoppingCarRect = shoppingCar.getBoundingClientRect();
   const offsetTop = window.pageYOffset + shoppingCarRect.top;
-  const stickyTop = 85; // 這是你設定的 sticky 的頂部距離
+  const stickyTop = 85; // 設定 sticky 的頂部距離
 
   // 當購物車區塊的底部接近 footer 的頂部
   if (shoppingCarRect.bottom > footerRect.top) {
@@ -218,7 +218,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const petContainer = button.nextElementSibling;
 
         // 發送 AJAX 請求獲取 UID 3 的寵物名稱
-        fetch("http://localhost/happypet/happypet_back/public/api/hotel_user_pets")
+        fetch(
+          "http://localhost/happypet/happypet_back/public/api/hotel_user_pets"
+        )
           .then((response) => {
             if (!response.ok) {
               throw new Error("Network response was not ok");
