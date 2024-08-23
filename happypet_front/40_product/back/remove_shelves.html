@@ -192,8 +192,8 @@
             <td>${product_name}</td>
             <td><input type="text" value=${price} class="text-center ons_input" disabled></td>
             <td><input type="text" value=${inventory} class="text-center ons_input" disabled></td>
-            <td>${create_date}</td>
-            <td>${update_date ? update_date : ''}</td>
+            <td>${create_date.replaceAll('-', '/')}</td>
+            <td>${update_date ? update_date.replaceAll('-', '/') : ''}</td>
             <td>
               <button class="btn btn_shelves shadow-sm" data-bs-toggle="modal" data-bs-target="#shelves_dialog">上架</button>
               <button class="btn btn_modify shadow-sm">修改</button>
