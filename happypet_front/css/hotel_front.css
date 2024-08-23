@@ -67,6 +67,7 @@
 }
 #myProductimg {
   width: 425px;
+  /* width: 100%; */
 }
 .room {
   background-color: #90b9ab;

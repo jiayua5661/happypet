@@ -529,6 +529,24 @@ function saveToLocalStorageHotelOrder() {
     .replace(",", "")
     .trim(); // 移除NT$和逗號，保留數字
 
+  // 檢查是否所有必填項目都已填寫
+  if (
+    !hotelName ||
+    !hotelPetName ||
+    !checkinDisplay ||
+    !checkoutDisplay ||
+    !nightdayDisplay ||
+    !hotelCartQuantity ||
+    !hotelCartPrice ||
+    !sameRoomCount ||
+    !sameroomNightday ||
+    !sameRoomPrice ||
+    !roomTotal
+  ) {
+    alert("未填寫完成，請填寫所有項目！");
+    return; // 終止保存操作
+  }
+
   // 從 localStorage 中讀取選中的寵物資料
   const selectedPetIds = localStorage.getItem("selectedPetIds") || "";
   const selectedPetNames = localStorage.getItem("selectedPetNames") || "";
