@@ -19,7 +19,7 @@ class BeautyBackController extends Controller
         from beauty_order 
         LEFT JOIN pet_info ON beauty_order.pid = pet_info.pid
         left join beauty_plan on beauty_order.planid = beauty_plan.planid
-        left join user_info on beauty_order.uid = user_info.uid where date between ? and ?', [$first_date, $last_date]);
+        left join user_info on pet_info.uid = user_info.uid where date between ? and ?', [$first_date, $last_date]);
 
         $result = collect($oneweek_order)->map(function($row) {
             if ($row->pet_headphoto) {
