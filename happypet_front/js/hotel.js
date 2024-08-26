@@ -282,12 +282,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const petData = data.map((pet) => pet);
             petData.forEach((pet, index) => {
               const petCheckboxHTML = `
-              <div class="form-check ms-2">
-                <input class="form-check-input pet-checkbox" type="checkbox" value="${pet.pid}" id="petCheckbox${index}" />
-                <label class="form-check-label" for="petCheckbox${index}">
-                  ${pet.pet_name}
-                </label>
-              </div>`;
+          <div class="form-check ms-2">
+            <input class="form-check-input pet-checkbox" type="checkbox" value="${pet.pid}" id="petCheckbox${index}" />
+            <label class="form-check-label" for="petCheckbox${index}">
+              ${pet.pet_name}
+            </label>
+          </div>`;
               petContainer.innerHTML += petCheckboxHTML;
             });
 
@@ -305,7 +305,51 @@ document.addEventListener("DOMContentLoaded", function () {
                   petContainer.querySelectorAll(".pet-checkbox:checked")
                 ).map((cb) => cb.value);
 
-                // 計算每種寵物的數量
+                // 檢查每隻寵物的種類並限制房型
+                let showCatAlert = false;
+                let showDogAlert = false;
+
+                // 記錄選擇的貓咪數量
+                let catCount = 0;
+
+                selectedPetIds.forEach((petId) => {
+                  const pet = petData.find((p) => p.pid === parseInt(petId));
+                  if (pet) {
+                    const petSpecies = pet.pet_species;
+                    if (petSpecies === "貓") {
+                      catCount++; // 增加貓咪數量
+                      if (roomType !== "喵皇房") {
+                        showCatAlert = true;
+                      }
+                    }
+                    if (petSpecies === "狗" && roomType === "喵皇房") {
+                      showDogAlert = true;
+                    }
+                  }
+                });
+
+                // 如果是貓但選擇了非喵皇房，顯示警告
+                if (showCatAlert) {
+                  alert("貓咪只能住喵皇房哦!");
+                  checkbox.checked = false; // 取消選中
+                  return; // 直接返回，避免繼續執行後面的代碼
+                }
+
+                // 如果是狗但選擇了喵皇房，顯示警告
+                if (showDogAlert) {
+                  alert("狗狗不能住喵皇房哦!");
+                  checkbox.checked = false; // 取消選中
+                  return; // 直接返回，避免繼續執行後面的代碼
+                }
+
+                // 如果選擇的貓咪超過3隻，顯示警告
+                if (catCount > 3) {
+                  alert("最多只能選擇三隻貓咪哦!");
+                  checkbox.checked = false; // 取消選中
+                  return; // 直接返回，避免繼續執行後面的代碼
+                }
+
+                // 繼續進行房型限制檢查
                 const petCount = {
                   小型犬: 0,
                   中型犬: 0,
@@ -323,12 +367,10 @@ document.addEventListener("DOMContentLoaded", function () {
                   }
                 });
 
-                // 檢查是否超過限制
                 const limits = roomLimits[roomType];
                 let showAlert = false;
 
                 if (roomType === "奢華房") {
-                  // 奢華房特別限制
                   const validCombination = limits.combinations.some(
                     (combination) => {
                       return (
@@ -342,7 +384,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showAlert = true;
                   }
                 } else if (roomType === "總統房") {
-                  // 總統房特別限制
                   const validCombination = limits.combinations.some(
                     (combination) => {
                       return (
@@ -357,7 +398,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     showAlert = true;
                   }
                 } else {
-                  // 其他房型
                   if (
                     petCount["小型犬"] > limits["小型犬"] ||
                     petCount["中型犬"] > limits["中型犬"] ||
@@ -367,64 +407,20 @@ document.addEventListener("DOMContentLoaded", function () {
                   }
                 }
 
-                // 根據標誌顯示警告
                 const currentTime = new Date().getTime();
                 if (showAlert && currentTime - lastAlertTime > alertDelay) {
                   alert("所選擇的寵物數量超過了此房型的限制，請重新選擇");
                   lastAlertTime = currentTime;
+                  checkbox.checked = false; // 取消選中
+                  return; // 直接返回，避免繼續執行後面的代碼
                 }
-                // 綁定勾選框的事件監聽器
-                const petCheckboxes =
-                  petContainer.querySelectorAll(".pet-checkbox");
-                petCheckboxes.forEach((checkbox) => {
-                  checkbox.addEventListener("change", updateSameRoomCount);
-                });
+                // 呼叫 updateSameRoomCount() 函數
+                updateSameRoomCount();
               });
             });
           });
       });
     });
-
-    // // 綁定 "選擇寵物" 按鈕的事件監聽器ok
-    // const chooseButtons = document.querySelectorAll(".choose");
-    // chooseButtons.forEach((button) => {
-    //   button.addEventListener("click", function () {
-    //     // 取得當前按鈕所在的容器
-    //     const petContainer = button.nextElementSibling;
-
-    //     // 發送 AJAX 請求獲取 UID 3 的寵物名稱
-    //     fetch(
-    //       "http://localhost/happypet/happypet_back/public/api/hotel_user_pets"
-    //     )
-    //       .then((response) => response.json())
-
-    //       .then((data) => {
-    //         console.log("pet_info", data);
-    //         // 清空之前的內容
-    //         petContainer.innerHTML = "";
-
-    //         // 動態生成勾選框和 label
-    //         const petData = data.map((pet) => pet);
-    //         petData.forEach((pet, index) => {
-    //           const petCheckboxHTML = `
-    //                     <div class="form-check ms-2">
-    //                         <input class="form-check-input pet-checkbox" type="checkbox" value="${pet.pid}" id="petCheckbox${index}" />
-    //                         <label class="form-check-label" for="petCheckbox${index}">
-    //                             ${pet.pet_name}
-    //                         </label>
-    //                     </div>`;
-    //           petContainer.innerHTML += petCheckboxHTML;
-    //         });
-
-    //         // 綁定勾選框的事件監聽器
-    //         const petCheckboxes =
-    //           petContainer.querySelectorAll(".pet-checkbox");
-    //         petCheckboxes.forEach((checkbox) => {
-    //           checkbox.addEventListener("change", updateSameRoomCount);
-    //         });
-    //       });
-    //   });
-    // });
 
     // 同房數跟同房價
     function updateSameRoomCount() {
