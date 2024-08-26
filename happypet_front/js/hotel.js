@@ -436,9 +436,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const sameRoomPriceElement = document.getElementById("sameRoomPrice");
 
       // 如果勾選多於一個寵物，從1開始累加；如果只勾選一個，顯示0
+      console.log("selectedCheckboxes", selectedCheckboxes);
       const sameRoomCount =
         selectedCheckboxes.length > 1 ? selectedCheckboxes.length - 1 : 0;
       console.log("selectedCheckboxes", selectedCheckboxes.length);
+      console.log("sameRoomCount------>", sameRoomCount);
       // 更新同房數
       if (sameRoomCountElement) {
         sameRoomCountElement.textContent = `同房數: ${sameRoomCount}`;
@@ -454,6 +456,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (sameRoomPriceElement) {
         if (sameRoomCount === 0) {
           sameRoomPriceElement.textContent = "同房價: $0";
+          console.log("iffffff");
         } else {
           const room = rooms.find((r) => r.type === roomType);
           const sameRoomPrice =
