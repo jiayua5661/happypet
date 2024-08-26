@@ -143,7 +143,6 @@ class HotelOrderController extends Controller
        if ($request->has('name')) {
            $userName = $request->input('name');
    
-           // 使用 DB::select 查詢
            $orders = DB::select("
                SELECT 
                    o.oid, 
@@ -182,7 +181,9 @@ class HotelOrderController extends Controller
         $petNames = DB::select("
         SELECT 
             p.pet_name,
-            p.pid
+            p.pid,
+            p.pet_weight,
+            p.pet_species
         FROM 
             pet_info p
         WHERE 
