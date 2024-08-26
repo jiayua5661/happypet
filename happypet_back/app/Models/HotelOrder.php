@@ -32,7 +32,7 @@ class HotelOrder extends Model
         'order_remark',
         'sameroomNightday',
         'nid',
-        'room_number', // 確保這裡包含 room_number
+        'room_number', 
     ];
 
     // 定義與 PetInfo 模型的關聯

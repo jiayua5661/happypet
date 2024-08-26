@@ -119,8 +119,8 @@ function renderOrders(data) {
               <td>${order.user_name}</td>
               <td>${order.pet_name}</td>
               <td>${order.room_type}</td>
-              <td>${order.checkin}</td>
-              <td>${order.checkout}</td>`;
+              <td>${order.checkin.replaceAll("-", "/")}</td>
+              <td>${order.checkout.replaceAll("-", "/")}</td>`;
     ordersTableBack.appendChild(row);
   });
 }
