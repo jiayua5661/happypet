@@ -281,6 +281,21 @@ document.addEventListener("DOMContentLoaded", function () {
             // 動態生成勾選框和 label
             const petData = data.map((pet) => pet);
             petData.forEach((pet, index) => {
+              const petSpecies = pet.pet_species;
+
+              // 如果房型是「深景房」、「奢華房」、「總統房」，則隱藏貓的選項
+              if (
+                ["深景房", "奢華房", "總統房"].includes(roomType) &&
+                petSpecies === "貓"
+              ) {
+                return;
+              }
+
+              // 如果房型是「喵皇房」，則只顯示貓的選項
+              if (roomType === "喵皇房" && petSpecies !== "貓") {
+                return;
+              }
+
               const petCheckboxHTML = `
           <div class="form-check ms-2">
             <input class="form-check-input pet-checkbox" type="checkbox" value="${pet.pid}" id="petCheckbox${index}" />
