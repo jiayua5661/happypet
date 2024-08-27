@@ -81,7 +81,14 @@
                                 onclick="handleClicksend()" checked>
                             <label class="form-check-label" for="home_delivery">宅配寄送</label>
                         </div>
-                        <div class="form-check">
+
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="radio" name="choosesend" id="supermarket"
+                                onclick="handleClicksend()">
+                            <label class="form-check-label" for="supermarket">超商取貨</label>
+                        </div>
+
+                        <div class="form-check ">
                             <input class="form-check-input" type="radio" name="choosesend" id="sotre"
                                 onclick="handleClicksend()">
                             <label class="form-check-label" for="sotre">到店取貨</label>
@@ -97,9 +104,9 @@
                             <select onchange="handleChangeSelect()" class="form-select w-25 h-25"
                                 aria-label="Default select example">
                                 <option selected value="0">請選擇</option>
-                                <option value="1">仁愛店</option>
-                                <option value="2">大安店</option>
-                                <option value="3">內湖店</option>
+                                <option value="1">台中店</option>
+                                <option value="2">台北店</option>
+                                <option value="3">台南店</option>
                             </select>
                         </div>
                         <div id="store_open" class="d-block pt-3 visually-hidden ms-5">
@@ -107,6 +114,23 @@
                             門市電話：<label id="store_phone"></label> <br>
                             <label>營業時間：10:30-20:00</label>
                         </div>
+                    </div>
+                    <div id="send3" class="visually-hidden d-flex pt-3 align-middle align-items-center ms-5 ">
+
+                        <!-- visually-hidden -->
+                        <div id="supermarket_info" class="d-flex flex-column">
+                            <div onclick="handleClicksupermark()"
+                                class="border border-secondary rounded-3 order_time_check cursor_pointer col-4 text-center p-1 mb-2">
+                                選擇門市
+                            </div>
+                            <div class="mt-1">
+                                
+                                門市名稱：<label id="supermarket_storename"></label> <br>
+                                門市地址：<label id="supermarket_address"></label> <br>
+                                <!-- <label>營業時間：10:30-20:00</label><br> -->
+                            </div>
+                        </div>
+                        <!-- <input type="text" id="send_address" class="form-control w-75 h-25"> -->
                     </div>
                 </div>
             </div>
@@ -303,10 +327,35 @@
 
     let userinfo;
     let order = {};
+    let order_json;
     //總金額
     ftotal.innerText = `NT$ ${localStorage.getItem('total')} 元`
 
+    // 獲取 URL 查詢參數
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
+    // 使用獲取的數據
+    const encodedData = getQueryParam('spumark');
+    if (encodedData) {
+        // 解碼 URL 編碼的 JSON 字符串
+        try {
+            const jsonData = JSON.parse(decodeURIComponent(encodedData));
+            console.log(jsonData); // 使用解析後的數據
+            $('#supermarket').prop("checked",true);
+            $('#send1').addClass("visually-hidden")
+            $('#send2').addClass("visually-hidden")
+            $('#send3').removeClass("visually-hidden")
+            $('#payforstore').removeAttr("disabled")
+
+            $('#supermarket_storename').text(jsonData.storename)
+            $('#supermarket_address').text(jsonData.storeaddress)
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
+    }
 
     async function getuserinfo() {
         let response = await fetch('http://localhost/happypet/happypet_back/public/api/userinfoforbill',
@@ -314,7 +363,7 @@
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    "uid": "2"
+                    "uid": localStorage.getItem('uid')
                 })
             });
         let data = await response.json()
@@ -328,24 +377,47 @@
         order['user_name'] = cname;
         order['user_phone'] = cellphone;
         order['user_email'] = email;
+        order_json = {
+            "user_name": cname,
+            "user_phone": cellphone,
+            "user_email": email
+        }
+        localStorage.setItem('orderinfo', JSON.stringify(order_json));
     }
     getuserinfo();
 
     consignee.onclick = () => {
         let { cname, email, cellphone, address } = userinfo;
-        // console.log(cname);
 
         if (event.target.checked) {
             consignee_name.value = cname;
             consignee_phone.value = cellphone;
             send_address.value = address;
+
+            order_json = localStorage.getItem('orderinfo') ? JSON.parse(localStorage.getItem('orderinfo')) : {};
+            order_json.consignee_name = cname
+            order_json.consignee_phone = cellphone
+            order_json.send_address = address
+
+            localStorage.setItem('orderinfo', JSON.stringify(order_json));
+            // console.log('consignee',localStorage.getItem('orderinfo') );
+
         } else {
             consignee_name.value = "";
             consignee_phone.value = "";
             send_address.value = "";
-
         }
+
     }
+
+    //超商取貨
+    let handleClicksupermark = () => {
+
+        let targetUrl = 'https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://localhost/happypet/happypet_back/public/api/returninfo';
+        window.location.href = targetUrl;
+
+    }
+
 
     let handleClicksend = () => {
         // console.log(event.target.id=="sotre");
@@ -353,11 +425,19 @@
 
         if (event.target.id == "sotre") {
             $('#send1').addClass("visually-hidden")
+            $('#send3').addClass("visually-hidden")
             $('#send2').removeClass("visually-hidden")
+            $('#payforstore').removeAttr("disabled")
+        }
+        if (event.target.id == "supermarket") {
+            $('#send1').addClass("visually-hidden")
+            $('#send2').addClass("visually-hidden")
+            $('#send3').removeClass("visually-hidden")
             $('#payforstore').removeAttr("disabled")
         }
         else {
             $('#send2').addClass("visually-hidden")
+            $('#send3').addClass("visually-hidden")
             $('#send1').removeClass("visually-hidden")
             $('#payforstore').attr("disabled", "disabled")
             // $('#store_open').addClass("visually-hidden");
@@ -428,17 +508,17 @@
 
         switch (event.target.value) {
             case '1':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
+                store_address.innerText = "台中市南屯區公益路二段";
                 store_phone.innerText = "+886-0227752749";
                 $('#store_open').removeClass("visually-hidden");
                 break;
             case '2':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
+                store_address.innerText = "台北市信義區市府路1號";
                 store_phone.innerText = "+886-0227752749";
                 $('#store_open').removeClass("visually-hidden");
                 break;
             case '3':
-                store_address.innerText = "臺北市大安區仁愛路四段345巷4弄45號";
+                store_address.innerText = "台南市安平區永華路二段6號7樓";
                 store_phone.innerText = "+886-0227752749";
                 $('#store_open').removeClass("visually-hidden");
                 break;
@@ -467,15 +547,15 @@
         } else {
             switch ($('select').val()) {
                 case "1":
-                    order['send'] = "到店取貨-仁愛店";
+                    order['send'] = "到店取貨-台中店";
                     order['send_address'] = store_address.innerText;
                     break;
                 case "2":
-                    order['send'] = "到店取貨-大安店";
+                    order['send'] = "到店取貨-台北店";
                     order['send_address'] = store_address.innerText;
                     break;
                 case "3":
-                    order['send'] = "到店取貨-內湖店";
+                    order['send'] = "到店取貨-台南店";
                     order['send_address'] = store_address.innerText;
                     break;
 

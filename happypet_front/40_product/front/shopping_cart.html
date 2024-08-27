@@ -228,7 +228,7 @@
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              "uid": "2"
+              "uid": localStorage.getItem('uid')
             })
           }
         );
@@ -252,7 +252,7 @@
           method: "DELETE",
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            "uid": "2",
+            "uid": localStorage.getItem('uid'),
             "product_id": pid
           })
         }

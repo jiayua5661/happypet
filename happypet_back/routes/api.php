@@ -14,6 +14,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MyPetController;
 use App\Http\Controllers\UserinfoController;
+use App\Http\Controllers\getSupmkController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -511,6 +512,12 @@ Route::post("/productqupdate", function (Request $request) {
         return response()->json(['message' => 'No product found or updated'], 404);
     }
 });
+
+//跳轉711選擇頁面
+Route::post('/getsupinfo', [getSupmkController::class,'getinfo']);
+//取得資料
+Route::post('/returninfo', [getSupmkController::class,'returninfo_']);
+
 //////////////////////////////////// HUEI ////////////////////////////////////////
 
 //////////////////////////////////// LIN ////////////////////////////////////////
