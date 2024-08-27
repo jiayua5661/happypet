@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const currentTime = new Date().getTime();
                 if (showAlert && currentTime - lastAlertTime > alertDelay) {
-                  alert("所選擇的寵物數量超過了此房型的限制，請重新選擇");
+                  alert("所選擇的寵物體重超過了此房型的限制，請重新選擇");
                   lastAlertTime = currentTime;
                   checkbox.checked = false; // 取消選中
                   return; // 直接返回，避免繼續執行後面的代碼
