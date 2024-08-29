@@ -33,7 +33,7 @@
         </div>
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
-                <a class="" href="#">
+                <a class="" href="../../00_index/back/index_back.html">
                     <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
                 </a>
             </div>
@@ -43,15 +43,15 @@
                         <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="header_beauty"
                             data-bs-toggle="dropdown" aria-expanded="false">美容預約</a>
                         <ul class="dropdown-menu nav_drop" aria-labelledby="header_beauty">
-                            <li><a href="#" class="dropdown-item" id="beauty1">美容預約表</a></li>
+                            <li><a href="../../20_beauty/back/beauty_back.html" class="dropdown-item" id="beauty1">美容預約表</a></li>
                         </ul>
                     </li>
                     <li class="col-3 mt-3 mb-3 dropdown">
                         <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button" id="header_hotel"
                             data-bs-toggle="dropdown" aria-expanded="false">寵物住宿</a>
                         <ul class="dropdown-menu nav_drop" aria-labelledby="header_hotel">
-                            <li><a href="#" class="dropdown-item" id="hotel1">旅館訂單</a></li>
-                            <li><a href="#" class="dropdown-item" id="hotel2">當日住宿</a></li>
+                            <li><a href="../../30_hotel/back/order_back.html" class="dropdown-item" id="hotel1">旅館訂單</a></li>
+                            <li><a href="../../30_hotel/back/hotel_today_back.html" class="dropdown-item" id="hotel2">當日住宿</a></li>
                         </ul>
                     </li>
                     <li class="col-3 mt-3 mb-3 dropdown">
@@ -69,8 +69,8 @@
                         <a href="" data-toggle="dropdown" class="dropdown-toggle" role="button"
                             id="header_product_order" data-bs-toggle="dropdown" aria-expanded="false">產品訂單</a>
                         <ul class="dropdown-menu nav_drop" aria-labelledby="header_product_order">
-                            <li><a href="#" class="dropdown-item" id="product_order1">產品訂單資訊</a></li>
-                            <li><a href="#" class="dropdown-item" id="product_order2">會員訂單紀錄</a></li>
+                            <li><a href="../../10_member/back/product_orders.html" class="dropdown-item" id="product_order1">產品訂單資訊</a></li>
+                            <li><a href="../../10_member/back/member_orders.html" class="dropdown-item" id="product_order2">會員訂單紀錄</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -79,81 +79,9 @@
     </header>
     <!-- Header end -->
     <div id="root"></div>
-    <!-- <div class=" pdDetailContainer position-relative py-3">
-        <h2 class="m-0 py-3">產品詳細資訊</h2>
-        <button id="addBtn"> + 新增</button>
-        <form id="myPd" method="post" enctype="multipart/form-data" class="position-relative">
-            <table class="table border " >
-                <tr class="querySeriesID">
-                    <th>產品系列編號<i class="bi bi-arrow-clockwise refreshBtn"></i></th>
-                    <td class="border "><input class="" type="text" name="pdSeries"></td>
-                    <th>產品系列名稱</th>
-                    <td class="border "><input class="" id="pdName" type="text" name="pdName" disabled></td>
-                </tr>
-            </table>
-            <table id="addTable" class="table table-striped align-middle table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th >料號</th>
-                        <th >口味</th>
-                        <th >淨重</th>
-                        <th >尺寸</th>
-                        <th >款式</th>
-                        <th >價格</th>
-                        <th >GTIN</th>
-                    </tr>
-                </thead>
-                <tbody id="newItem">
-                    <tr class="pd_row ">
-                        <td class="pd_id_area position-relative">
-                            <button class="position-absolute deleteBtn"><i class="bi bi-x"></i></button>
-                            <input class="pdID" type="text" form="myPd">
-                            <input type="text" name="fullID[]" class="fullPdID" form="myPd" readonly>
-                        </td>
-                        <td><input type="text" name="flavor[]" form="myPd"></td>
-                        <td><input type="text" name="weight[]" form="myPd"></td>
-                        <td><input type="text" name="size[]" form="myPd"></td>
-                        <td><input type="text" name="style[]" form="myPd"></td>
-                        <td><input type="text" name="price[]" form="myPd"></td>
-                        <td><input type="text" name="GTIN[]" form="myPd"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-        <div class="d-flex justify-content-end">
-            <button id="insertBtn" form="myPd" >新增至資料庫</button>
-        </div>
-
-    </div> -->
-    <!-- 彈出視窗 -->
-        <!-- Modal -->
-        <!-- <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p id="alertMsg" class="m-0"></p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn" data-bs-dismiss="modal">確認</button>
-                </div>
-            </div>
-            </div>
-        </div> -->
-    
-
        
     <script type="text/babel">
-        window.onload = () =>{
-            // document.getElementById('myPd').setAttribute('data-type','insert')
-            // let x = document.getElementById('myPd').getAttribute('data-type')
-            // console.log('x',x)
-            
-        }
-        // function showMsg(msg){
-        //     $('#myModal').modal('show')
-        //     // $('#alertMsg').text(msg)
-        //     setMessage(msg)
-        // }
+        
         let myReactRoot = ReactDOM.createRoot(document.getElementById('root'));
         // createContext在所有組件外
         let myContext =  React.createContext();
@@ -323,9 +251,6 @@
                 // console.log('update_myPdType',myPdType)
                 clearInput();
                 // setRows([{ id: rows.length, fullPdID: '' }])
-
-     
-               
             }
 
             return(
@@ -348,13 +273,7 @@
             // let [productArr,setProductArr] = React.useState([])
             let {pdSeries,setPdSeries} = pdSeriesObj
             let {productArr,setProductArr} = productObj
-            // let {clearInput} = clearInput
-
-            // console.log('QuerySeriesIDTable的productArr',productArr)
-            // React.useEffect(() => {
-                // return ()=>{
-                    // setSeriesName('')
-                // }
+        
             React.useEffect(() => {
                 // 讀取 URL 參數，並根據參數設置默認模式
                 const urlParams = new URLSearchParams(window.location.search);
@@ -445,12 +364,9 @@
                             }
                         })
                     }
-
                 }
-     
             }
-            
-            // onChange={()=>{setPdSeries('')}}
+
             return(
                 <table className="table border align-middle text-center" >
                     <tbody>
@@ -565,12 +481,9 @@
             let [productArr,setProductArr] = React.useState([])
             let [message,setMessage] = React.useState('');
             // console.log('我是DetailInfo的pdSeries',pdSeries)
-            
             function clearInput(){
-                
                 setPdSeries('')
                 setSeriesName('')
-               
                 setProductArr([])
                 setRows([{ id: '', fullPdID: '',flavor:'',weight:'',size:'',color:'',price:'',GTIN:'' }])
                 
@@ -584,16 +497,15 @@
                 // $('#alertMsg').text(msg)
                 setMessage(msg)
             }
-            React.useEffect(() => {
-                console.log('pdSeries 狀態變化:', pdSeries);
-            }, [pdSeries]);
-            React.useEffect(() => {
-                console.log('message 狀態變化:', message);
-            }, [message]);
-
-            React.useEffect(() => {
-                console.log('seriesName 狀態變化:', seriesName);
-            }, [seriesName]);
+            // React.useEffect(() => {
+            //     console.log('pdSeries 狀態變化:', pdSeries);
+            // }, [pdSeries]);
+            // React.useEffect(() => {
+            //     console.log('message 狀態變化:', message);
+            // }, [message]);
+            // React.useEffect(() => {
+            //     console.log('seriesName 狀態變化:', seriesName);
+            // }, [seriesName]);
             return(
                 <React.Fragment>
                     <myContext.Provider value={{myPdType,setMyPdType,clearInput,rows,setRows,pdSeries,setPdSeries,seriesName,setSeriesName,productArr,setProductArr,showMsg,message,setMessage}}>

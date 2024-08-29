@@ -35,33 +35,89 @@
 
     <header id="navbar" class="sticky-top ">
         <div class="member nav_icon">
-            <a href="#"><i class="bi-person"></i></a>
-            <a href="#"><i class="bi-cart"></i></a>
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="bi-person"></i></a>
+            <a href="http://localhost/happypet/happypet_front/40_product/front/shopping_cart.html" class="position-relative">
+                <i class="bi-cart"></i>
+                <span class="cart_quantity position-absolute text-center d-none"></span>
+            </a>
         </div>
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
-                <a class="" href="#">
+                <a class="" href="http://localhost/happypet/happypet_front/00_index/index.html">
                     <img class="nav-logo m-2" src="../img/LOGO.png" alt="">
                 </a>
             </div>
             <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
                 <ul class="nav justify-content-center text-center">
                     <li class="col-3 mt-3 mb-3">
-                        <a class="p-2" href="#">美容預約</a>
+                        <a class="p-2" href="../20_beauty/beauty_front1.html">美容預約</a>
                     </li>
                     <li class="col-3 mt-3 mb-3">
-                        <a class="p-2" href="#">寵物住宿</a>
+                        <a class="p-2" href="../30_hotel/front/hotel.html">寵物住宿</a>
                     </li>
                     <li class="col-3 mt-3 mb-3">
-                        <a class="p-2" href="#">產品專區</a>
+                        <a class="p-2" href="../40_product/front/product.html">產品專區</a>
                     </li>
                     <li class="col-3 mt-3 mb-3">
-                        <a class="p-2" href="#">獸醫門診</a>
+                        <a class="p-2" href="../50_vet/vet.html">獸醫門診</a>
                     </li>
                 </ul>
             </div>
         </div>
     </header>
+    <!-- 會員登入Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">會員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formLoginCustomer" class="row g-3" novalidate>
+                        <div class="col-md-12">
+                            <label for="" class="form-label">電子信箱 / e-mail :</label>
+                            <input name="login_email" type="email" class="form-control" required>
+                            <div class="invalid-feedback">
+                                請輸入正確格式
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="form-label">密碼 / password :</label>
+                            <input name="login_password" type="password" class="form-control" required minlength="8"
+                                maxlength="16" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$">
+                            <div class="invalid-feedback">
+                                請輸入8~16個字元且包含數字、英文字母大小寫及特殊符號的密碼
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-secondary" type="reset">取消</button>
+                            <button class="btn btn-success" type="submit" id="btnLoginCustomer">登入</button>
+                        </div>
+                    </form>
+                    <!-- <form>
+                      <div class="mb-3">
+                          <label for="recipient-name1" class="col-form-label">電子信箱 / e-mail :</label>
+                          <input type="email" class="form-control" id="recipient-name1">
+                      </div>
+                      <div class="mb-3">
+                          <label for="recipient-name2" class="col-form-label">密碼 / password :</label>
+                          <input type="password" class="form-control" id="recipient-name2">
+                      </div>
+                  </form> -->
+                </div>
+                <div class="modal-footer">
+                    <p><a href="#">忘記密碼?</a>&ensp;或&ensp;<a
+                            href="../10_member/member_register.html">註冊會員</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    </p>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">離開</button>
+                  <button type="button" class="btn btn-success">登入</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 會員登入Modal end-->
+
     <!-- Header end -->
     <!-- Header end -->
     <!-- Header end -->
@@ -319,6 +375,10 @@
     <!--------------- footer end---------------->
     <!--------------- footer end---------------->
     <!--------------- footer end---------------->
+    <!-- 引入購物車數量 -->
+    <script src="../js/queryQuantity.js"></script>
+    <!-- 引用登入功能的後端JS檔 -->
+    <script src="../js/member_login.js"></script>    
     <script>
 
         // 生成日曆
@@ -569,23 +629,23 @@
             //     })
 
             // lala fetch
-            
+
             fetch(`http://localhost/happypet/happypet_back/public/api/front2_beauty_select_beauty_plan_price_time/${pet_species}/${pet_weight}/${pet_fur}/${planid}`)
                 .then(res => res.json())
                 .then(result => {
                     const thousandthsFormat = (value) => {
-  const regex = /\B(?=(\d{3})+(?!\d))/g
-  value = value.toString()
-  return value.replace(regex, ',')
-}
+                        const regex = /\B(?=(\d{3})+(?!\d))/g
+                        value = value.toString()
+                        return value.replace(regex, ',')
+                    }
 
                     result = result[0];
-                    console.log('價格',thousandthsFormat(result.price));
-                    
+                    console.log('價格', thousandthsFormat(result.price));
+
                     console.log('改變選擇寵物的美容價格時間', result);
                     console.log('改變選擇寵物的美容價格時間', JSON.stringify(result));
                     sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(result));
-                    detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(result.price) }`;
+                    detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(result.price)}`;
                     deatail_beauty_plan_time.innerHTML = `${parseInt(result.time.split(':')[0])}小時${result.time.split(':')[1]}分鐘`;
 
 
@@ -680,16 +740,16 @@
             // 帶上一頁選的資料 初始化這一頁
             function from_front1_info() {
                 const thousandthsFormat = (value) => {
-  const regex = /\B(?=(\d{3})+(?!\d))/g
-  value = value.toString()
-  return value.replace(regex, ',')
-}
+                    const regex = /\B(?=(\d{3})+(?!\d))/g
+                    value = value.toString()
+                    return value.replace(regex, ',')
+                }
 
                 // 預計時長 錢
                 let beauty_plan_data = JSON.parse(sessionStorage.getItem('beauty_plan_price_time'));
                 let beauty_plan_id = sessionStorage.getItem('planid');
                 deatail_beauty_plan_time.innerHTML = `${parseInt(beauty_plan_data[beauty_plan_id - 1].time.split(':')[0])}小時${beauty_plan_data[beauty_plan_id - 1].time.split(':')[1]}分鐘`;
-                detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(beauty_plan_data[beauty_plan_id - 1].price) }`;
+                detail_beauty_plan_price.innerHTML = `NT$ ${thousandthsFormat(beauty_plan_data[beauty_plan_id - 1].price)}`;
 
                 console.log('前面帶進來的挑選', beauty_plan_data[beauty_plan_id - 1]);
                 sessionStorage.setItem('f2_select_beauty_plan_price_time', JSON.stringify(beauty_plan_data[beauty_plan_id - 1]));
@@ -775,8 +835,9 @@
                             'Content-Type': 'application/json; charset=utf-8'
                         }
                     }).then(res => {
-                        console.log('res',res)
-                        return res.json()})
+                        console.log('res', res)
+                        return res.json()
+                    })
                         .then(result => {
                             console.log(result);
                             sessionStorage.removeItem("plan_title");

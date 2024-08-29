@@ -103,7 +103,7 @@ document.getElementById("nextStep").addEventListener("click", function () {
   petIdsArray = petIdsArray.join(","); // 將陣列轉換為逗號分隔的字串
 
   // 傳送訂單和選中的寵物ID
-  fetch("http://localhost/happypet_back/public/api/hotel_orders", {
+  fetch("http://localhost/happypet/happypet_back/public/api/hotel_orders", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -147,8 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
       currentStep++;
       // 為新的當前步驟添加 active 類別
       steps[currentStep].classList.add("active");
-    } else {
-      alert("已訂購完成!");
     }
   });
 });

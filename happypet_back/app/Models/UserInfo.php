@@ -13,5 +13,5 @@ class UserInfo extends Model
     protected $primaryKey = 'uid';
     public $incrementing = true;
   // 批量賦值
-    protected $fillable = ['name'];
+    protected $fillable = ['cname'];
 }

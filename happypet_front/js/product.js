@@ -22,18 +22,6 @@ function headerChange(){
 window.onload = function(){
     let isFetching = false  //預設沒有執行fetch
 
-    let cartQuantity = localStorage.getItem("cartQuantity")
-    if(!cartQuantity ){
-        // cartQuantity.style.display = 'none'
-        $('.nav_icon .cart_quantity').addClass('d-none');
-    }else{
-        // cartQuantity.style.display = 'block'
-        $('.nav_icon .cart_quantity').removeClass('d-none');
-        $('.nav_icon .cart_quantity').text(cartQuantity);
-        // console.log("購物車quantity localStorage",localStorage.getItem("cartQuantity"))
-    }
-    console.log('cartQuantity  = ',cartQuantity)
-
     // changePathname('df',false)
     // changePathname('df')
     let urlParams  = new URLSearchParams(window.location.search)
@@ -79,30 +67,14 @@ window.onload = function(){
     
     // 更新card左上角小圖示
     function changeTagImg(tag,dogOrCat){
-        
-        // tags.forEach((tag)=>{
-            console.log('changeTagImg----->',tag)
-            // if(categoryID.startsWith('d')){
-                tag.style.backgroundImage = `url(../../img/40_product/productIcon/${dogOrCat}.png)`
-            // }else{
-                // tag.style.backgroundImage = `url(../../img/40_product/productIcon/cat2.png)`
+        tag.style.backgroundImage = `url(../../img/40_product/productIcon/${dogOrCat}.png)`
 
-            // }
-            // tag.style.backgroundImage = `url('./img/productIcon/${dogOrCat}.png')`
-        // })
     }
-    // function changeTagImg(dogOrCat){
-    //     let animalTags = document.querySelectorAll('.animalTag')
-    //     animalTags.forEach((tag)=>{
-    //         tag.style.backgroundImage = `url('../../img/40_product/productIcon/${dogOrCat}.png')`
-    //         // tag.style.backgroundImage = `url('./img/productIcon/${dogOrCat}.png')`
-    //     })
-    // }
     function changeBanner(category){
         let pdBannerImg = document.getElementById('pdBannerImg')
         pdBannerImg.src = `../../img/40_product/banner/banner-${category}.jpg`
         // pdBannerImg.src = `./img/banner/banner-${category}.jpg`
-        console.log('pdBannerImg',pdBannerImg)
+        // console.log('pdBannerImg',pdBannerImg)
     }
 
     // 彙總
@@ -129,7 +101,7 @@ window.onload = function(){
 
             updateSeriesTitle(category.startsWith('d') ? 'd' : 'c');
             productContainer.innerHTML = ''
-            console.log('event.target',category) 
+            // console.log('event.target',category) 
             changePathname(category)
             changeBanner(category)
 
@@ -138,10 +110,6 @@ window.onload = function(){
 
     // 切換類別(傳入類別,是否要更改?category="")
     function changePathname(category,updateState = true){
-        // const fetchURL = new URL('http://localhost/testpet/public/product/ds')
-        // console.log('我是fetchURL = ',fetchURL)
-        // let originPathname = "/testpet/public/product/"
-        console.log('changePathname的category',category)
         // 如果正在進行請求，就返回
         if(isFetching){ return }
         
@@ -159,30 +127,10 @@ window.onload = function(){
                 return response.json()  //陣列
             })
             .then(products=>{
-                console.log('products',products)
+                // console.log('products',products)
                 let oneSeries = new Set()
                 let seriesPriceObj = {};
                 uniqueSeriesAndPriceRange(products,oneSeries,seriesPriceObj)
-                // products.forEach(pd => {
-                //     // console.log('pd',pd)
-                //     //系列產品中價格最大和最小    
-                //     if(pd.status != 0){
-                //         // if 初始化一開始數字，當此系列存在會進入else 來更新成最新的min與max
-                //         if(!seriesPriceObj[pd.series_ai_id]){
-                //             seriesPriceObj[pd.series_ai_id] = {min:pd.price,max:pd.price}
-                //         }else{
-                //             // seriesPriceObj[pd.series_ai_id] = {min:Math.min(pd.price),max:Math.max(pd.price)}
-                //             seriesPriceObj[pd.series_ai_id].min = Math.min(seriesPriceObj[pd.series_ai_id].min,pd.price)
-                //             seriesPriceObj[pd.series_ai_id].max = Math.max(seriesPriceObj[pd.series_ai_id].max,pd.price)
-                //         }
-
-                //         // 系料號加到集合中
-                //         oneSeries.add(pd.series_ai_id)
-                //     }
-                   
-                // })
-                console.log('我是objjjjj',seriesPriceObj)
-                // console.log('我是SET集合',oneSeries)
                 
                 // let productContainer = document.querySelector('.product_container');
                 oneSeries.forEach(arrSeriesID=>{
@@ -193,16 +141,16 @@ window.onload = function(){
                     let {category_id,series_ai_id,cover_img,series_name,price} = seriesProduct
                     // console.log('我是636行category_id',category_id)
                     // console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
-                    console.log('我是seriesProduct',seriesProduct)
+                    // console.log('我是seriesProduct',seriesProduct)
                     if(seriesProduct){
                         let productItem = document.createElement('div')
                         // productItem.classList.add('product_item','col-md-3','position-relative')
                         let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? 
                                 `${seriesPriceObj[series_ai_id].min.toLocaleString()}` : `${seriesPriceObj[series_ai_id].min.toLocaleString()} ~ ${seriesPriceObj[series_ai_id].max.toLocaleString()}`
-                        console.log('我是上面的seriesPriceObj',seriesPriceObj)
+                        // console.log('我是上面的seriesPriceObj',seriesPriceObj)
                         productItem.classList.add('product_item','position-relative')
                         // <p class="pd_price">${price.toLocaleString()}</p>
-                        console.log('category_id',category_id)
+                        // console.log('category_id',category_id)
                         productItem.innerHTML = `
                             <a href="http://localhost/happypet/happypet_front/40_product/front/product_item.html?category=${category_id}&sID=${series_ai_id}" data-seriesID="${series_ai_id}">
                                 <div class="img_wrapper">
@@ -288,8 +236,7 @@ window.onload = function(){
                     let seriesPriceObj = {};
                     uniqueSeriesAndPriceRange(result,oneSeries,seriesPriceObj)
                     console.log('result',result)
-                    // console.log('我是下面的seriesPriceObj',seriesPriceObj)
-                    // console.log('我是下面的oneSeries',oneSeries)
+
                     // let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? `${seriesPriceObj[series_ai_id].min}` : `${seriesPriceObj[series_ai_id].min} ~ ${seriesPriceObj[series_ai_id].max}`
                     // result.forEach((searchProduct)=>{
                     oneSeries.forEach((SerieID)=>{
@@ -301,7 +248,6 @@ window.onload = function(){
                         let priceRange = seriesPriceObj[series_ai_id].min == seriesPriceObj[series_ai_id].max ? `${seriesPriceObj[series_ai_id].min}` : `${seriesPriceObj[series_ai_id].min} ~ ${seriesPriceObj[series_ai_id].max}`
                         // let priceRange = price
                         productItem.classList.add('product_item','position-relative')
-                        // <p class="pd_price">${price.toLocaleString()}</p>
                         // productContainer.innerHTML = ""
 
                        
@@ -319,18 +265,6 @@ window.onload = function(){
                         productContainer.appendChild(productItem);
                         let animalTags = productItem.querySelector('.animalTag')
                         changeTagImg(animalTags, category_id.startsWith('d') ? 'dog' : 'cat2')
-                        // if(category_id.startsWith('c')){
-                        //     changeTagImg(animalTags,'cat2')
-                        //     console.log('我是startsWithCCCCCCC')
-                            
-                        // }
-                        // if(category_id.startsWith('d')){
-                        //     changeTagImg(animalTags,'dog')
-                        //     console.log('我是startsWithDDDDD')
-
-                        // }
-                        // changeTagImg(category_id.startsWith('d') ? 'dog' : 'cat2')
-                        
 
                     })
                 })

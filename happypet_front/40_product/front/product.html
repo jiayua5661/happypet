@@ -28,28 +28,68 @@
     <!-- http://localhost/hppypet/happypet_front/40_product/front/product.html -->
     <header id="navbar" class="sticky-top ">
         <div class="member nav_icon">
-            <a href="#"><i class="bi-person"></i></a>
-            <a href="./shopping_cart.html" class="position-relative">
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="bi-person"></i></a>
+            <a href="http://localhost/happypet/happypet_front/40_product/front/shopping_cart.html" class="position-relative">
                 <i class="bi-cart"></i>
                 <span class="cart_quantity position-absolute text-center d-none"></span>
             </a>
         </div>
         <div class="row align-items-center container-xl">
             <div class="text-center col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-ms-12 col-12">
-                <a class="" href="#">
+                <a class="" href="http://localhost/happypet/happypet_front/00_index/index.html">
                     <img class="nav-logo m-2" src="../../img/LOGO.png" alt="">
                 </a>
             </div>
             <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-ms-12 col-12">
                 <ul class="nav justify-content-center text-center">
                     <li class="col-3 mt-3 mb-3"><a class="p-2" href="http://localhost/happypet/happypet_front/20_beauty/beauty_front1.html">美容預約</a></li>
-                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="http://localhost/happypet/happypet_front/30_hotel/hotel.html">寵物住宿</a></li>
+                    <li class="col-3 mt-3 mb-3"><a class="p-2" href="http://localhost/happypet/happypet_front/30_hotel/front/hotel.html">寵物住宿</a></li>
                     <li class="col-3 mt-3 mb-3"><a class="p-2" href="http://localhost/happypet/happypet_front/40_product/front/product.html?category=df">產品專區</a></li>
                     <li class="col-3 mt-3 mb-3"><a class="p-2" href="http://localhost/happypet/happypet_front/50_vet/vet.html">獸醫門診</a></li>
                 </ul>
             </div>
         </div>
     </header>
+     <!-- 會員登入Modal -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">會員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formLoginCustomer" class="row g-3" novalidate>
+                        <div class="col-md-12">
+                            <label for="" class="form-label">電子信箱 / e-mail :</label>
+                            <input name="login_email" type="email" class="form-control" required>
+                            <div class="invalid-feedback">
+                                請輸入正確格式
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="" class="form-label">密碼 / password :</label>
+                            <input name="login_password" type="password" class="form-control" required minlength="8"
+                                maxlength="16" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$">
+                            <div class="invalid-feedback">
+                                請輸入8~16個字元且包含數字、英文字母大小寫及特殊符號的密碼
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-secondary" type="reset">取消</button>
+                            <button class="btn btn-success" type="submit" id="btnLoginCustomer">登入</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p><a href="#">忘記密碼?</a>&ensp;或&ensp;
+                        <a href="http://localhost/happypet/happypet_front/10_member/member_register.html">註冊會員</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 會員登入Modal end-->
     <nav class="navbar navbar-expand-md pd_navbar">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,287 +202,12 @@
         </div>
     </footer>
 
-   
     
+    <script src="../../js/queryQuantity.js"></script>
     <script src="../../js/product.js"></script>
-    <!-- <script>
-        window.onscroll = function() {
-            headerChange()
-            // console.log(window.scrollY)
-        }
-        function headerChange(){
-            let pdNavbar = document.querySelector('.pd_navbar');
-            // let logo = document.querySelector('.logo')
-            if (window.scrollY > 500 ) {
-                pdNavbar.style.position = "sticky";  
-                pdNavbar.style.top = "95px";  
-                pdNavbar.style.display = "block";  
-                if(window.innerWidth <= 1198)pdNavbar.style.top = "148px"
-            } else {
-                pdNavbar.style.display = "none";  
-                pdNavbar.style.position = "static";  
-            }
-            console.log('window.innerWidth',window.innerWidth)
-            // window.innerWidth == 1200 ? pdNavbar.style.top = "148px" : pdNavbar.style.top = "95px"; 
-        }
+    <!-- 引用登入功能的後端JS檔 -->
+    <script src="../../js/member_login.js"></script>
 
-
-        window.onload = function(){
-            let isFetching = false  //預設沒有執行fetch
-            // changePathname('df',false)
-
-            // changePathname('df')
-            let urlParams  = new URLSearchParams(window.location.search)
-            console.log('window',window.location.search)
-            let categoryID = urlParams.get('category') || 'df'
-
-             // 初始化設定
-            changePathname(categoryID, false); // 不要更新歷史紀錄，避免誤操作
-            changeBanner(categoryID)
-            console.log('window categoryID',categoryID)
-            // categoryID ? changePathname(categoryID) :  changePathname('df',false)
-           
             
-            let dropdownItem = document.querySelectorAll('.dropdown-item')
-            let dropdownMenus = document.querySelectorAll('.dropdown-menu')
-            let productContainer = document.querySelector('.product_container');
-            // let categoryTitle = seriesTile.getAttribute('data-tile')
-            let links = document.querySelectorAll('.pet_pdicon li>a')
-            
-            function updateIconLink(categoryAbbr){
-                let categoriesObj = {
-                    'd': ['df', 'dc', 'dt', 'dh', 'ds'],
-                    'c': ['cf', 'cc', 'ct', 'ch', 'cs']
-                };
-                let categories = categoriesObj[categoryAbbr]
-                links.forEach((link,index)=>{
-                    link.setAttribute('data-change-category', categories[index])
-                })
-            }
-
-            links.forEach((link)=>{
-                link.addEventListener('click',function(event){
-                    event.preventDefault()
-                    // console.log(event.target.closest('a'))
-                    let categoryInIcon = event.target.closest('a').getAttribute('data-change-category') 
-                    // console.log(categoryInIcon)
-                    productContainer.innerHTML = ''
-                    changePathname(categoryInIcon)
-                    let categoryID = urlParams.get('category')
-                    changeBanner(categoryInIcon)
-                })
-            })
-            
-            function changeTagImg(dogOrCat){
-                let animalTags = document.querySelectorAll('.animalTag')
-                animalTags.forEach((tag)=>{
-                    tag.style.backgroundImage = `url('./img/productIcon/${dogOrCat}.png')`
-                })
-            }
-            function changeBanner(category){
-                let pdBannerImg = document.getElementById('pdBannerImg')
-                pdBannerImg.src = `./img/banner/banner-${category}.jpg`
-                console.log('pdBannerImg',pdBannerImg)
-            }
-
-            // 彙總
-            function updateSeriesTitle(categoryAbbr) {
-                if (categoryAbbr === 'd') {
-                    seriesTile.innerText = "狗狗專區";
-                    seriesTile.setAttribute('data-title', 'd');
-                    updateIconLink('d');
-                    changeTagImg('dog');
-                } else {
-                    seriesTile.innerText = "貓貓專區";
-                    seriesTile.setAttribute('data-title', 'c');
-                    updateIconLink('c');
-                    changeTagImg('cat2');
-                }
-            }
-            dropdownMenus.forEach((dropdownMenu,i)=>{
-                // console.log('dropdownMenu',dropdownMenu)
-                dropdownMenu.addEventListener('click',function(event){
-                    event.preventDefault();
-                    let category = event.target.getAttribute('data-pdcategory')
-                    
-                    // console.log('我是類別 = ',category)
-                    // console.log('event.target',event.target) 
-                    // window.location.replace();
-
-                    // categoryTitle.innerText = category
-                    // console.log('categoryTitle = ',categoryTitle)
-                    // console.log('是d嗎',category.startsWith('d'))
-                    // console.log(link.setAttribute('data-change-category'))
-
-
-                   
-                    // let urlParams = new URLSearchParams(window.location.search)
-                    // let urlParams  = new URLSearchParams(window.location.search)
-                    // console.log('link裡',window.location.search)
-                    // let categoryID = urlParams.get('category') 
-                    // console.log('link裡',categoryID)
-
-
-                    // if(category.startsWith('d')  ) {
-                    //     seriesTile.innerText = "狗狗專區" 
-                    //     seriesTile.setAttribute('data-title','d')
-                    //     updateIconLink('d')
-                    //     // console.log('animalTag',animalTag)
-                    //     // animalTag.style.backgroundImage = "url('./img/productIcon/dog.png')"
-                    //     changeTagImg('dog')
-                    //     // console.log('asbgimg',animalTag.style)
-                    //     console.log('category.startsWith(d) ' )
-                        
-                    // } else{
-                    //     seriesTile.innerText = "貓貓專區"
-                    //     seriesTile.setAttribute('data-title','c')
-                    //     updateIconLink('c')
-                    //     console.log('貓的category',category)
-                    //     // changePathname(category)
-
-                    //     changeTagImg('cat')
-                    //     console.log('category.startsWith(c) ' )
-                    // }
-
-                    updateSeriesTitle(category.startsWith('d') ? 'd' : 'c');
-                    productContainer.innerHTML = ''
-                    console.log('event.target',category) 
-                    changePathname(category)
-                    changeBanner(category)
-
-                })
-            //     console.log('category',category)
-                // event.target.onclick = ()=>{
-                    // console.log(event.target)
-                // }
-
-            })
-
-            // 切換類別(傳入類別,是否要更改?category="")
-            function changePathname(category,updateState = true){
-                // const fetchURL = new URL('http://localhost/testpet/public/product/ds')
-                // console.log('我是fetchURL = ',fetchURL)
-                // let originPathname = "/testpet/public/product/"
-                // 如果正在進行請求，就返回
-                if(isFetching){ return }
-                
-                // 設定正在fetch，如果沒有flag，點某類別後產品還沒回傳，再點別的類別，畫面會把兩個類別都show出
-                isFetching = true
-                loadingArea.style.display = 'block';
-                fetch(`http://localhost/testpet/public/product/${category}`,{
-                        method:'get',
-                    })
-                    .then(response=>{
-                        // console.log('res',response)
-                        // return response.text()   //圖片
-                        return response.json()  //陣列
-                    })
-                    .then(products=>{
-                        // console.log(products)
-                        
-                        let oneSeries = new Set()
-                        products.forEach(pd => {
-                            if(pd.status != 'f'){
-
-                                // 系料號加到集合中
-                                oneSeries.add(pd.series_AINUM)
-                            }
-                        })
-                        // console.log('我是SET集合',oneSeries)
-                        
-                        // let productContainer = document.querySelector('.product_container');
-                        oneSeries.forEach(arrSeriesID=>{
-                            // console.log('我是SET中的系列號',arrSeriesID)
-                            // let seriesProduct = products.find(pd=> pd.series_id === arrSeriesID)
-                            let seriesProduct = products.find(pd=> pd.series_AINUM === arrSeriesID)
-                            let {category_id,series_AINUM,cover_img,series_name,price} = seriesProduct
-                            // console.log('我是636行category_id',category_id)
-                            console.log('.toLocaleString()',price.toLocaleString()) //可以有千位符
-                            console.log('我是seriesProduct',seriesProduct)
-                            if(seriesProduct){
-                                let productItem = document.createElement('div')
-                                // productItem.classList.add('product_item','col-md-3','position-relative')
-                                productItem.classList.add('product_item','position-relative')
-                                    productItem.innerHTML = `
-                                        <a href="http://localhost/petx/productItem.html?category=${category_id}&sID=${series_AINUM}" data-seriesID="${seriesProduct.series_AINUM}">
-                                            <div class="img_wrapper">
-                                                <img src="${cover_img}" alt="" class="img-fluid" />
-                                            </div>
-                                            <p>${series_name}</p>
-                                        </a>
-                                        <p class="pd_price">${price.toLocaleString()}</p>
-                                        <div class="animalTag d-block position-absolute"></div>
-                                        `
-                                    productContainer.appendChild(productItem);
-                                    // productContainer.appendChild(dogProductItem)
-                                }
-                            
-                        })
-                        loadingArea.style.display = 'none';
-                        isFetching = false
-                        
-                       
-              
-                        if(updateState){
-                            // history.pushState(state：物件, title：通常是空字串, url：要改成的url);
-                            // pushState可以點上一頁，replaceState 只修改最後一筆網址內容
-                            history.pushState({category:category},'',`?category=${category}`)
-                        }else{
-                            history.replaceState({category:category},'',`?category=${category}`)
-                        }
-                        updateSeriesTitle(category.startsWith('d') ? 'd' : 'c');
-
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        loadingArea.style.display = 'none';
-                        isFetching = false
-
-                    });
-            }        
-               
-            // 新的一筆紀錄網址會被更改到網址列內，而這時會觸發瀏覽器的內建事件 — popstate 事件
-            // 類別點選上一頁時會再fetch該類別
-            window.onpopstate  = ( event ) => { 
-                console.log(event.state)
-                if(event.state){
-                    productContainer.innerHTML = ''
-                    changePathname(event.state.category,false)
-                    changeBanner(event.state.category)
-                }
-            }
-        }
-   </script> -->
-            <script>
-                  //         let petCategories = document.querySelectorAll('.pet-category')
-    //         // 產品專區預設為狗狗飼料，更改狗狗飼料為粉色高亮
-    //         let defaultCategory = document.querySelector('a[data-change-category="df"] img');
-    // let defaultAltSrc = defaultCategory.getAttribute('data-alt-src');
-    // defaultCategory.setAttribute('data-original-src', defaultCategory.src); // 保存原始 src
-    // defaultCategory.src = defaultAltSrc; // 設置為高亮狀態
-
-    // // 設置點擊事件處理器
-    // petCategories.forEach(function(petCategory) {
-    //     petCategory.setAttribute('data-original-src', petCategory.src); // 保存原始 src
-
-    //     petCategory.addEventListener('click', function(event) {
-    //         event.preventDefault();
-
-    //         petCategories.forEach(function(item) {
-    //             if (item === petCategory) {
-    //                 // 切換當前點擊的圖標為 alt-src 圖片
-    //                 if (item.src === item.getAttribute('data-alt-src')) {
-    //                     item.src = item.getAttribute('data-original-src'); // 恢復原始狀態
-    //                 } else {
-    //                     item.src = item.getAttribute('data-alt-src'); // 設置為高亮狀態
-    //                 }
-    //             } else {
-    //                 // 清除其他圖片的高亮，恢復原始狀態
-    //                 item.src = item.getAttribute('data-original-src');
-    //             }
-    //         });
-    //     });
-    // });
-            </script>
 </body>
 </html>

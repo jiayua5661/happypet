@@ -278,7 +278,7 @@
                     <td>{user_phone}</td>
                     <td>{user_name}</td>
                     <td>NT ${numberComma(total)}</td>
-                    <td>{new Date(create_time).toISOString().split('T')[0]}</td>
+                    <td>{new Date(create_time).toISOString().split('T')[0].replaceAll('-','/')}</td>
                   </tr>
                 )
 
