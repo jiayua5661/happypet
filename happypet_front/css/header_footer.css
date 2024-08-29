@@ -60,6 +60,11 @@ header {
     font-weight: bolder;
 }
 
+.carousel-inner img {
+    max-height: 400px;
+    width: auto; /* 保持圖片的等比例縮放 */
+    object-fit: cover; /* 視需求使用 cover, contain, fill 等 */
+}
 
 footer{
     background-color:  #90b9ab;
@@ -145,7 +150,12 @@ footer a,footer i{
     max-width: 100%; /* 確保圖片不超過容器的寬度 */
     height: auto; /* 保持圖片比例 */
 }
-
+@media (min-width: 720px) {
+    .service_item img {
+        width: 70%; /* 調整為所需的寬度比例 */
+        height: auto;
+    }
+}
 .service_item p {
     margin: 0; /* 取消預設外邊距 */
     padding: 0.5rem 0; /* 添加內邊距 */
@@ -159,4 +169,21 @@ footer a,footer i{
 .service_item:hover img,
 .service_item:hover p {
     transform: translateY(-10px); /* 鼠標懸停時向上移動 */
+}
+.store_img {
+    height: 200px; /* 設定固定高度 */
+    overflow: hidden; /* 確保圖片超出部分被隱藏 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reserve_btn{
+    background-color: #ffffff;
+    border-color:#90b9ab;
+    color: #579d86;
+}
+.reserve_btn:hover{
+    background-color: #90b9ab;
+    border-color:white;
+    color: #ffffff;
 }
