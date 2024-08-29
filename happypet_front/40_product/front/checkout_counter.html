@@ -120,11 +120,10 @@
                         <!-- visually-hidden -->
                         <div id="supermarket_info" class="d-flex flex-column">
                             <div onclick="handleClicksupermark()"
-                                class="border border-secondary rounded-3 order_time_check cursor_pointer col-4 text-center p-1 mb-2">
+                                class="border border-secondary rounded-3 order_time_check cursor_pointer col-4 text-center p-1 mb-2 w-100">
                                 選擇門市
                             </div>
                             <div class="mt-1">
-                                
                                 門市名稱：<label id="supermarket_storename"></label> <br>
                                 門市地址：<label id="supermarket_address"></label> <br>
                                 <!-- <label>營業時間：10:30-20:00</label><br> -->
@@ -344,14 +343,19 @@
         try {
             const jsonData = JSON.parse(decodeURIComponent(encodedData));
             console.log(jsonData); // 使用解析後的數據
-            $('#supermarket').prop("checked",true);
+            $('#supermarket').prop("checked", true);
             $('#send1').addClass("visually-hidden")
             $('#send2').addClass("visually-hidden")
             $('#send3').removeClass("visually-hidden")
             $('#payforstore').removeAttr("disabled")
-
+            //超商文字顯示
             $('#supermarket_storename').text(jsonData.storename)
             $('#supermarket_address').text(jsonData.storeaddress)
+
+            let info = JSON.parse(localStorage.getItem('orderinfo'))
+            consignee_name.value = info.consignee_name;
+            consignee_phone.value = info.consignee_phone;
+            info.consignee_checked ? $('#consignee').prop("checked", true) : ''
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }
@@ -377,13 +381,37 @@
         order['user_name'] = cname;
         order['user_phone'] = cellphone;
         order['user_email'] = email;
-        order_json = {
-            "user_name": cname,
-            "user_phone": cellphone,
-            "user_email": email
+        if (!localStorage.getItem('orderinfo')) {
+            order_json = {
+                "user_name": cname,
+                "user_phone": cellphone,
+                "user_email": email
+            }
+            localStorage.setItem('orderinfo', JSON.stringify(order_json));
         }
-        localStorage.setItem('orderinfo', JSON.stringify(order_json));
     }
+
+
+    async function getproductData() {
+        let response = await fetch('http://localhost/happypet/happypet_back/public/api/orderdetailwithuid',
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "uid": localStorage.getItem('uid')
+                })
+            }
+
+        );
+        let data = await response.json()
+        // order_json = localStorage.getItem('orderinfo') ? JSON.parse(localStorage.getItem('orderinfo')) : {};
+        // order_json.productdata = data
+        // localStorage.setItem('orderinfo', JSON.stringify(order_json));
+        order['productdata'] = data;
+        console.log('productdata',order['productdata']);
+        
+    }
+    getproductData();
     getuserinfo();
 
     consignee.onclick = () => {
@@ -398,7 +426,7 @@
             order_json.consignee_name = cname
             order_json.consignee_phone = cellphone
             order_json.send_address = address
-
+            order_json.consignee_checked = true
             localStorage.setItem('orderinfo', JSON.stringify(order_json));
             // console.log('consignee',localStorage.getItem('orderinfo') );
 
@@ -421,15 +449,16 @@
 
     let handleClicksend = () => {
         // console.log(event.target.id=="sotre");
-        console.log(send1);
+        // console.log(send1);
 
         if (event.target.id == "sotre") {
+            console.log('asdasd');
+
             $('#send1').addClass("visually-hidden")
             $('#send3').addClass("visually-hidden")
             $('#send2').removeClass("visually-hidden")
             $('#payforstore').removeAttr("disabled")
-        }
-        if (event.target.id == "supermarket") {
+        } else if (event.target.id == "supermarket") {
             $('#send1').addClass("visually-hidden")
             $('#send2').addClass("visually-hidden")
             $('#send3').removeClass("visually-hidden")
@@ -569,20 +598,64 @@
         order['order_number'] = localStorage.getItem('order_number');
         order['order_status'] = "1";
         console.log('order', order);
+        console.log('order', order['pay']);
         // console.log(Object.value(order));
 
-        //記得打開我
-        async function chechoutBill() {
-            let response = await fetch('http://localhost/happypet/happypet_back/public/api/orderinsert',
-                {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(order)
+
+        if (order['pay'] == "線上付款") {
+            // $.ajax({
+            //     url: 'http://localhost/happypet/happypet_back/public/api/sendOrder',
+            //     type: 'POST',
+            //     // data: JSON.stringify(formData),
+            //     contentType: 'application/json',
+            //     // headers: {
+            //     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     // },
+            //     success: function (data) {
+            //         if (data.redirect) {
+            //             window.location.href = data.redirect; // 跳转到新的 URL
+            //         } else {
+            //             console.log('Success:', data);
+            //         }
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.error('Error:', error);
+            //     }
+            // });
+
+
+            fetch('http://localhost/happypet/happypet_back/public/api/sendOrder', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+
+            })
+                .then(response => response.text())
+                .then(data => {
+                    // 將返回的表單HTML插入到當前頁面
+                    document.body.innerHTML += data;
+                    // 查找表單並提交
+                    document.querySelector('form').submit();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-            let data = await response.json();
-            data ? toindex() : ''
         }
-        chechoutBill();
+
+
+
+        //記得打開我
+        // async function chechoutBill() {
+        //     let response = await fetch('http://localhost/happypet/happypet_back/public/api/orderinsert',
+        //         {
+        //             method: "POST",
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify(order)
+        //         });
+        //     let data = await response.json();
+        //     data ? toindex() : ''
+        // }
+        // chechoutBill();
 
         let toindex = () => {
             $('.toast-body').text('感謝您的購買!');

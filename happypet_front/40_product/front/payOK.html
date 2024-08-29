@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 好寵你 | 付款完成 </title>
+
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/header_footer.css">
+    <!-- 引入自己的css -->
+    <link rel="stylesheet" href="../../css/orders.css">
+
+    <script src="../../js/bootstrap.bundle.js"></script>
+
+    <!-- 使用CDN引入bootstrap-icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- 字型字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+    <script src="../../js/jquery-3.7.1.js" data-auto-replace-svg="nest"></script>
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="navbar" class="sticky-top headerPage"></header>
+    <!-- Header end -->
+    <main id="root" class="container w-50 mb-5">
+        <div class="container">
+            <div class="container">
+                <div class="container m-5 p-5 text-center">
+                    <h2>付款完成，感謝您的購買</h2>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footerPage"></footer>
+
+</body>
+
+<script>
+    $(".headerPage").load("../../99_Huei/header_.html");
+    $(".footerPage").load("../../99_Huei/footer_.html");
+
+    setTimeout(function () {
+        window.location.href='http://localhost/happypet/happypet_front/00_index/index.html';
+    }, 1500);
+</script>
+
+</html>

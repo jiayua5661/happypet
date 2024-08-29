@@ -5,16 +5,17 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use App\Http\Controllers\SeriesProductController; 
-use App\Http\Controllers\DetailProductController; 
+use App\Http\Controllers\SeriesProductController;
+use App\Http\Controllers\DetailProductController;
 use App\Http\Controllers\HotelOrderController;
-use App\Http\Controllers\BeautyFrontController; 
-use App\Http\Controllers\BeautyBackController; 
+use App\Http\Controllers\BeautyFrontController;
+use App\Http\Controllers\BeautyBackController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MyPetController;
 use App\Http\Controllers\UserinfoController;
 use App\Http\Controllers\getSupmkController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,7 +26,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/product_back/info/select/{seriesID?}', function ($seriesID = null) {
     $seriesIDCount = DB::scalar("SELECT count(*) FROM product_series WHERE series_id = ?", [$seriesID]);
     $categories = DB::select('SELECT category_id,description FROM product_category');
-    
+
     // Log::info('我是seriesIDCount',['seriesIDCount',$seriesIDCount]);
     // Cannot use object of type stdClass as array ，解決↓ (編碼在解碼為Array)
     $categories = json_decode(json_encode($categories), true);
@@ -47,28 +48,28 @@ Route::get('/product_back/info/select/{seriesID?}', function ($seriesID = null) 
         'categories' => $categoryArr,
     ]);
 });
-Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
+Route::post('/product_back/info/update/{seriesID?}', function ($seriesID = null) {
     $seriesProduct = DB::select("SELECT * FROM  product_series ps 
                                 JOIN product_seriesimg psi 
                                 ON ps.series_id  = psi.series_id
-                                WHERE ps.series_id = ?",[$seriesID]);
-    foreach($seriesProduct as &$spdImg){
+                                WHERE ps.series_id = ?", [$seriesID]);
+    foreach ($seriesProduct as &$spdImg) {
         // print_r($pd);
-        if(isset($spdImg->img)){
+        if (isset($spdImg->img)) {
             $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($spdImg->img);
             $spdImg->img = base64_encode($spdImg->img);
             $src = "data:{$mime_type};base64,{$spdImg->img}";
             $spdImg->img = $src;
         }
     };
-    if(empty($seriesProduct)){
+    if (empty($seriesProduct)) {
         return response()->json([
-            'message'=>"查無此系列編號",
+            'message' => "查無此系列編號",
         ]);
-    }else{
-        Log::info('系列產品查詢結果',['seriesProduct'=>empty($seriesProduct)]);
+    } else {
+        Log::info('系列產品查詢結果', ['seriesProduct' => empty($seriesProduct)]);
         return response()->json([
-            'seriesProduct'=>$seriesProduct,
+            'seriesProduct' => $seriesProduct,
         ]);
     }
 });
@@ -77,8 +78,8 @@ Route::post('/product_back/info/update/{seriesID?}',function($seriesID = null){
 // Route::post('/product_back/info/update',[SeriesProductController::class,'update']);
 
 Route::prefix('/product_back/info')->group(function () {
-    Route::post('/create',[SeriesProductController::class,'store'] );
-    Route::post('/modify',[SeriesProductController::class,'modify']);
+    Route::post('/create', [SeriesProductController::class, 'store']);
+    Route::post('/modify', [SeriesProductController::class, 'modify']);
 });
 
 // 產品主要資訊插入(系列產品)
@@ -104,26 +105,26 @@ Route::post('/product_back/detail/show', function (Request $request) {
 // Route::post('/product_back/detail/modify',[DetailProductInsertController::class,'modify']);
 
 Route::prefix('/product_back/detail')->group(function () {
-    Route::get('/select',[DetailProductController::class,'select'] );
-    Route::post('/create',[DetailProductController::class,'store'] );
-    Route::post('/modify',[DetailProductController::class,'modify']);
+    Route::get('/select', [DetailProductController::class, 'select']);
+    Route::post('/create', [DetailProductController::class, 'store']);
+    Route::post('/modify', [DetailProductController::class, 'modify']);
 });
 
 // 查詢種類(狗狗、貓貓專區 product.html)
-Route::get('/product/{c}',function($c){
+Route::get('/product/{c}', function ($c) {
     // $products = DB::select('select * from seriespdimg_view');
     // $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id LIKE '{$c}%'");
-    $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id LIKE ? ",["{$c}%"]);
+    $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id LIKE ? ", ["{$c}%"]);
     // json_decode($products);
     // print_r($products);
-    
-    foreach($products as &$pd){
+
+    foreach ($products as &$pd) {
         // print_r($pd);
-        if(isset($pd->cover_img)){
+        if (isset($pd->cover_img)) {
             $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pd->cover_img);
             $pd->cover_img = base64_encode($pd->cover_img);
             $src = "data:{$mime_type};base64,{$pd->cover_img}";
-           $pd->cover_img = $src;
+            $pd->cover_img = $src;
         }
     }
 
@@ -133,7 +134,7 @@ Route::get('/product/{c}',function($c){
 });
 
 // 查詢此產品資訊(product_item.html)
-Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
+Route::get('/product/{c}/{seriesProduct}', function ($c, $seriesProduct) {
     // $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id like '{$c}%' and series_AINUM = '{$seriesProduct}'");
     $products = DB::select("SELECT * FROM seriespdimg_view WHERE product_id like ? and series_ai_id = ?", ["{$c}%", $seriesProduct]);
     $productImgs = DB::select("SELECT psi.*,spv.series_ai_id
@@ -144,23 +145,23 @@ Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
                                 ON ps.series_id = psi.series_id 
                                 WHERE spv.series_ai_id = ?
                                 GROUP BY psi.id ,psi.series_id,psi.img,psi.pic_category_id ,psi.create_date, psi.update_date
-                            ",[$seriesProduct]);
+                            ", [$seriesProduct]);
     // $category = DB::scalar("SELECT description FROM product_category WHERE id = '{$c}'");
-    $category = DB::scalar("SELECT description FROM product_category WHERE category_id = ?",["{$c}"]);
+    $category = DB::scalar("SELECT description FROM product_category WHERE category_id = ?", ["{$c}"]);
 
     // print_r($products);
-    foreach($products as &$pd){
+    foreach ($products as &$pd) {
         // print_r($pd);
-        if(isset($pd->cover_img)){
+        if (isset($pd->cover_img)) {
             $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pd->cover_img);
             $pd->cover_img = base64_encode($pd->cover_img);
             $src = "data:{$mime_type};base64,{$pd->cover_img}";
-           $pd->cover_img = $src;
+            $pd->cover_img = $src;
         }
     }
-    foreach($productImgs as &$pdImg){
+    foreach ($productImgs as &$pdImg) {
         // print_r($pd);
-        if(isset($pdImg->img)){
+        if (isset($pdImg->img)) {
             $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($pdImg->img);
             $pdImg->img = base64_encode($pdImg->img);
             $src = "data:{$mime_type};base64,{$pdImg->img}";
@@ -172,56 +173,55 @@ Route::get('/product/{c}/{seriesProduct}',function($c,$seriesProduct){
         'products' => $products,
         'productImgs' => $productImgs,
         'categoryName' => $category
-    
+
     ]);
 });
 
 // 插入購物車
 // Route::get('/product/insert/{poductID}/{quantity}',function($poductID,$quantity){
-Route::get('/product/insert/{user}/{poductID}/{quantity}',function($user,$poductID,$quantity){
-    Log::info('====>', ['productcart的user' => $user,'我是pdID'=>$poductID,'我是數量'=>$quantity]); 
+Route::get('/product/insert/{user}/{poductID}/{quantity}', function ($user, $poductID, $quantity) {
+    Log::info('====>', ['productcart的user' => $user, '我是pdID' => $poductID, '我是數量' => $quantity]);
 
     // 會傳回異動筆數
-    if(!$user){
+    if (!$user) {
         echo '尚未登入';
     }
     // Log::info('我是登入user編號 ====>',$user);
     Log::info('我是登入user編號 :', ['user' => $user]); // 日誌查詢的ID
 
-    if(!isset($poductID) || !isset($quantity)){
+    if (!isset($poductID) || !isset($quantity)) {
         echo '尚未選擇產品';
-    }else{
-        $pdCount = DB::scalar("SELECT count(*) FROM shopping_cart_item WHERE product_id = ?",[$poductID]);
+    } else {
+        $pdCount = DB::scalar("SELECT count(*) FROM shopping_cart_item WHERE product_id = ?", [$poductID]);
         // echo 'pdCount'.json_encode($pdCount);
         // echo 'pdCount'.$pdCount;
         // echo $pdCount;
-        if($pdCount >= 1){
+        if ($pdCount >= 1) {
             $n = DB::update("UPDATE shopping_cart_item 
                             SET quantity = quantity + ?
-                            WHERE product_id = ?",[$quantity,$poductID]);
+                            WHERE product_id = ?", [$quantity, $poductID]);
 
             echo $n;
-        }else{
+        } else {
             // $n = DB::insert("insert into userinfo (uid,cname) values(?,?)",[$uid,$cname]);
             // uid寫死
             // $aaa = DB::select('SELECT count(uid) FROM shopping_cart_item WHERE uid = ?',["qwe123"]);
             // if($aaa >0){
-                // }
-            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1',[$user]);
-            Log::info('ordernumber_old :', ['ordernumber_old' => $ordernumber_old]); 
+            // }
+            $ordernumber_old = DB::select('SELECT order_number FROM shopping_cart_item WHERE uid = ? limit 1', [$user]);
+            Log::info('ordernumber_old :', ['ordernumber_old' => $ordernumber_old]);
             //  {"ordernumber_old":[{"stdClass":{"order_number":"20240814001"}}]} 
             // Log::info('ordernumber_old :', ['ordernumber_old[0]->order_number' => $ordernumber_old[0]->order_number]); 
 
-            if($ordernumber_old){
+            if ($ordernumber_old) {
                 $ordernumber_old = $ordernumber_old[0]->order_number;
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                        VALUES(?,?,?,?,NOW())",[$ordernumber_old,$user,$poductID,$quantity]);   
-                Log::info('====>', ['我是if的insert數量' => $n]); 
-                 
-            }else{
+                        VALUES(?,?,?,?,NOW())", [$ordernumber_old, $user, $poductID, $quantity]);
+                Log::info('====>', ['我是if的insert數量' => $n]);
+            } else {
                 DB::select("call giveOrderNumber(@current_order)");
                 $callProcedure = DB::select('select @current_order');
-                
+
                 // Log::info('callProcedure:', $callProcedure);
                 // Log::info('orderNumber_1 :', $callProcedure[0]->{'@current_order'});
                 $orderNumber = $callProcedure[0]->{'@current_order'}; //取得orderNumber
@@ -229,10 +229,9 @@ Route::get('/product/insert/{user}/{poductID}/{quantity}',function($user,$poduct
                 // Log::info('今天日期:', ['今天日期' => now()]); 
 
                 $n = DB::insert("INSERT INTO shopping_cart_item(order_number,uid,product_id,quantity,create_time)
-                            VALUES(?,?,?,?,NOW())",[$orderNumber,$user,$poductID,$quantity]);
+                            VALUES(?,?,?,?,NOW())", [$orderNumber, $user, $poductID, $quantity]);
                 // echo "異動筆數".$n;
-                Log::info('====>', ['我是else的insert數量' => $n]); 
-
+                Log::info('====>', ['我是else的insert數量' => $n]);
             }
 
             echo $n;
@@ -240,34 +239,34 @@ Route::get('/product/insert/{user}/{poductID}/{quantity}',function($user,$poduct
     }
 });
 // 查詢購物車
-Route::get('/productcart/{user}',function($user){
-    if(!isset($user)) return;
-    
-    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = ?",[$user]);
-    Log::info('====>', ['productcart的user' => $user,'我是數量'=>$totalAmount]); 
+Route::get('/productcart/{user}', function ($user) {
+    if (!isset($user)) return;
+
+    $totalAmount = DB::scalar("SELECT COALESCE(SUM(quantity), 0) FROM shopping_cart_item WHERE uid = ?", [$user]);
+    Log::info('====>', ['productcart的user' => $user, '我是數量' => $totalAmount]);
     echo $totalAmount;
 });
 
 // 產品入庫
-Route::post('/product_back/warehouse',function(Request $request){
+Route::post('/product_back/warehouse', function (Request $request) {
     $productID = $request->input('productID');
     $action = $request->input('action');
-    
-    if($action === 'fetch'){
+
+    if ($action === 'fetch') {
         $products = DB::select("SELECT p.product_id,CONCAT_WS(' / ', nullif(ps.series_name,''),nullif(flavor,''),
                                     nullif(weight,''),nullif(size,''),nullif(style,'')) AS full_name
                                 FROM product p
                                 JOIN product_series ps 
                                 ON p.series_ai_id = ps.series_ai_id
-                                WHERE p.product_id = ? ",[$productID]);
-        if(count($products) > 0){
+                                WHERE p.product_id = ? ", [$productID]);
+        if (count($products) > 0) {
             // foreach($products as $product){
             return response()->json($products[0]);
             // }
-        }else{
+        } else {
             return response()->json(["error" => "查無此產品"]);
         }
-    }else if($action === 'insert'){
+    } else if ($action === 'insert') {
         // $productID = $request->input('productID');
         $mfd = $request->input('mfd');
         $exp = $request->input('exp');
@@ -275,20 +274,18 @@ Route::post('/product_back/warehouse',function(Request $request){
         $restockDate = $request->input('restockDate');
         // $data = $request->all();
         // DB::table('product_warehouse')->insert($data);
-        try{
+        try {
             DB::insert("INSERT INTO product_warehouse (product_id,inventory,mfd,exp,restock_date) 
-                    VALUES(?,?,?,?,?)",[$productID,$inventory,$mfd,$exp,$restockDate]);
+                    VALUES(?,?,?,?,?)", [$productID, $inventory, $mfd, $exp, $restockDate]);
             return response()->json(["message" => "產品已入庫"]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(["error" => "產品入庫失敗"]);
-    
         }
     }
-    
 });
 // 搜尋
-Route::post('/productall/select',function(Request $request){
+Route::post('/productall/select', function (Request $request) {
     $nameKeyword = $request->input('nameKeyword'); //
     // Log::info('nameKeyword = ',['nameKeyword----->',$nameKeyword]);
     $results = DB::select("SELECT series_id ,ps.series_ai_id,ps.series_name ,spv.cover_img ,spv.price,ps.category_id
@@ -296,25 +293,25 @@ Route::post('/productall/select',function(Request $request){
                             on spv.series_ai_id = ps.series_ai_id 
                             WHERE ps.series_name LIKE ?
                             group by ps.series_id,ps.series_ai_id,spv.price,ps.series_name,ps.category_id;
-                            ",["%{$nameKeyword}%"]);
+                            ", ["%{$nameKeyword}%"]);
     // 將封面圖轉base64
-    foreach($results as &$result){
-        if(isset($result->cover_img)){
+    foreach ($results as &$result) {
+        if (isset($result->cover_img)) {
             $mime_type = (new finfo(FILEINFO_MIME_TYPE))->buffer($result->cover_img);
             $result->cover_img = base64_encode($result->cover_img);
             $src = "data:{$mime_type};base64,{$result->cover_img}";
-           $result->cover_img = $src;
+            $result->cover_img = $src;
         }
     }
     // Log::info(['result----->',$result]);
     return response()->json(["result" => $results]);
 });
 // all_product查詢
-Route::get('/product_back/allproducts',function(Request $request){
+Route::get('/product_back/allproducts', function (Request $request) {
     $productName = $request->query('productName');
     Log::info('查詢產品系列ID:', ['productName' => $productName]); // 日誌查詢的ID
     $all = DB::select(' SELECT * FROM all_product_view 
-                    WHERE full_name LIKE ?',["%$productName%"]);
+                    WHERE full_name LIKE ?', ["%$productName%"]);
     return response()->json($all);
 });
 //                         N                              //
@@ -325,12 +322,12 @@ Route::get('/product_back/allproducts',function(Request $request){
 
 
 Route::get("/shelves", function (Request $request) {
-    $status= $request->input('status');
-    $shelves_products = DB::select("select * from VW_shelves where shelves_status=?",[$status]);
+    $status = $request->input('status');
+    $shelves_products = DB::select("select * from VW_shelves where shelves_status=?", [$status]);
     return response(json_encode($shelves_products))
         ->header("content-type", "application/json")
         ->header("charset", "utf-8")
-        ->header("Access-Control-Allow-Origin", "*")     
+        ->header("Access-Control-Allow-Origin", "*")
         ->header("Access-Control-Allow-Methods", "GET");
 });
 
@@ -353,14 +350,14 @@ Route::post("/orders_search", function (Request $request) {
     $searchOrdernumber = $request->input('searchOrdernumber');
     $phone = $request->input('phone');
     $sql = "select * FROM orders ";
-    $orderby=" order by create_time desc";
+    $orderby = " order by create_time desc";
 
     if ($status == 'all') {
         if (Str::length($searchOrdernumber)) {
-            $sql = $sql . "where order_number like ?" .$orderby;
+            $sql = $sql . "where order_number like ?" . $orderby;
             $orders = DB::select($sql, [$searchOrdernumber]);
         } elseif (Str::length($phone)) {
-            $sql = $sql . "where user_phone like ? " .$orderby;
+            $sql = $sql . "where user_phone like ? " . $orderby;
             $orders = DB::select($sql, [$phone]);
         } else {
             $sql = $sql . $orderby;
@@ -514,18 +511,39 @@ Route::post("/productqupdate", function (Request $request) {
 });
 
 //跳轉711選擇頁面
-Route::post('/getsupinfo', [getSupmkController::class,'getinfo']);
+Route::post('/getsupinfo', [getSupmkController::class, 'getinfo']);
 //取得資料
-Route::post('/returninfo', [getSupmkController::class,'returninfo_']);
+Route::post('/returninfo', [getSupmkController::class, 'returninfo_']);
+//金流
+Route::post('/sendOrder', [CheckoutController::class, 'sendOrder']);
+// routes/web.php
+Route::post('/ecpay/return', [CheckoutController::class, 'handleOrderResult'])->name('ecpay.return');
+
+Route::get('/payOK',  [CheckoutController::class, 'payOK'])->name('payOK');
+
+use TsaiYiHua\ECPay\Http\Controllers\ECPayController;
+
+// Route::prefix('ecpay')->group(function(){
+//     Route::post('notify', [ECPayController::class, 'notifyUrl'])->name('ecpay.notify');
+//     Route::post('return',  [ECPayController::class, 'returnUrl'])->name('ecpay.return');
+// });
+Route::prefix('cart_ecpay')->group(function () {
+    //當消費者付款完成後，綠界會將付款結果參數以幕後(Server POST)回傳到該網址。
+    Route::post('notify', 'CheckoutController@notifyUrl')->name('notify');
+
+    //付款完成後，綠界會將付款結果參數以幕前(Client POST)回傳到該網址
+    Route::post('return', [CheckoutController::class, 'returnUrl'])->name('return');
+});
+
 
 //////////////////////////////////// HUEI ////////////////////////////////////////
 
 //////////////////////////////////// LIN ////////////////////////////////////////
 
-Route::get("/beauty_front2_get_schedule_fortime/{date}", function($date) {
+Route::get("/beauty_front2_get_schedule_fortime/{date}", function ($date) {
     $result = DB::table("beauty_order")
-                ->where("date", $date)
-                ->get();
+        ->where("date", $date)
+        ->get();
     return response()->json($result);
 });
 
