@@ -128,6 +128,8 @@ footer i {
   flex-wrap: wrap; /* 如果容器太窄，讓圖片換行 */
   justify-content: center; /* 居中對齊圖片 */
   gap: 1rem; /* 設置圖片之間的間距 */
+  margin: auto; /* 使容器在頁面中水平居中 */
+  max-width: 100%; /* 預設最大寬度 */
 }
 
 .service_item {
@@ -152,11 +154,17 @@ footer i {
   max-width: 100%; /* 確保圖片不超過容器的寬度 */
   height: auto; /* 保持圖片比例 */
 }
-@media (min-width: 720px) {
-    .service_item img {
-        width: 70%; /* 調整為所需的寬度比例 */
-        height: auto;
-    }
+
+@media (min-width: 992px) { /* lg 尺寸以上的樣式 */
+  .service_items_container {
+      max-width: 950px; /* 設置 lg 尺寸以上時容器的最大寬度，根據需要調整這個值 */
+  }
+
+  .service_item {
+      flex: 1 1 calc(25% - 1rem); /* 在 lg 尺寸以上，每個項目占據 25% 的寬度 */
+      max-width: calc(25% - 1rem); /* 限制最大寬度 */
+  }
+
 }
 .service_item p {
   margin: 0; /* 取消預設外邊距 */
@@ -171,4 +179,34 @@ footer i {
 .service_item:hover img,
 .service_item:hover p {
   transform: translateY(-10px); /* 鼠標懸停時向上移動 */
+}
+
+
+.store_img {
+  height: 200px; /* 設定固定高度，根據需要調整 */
+  overflow: hidden; /* 隱藏超出容器的部分 */
+  display: flex; /* 使用 flex 使圖片垂直居中 */
+  align-items: center; /* 垂直居中圖片 */
+  justify-content: center; /* 水平居中圖片 */
+}
+
+.store_img img {
+  width: 100%; /* 使圖片寬度填滿容器 */
+  height: 100%; /* 使圖片高度填滿容器 */
+  object-fit: cover; /* 確保圖片覆蓋容器並保持比例 */
+}
+
+.store_p{
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.reserve_btn{
+  border-color: #579d86;
+  color:#579d86;
+  background-color: #ffffff;
+}
+.reserve_btn:hover{
+  color: white;
+  background-color: #579d86;
 }
