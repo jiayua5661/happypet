@@ -428,7 +428,7 @@ Route::post("/orderdetailwithuid", function (Request $request) {
             $order->product_pic = base64_encode($order->product_pic);
         }
     }
-
+    Log::info(['order_details'=>$order_details]);
     return response(json_encode($order_details))
         ->header("content-type", "application/json")
         ->header("charset", "utf-8")
